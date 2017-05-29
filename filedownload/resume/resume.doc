@@ -1,0 +1,1538 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<meta name="robots" content="noindex,nofollow">
+<link href="http://www.saraminimage.co.kr/css_new/sub_global.css" rel="stylesheet" type="text/css">
+<link href="http://www.saraminimage.co.kr/css/ui/reset-fonts.css" rel="stylesheet" type="text/css" media="screen, print">
+<link href="http://www.saraminimage.co.kr/css/resume-20160622.css" rel="stylesheet" type="text/css" media="screen, print">
+<script type="text/javascript" src="http://www.saraminimage.co.kr/js/libs/prototype-1.6.0.3.js"></script>
+<script type="text/javascript" src="http://www.saraminimage.co.kr/js/libs/pngHack.mini.js"></script>
+<title>이력서 보기</title>
+
+<style type="text/css">
+#content { width:695px;text-align:center; }
+.resume #resume_header { margin-top:20px }
+.resume #resume_title_view { margin-top:5px }
+
+.ly-balloon-yell { position:absolute; z-index:10; margin-top:12px; border:1px solid #bccc7a; background:#fcfdce; text-align:left; padding:8px 9px 6px;font-family:돋움,굴림,sans-serif; font-size:11px; color:#444444; line-height:17px; letter-spacing:-1px }
+.ly-balloon-yell p { padding:0; margin:0 }
+.ly-balloon-yell .edge-top-short { position:absolute; top:-6px; width:9px; height:6px; background:url(http://www.saraminimage.co.kr/style_guide/2011/wsg/edge_y.gif) no-repeat 0 0; font-size:0 }
+    .break-word {-ms-word-break:break-all;word-break:break-all}
+</style>
+<script type="text/javascript">
+/**
+ * header 초기화
+ */
+var pandora = '';
+
+function initHeader() {
+    if ( !$('data_form') || !$('scrap_btn')) {
+        return;
+    }
+    var form     = $('data_form');
+    var mode     = $('mode');
+    var scrapBtn = $('scrap_btn');
+    var mandbBtn = $('mandb_btn');
+    var printBtn = $('print_btn');
+    var pdfBtn   = $('pdf_btn');
+    var emailBtn = $('email_btn');
+    var smsBtn   = $('sms_btn');
+    var editBtn  = $('edit_btn');
+
+    if ( !form.event_resume_auth && mode.value != 'print' ) {
+        printBtn.show();
+    }
+
+    if ( form.edit_icon_fl && form.edit_icon_fl.value == 'y' ) {
+        editBtn.show();
+    }
+    
+    // 스크랩 버튼
+    if ( form.scrap_service.value == true ) {
+        scrapBtn.show();
+    }
+
+    if ( form.mem_gb.value == 'c' ) {
+        if ( form.company_cd && form.company_cd.value == 8 ) {
+            return;
+        }
+        // sms 발송 버튼
+        if (form.talent_service.value == false) {
+            if (form.sms_service.value == true) {
+                smsBtn.show();
+            }
+        }
+
+        if (pandora == 'y') {
+            if (form.talent_service.value == true && form.cell_open.value == false) {
+                mandbBtn.show();
+            }
+        } else {
+            if (form.talent_service.value == true && form.has_talent_service.value == true) {
+                mandbBtn.show();
+            }
+        }
+
+        var serviceText = '';
+        if ( form.mandb_search_cnt ) {
+            serviceText += '&nbsp;▶인재 연락처보기 : ';
+            serviceText += '<font color="#e10b00"><b>';
+            serviceText += form.mandb_search_cnt_text.value
+            serviceText += '</b></font>건';
+        }
+        if(serviceText){
+            //$('mandb_service_text').innerHTML = serviceText;
+            //$('mandb_service_text').show();
+        }
+    }
+
+    // 이메일 발송 버튼
+    if ( form.email_service.value == true ) {
+        emailBtn.show();
+    }
+}
+
+function hideDisablePrintArea() {
+//    $('resume_header').select('span').invoke('hide');
+    //$$('.mandb-bar').invoke('hide');
+    if ( $('request_mandb_top') ) {
+        $('request_mandb_top').hide();
+    }
+    if ( $('request_mandb_bottom') ) {
+        $('request_mandb_bottom').hide();
+    }
+    /*
+    if ( $('data_form').talent_service.value == true && $('introduce_contents') ) {
+        $('introduce_contents').hide();
+        if ( $('divPng') ) {
+            $('divPng').hide();
+        }
+    }
+    */
+    if ( $('attach_files_view') ) {
+        $('attach_files_view').hide();
+    }
+    
+    if ( $('attach_port_files_view') ) {
+        $('attach_port_files_view').hide();
+    }
+    
+    if ( $('attachment_view') ) {
+        $('attachment_view').hide();
+    }
+}
+
+function showDisablePrintArea() {
+    //$$('.mandb-bar').invoke('show');
+    /*
+    if ( $('data_form').talent_service.value == true && $('introduce_contents') ) {
+        $('introduce_contents').show();
+        if ( $('divPng') ) {
+            $('divPng').show();
+        }
+    }
+    */
+    if ( $('attach_files_view') ) {
+        $('attach_files_view').show();
+    }
+    if ( $('attach_port_files_view') ) {
+        $('attach_port_files_view').show();
+    }
+    if ( $('attachment_view') ) {
+        $('attachment_view').show();
+    }
+}
+
+function hideHeader() {
+    $('resume_header').select('span').invoke('hide');
+}
+
+/**
+ * 수정 레이어 열기
+ */
+function showEditResumeLayer(el) {
+    if ( $('template_cd').value == 2 ) {
+        goEditingResume();
+        return;
+    }
+    
+    var pos = $(el).positionedOffset();
+    var topPos  = pos.top + 11;
+    var leftPos = pos.left - 26;
+    $('edit_resume_layer').setStyle({ top : topPos + 'px', left : leftPos + 'px' });
+    $('edit_resume_layer').show();
+
+    setTimeout(function() {
+        $('resume_print_area').onclick = function () {
+            hideEditResumeLayer();
+        };
+    }, 1000);
+}
+
+/**
+ * 수정 레이어 닫기
+ */
+function hideEditResumeLayer() {
+    $('edit_resume_layer').hide();
+    $('resume_print_area').onclick = '';
+
+    $('resume_print_area').stopObserving('click');
+}
+
+/**
+ * 이력서 수정 페이지로 이동
+ */
+function goEditingResume() {
+    if ( opener && !opener.closed ) {
+        opener.location.href = '/zf_user/member/resume-manage/write?res_idx=' + $('data_form').res_idx.value;
+        self.close();
+    }
+}
+
+/**
+ * 자기소개서 수정 페이지로 이동
+ */
+function goEditingIntroduce() {
+    if ( opener && !opener.closed ) {
+        parent.opener.location.href = '/zf_user/resume/write-resume-contents?write_mode=modify&res_idx=' + $('data_form').res_idx.value;
+        self.close();
+    }
+}
+
+/**
+ * 인쇄
+ */
+function printResume() {
+    if ( $('data_form').controller.value == 'mandb' || $('data_form').event_resume_auth ) {
+        printArea();
+    } else {
+        hideDisablePrintArea();
+        window.print();    
+        initHeader();
+        showDisablePrintArea();
+    }
+}
+
+/**
+ * 영역 인쇄
+ */
+function printArea() {
+    var url = '/zf_user/popup/areaPrint/printId/resume_print_area';
+	window.open(url, 'printWin', 'width=750, height=600, scrollbars=yes');
+}
+
+/**
+ * 인재디비 사용 레이어
+ */
+function useConfirmMandb(el, confirmLayerId) {
+    var url = '/zf_user/jobs/talent/use-confirm';
+    var res_idx = $('data_form').res_idx.value;
+    
+	new Ajax.Request(url, {
+	    parameters: {res_idx : res_idx},
+	    onSuccess: function (tr) {
+	    	if (tr.responseJSON) {
+	            var result = tr.responseJSON;
+	            var layerId = '';
+
+	            if ( result.userGroup == 'c' && result.mandb_search_cnt > 0 ) {
+	            	//$('mandb_num').innerHTML = '<b>'+ (result.mandb_search_cnt-1) + '건</b>';
+
+	            	layerId = confirmLayerId;
+	            } else {
+		            layerId = 'service-guide-layer';
+	            }
+
+	            if ( layerId ) {
+    	            elPos = $(el).positionedOffset();
+                	
+                	$(layerId).style.top  = elPos.top - 100;
+                    $(layerId).style.left = 200;
+                    
+                	$(layerId).show();
+	            }
+	        }
+	    },
+	    onComplete: function (tr) {
+	    	switch ( tr.status ) {
+	        case 200 :
+                break;
+	        case 203 :
+                // 203 Non-Authoritative Information
+                alert('로그아웃 되었습니다. 다시 로그인해 주십시오.');
+                location.reload();
+                break;
+	        case 500 :
+                alert('서버에서 오류가 발생했습니다. 잠시후 다시 시도해 주십시오.');
+                break;
+	        default :
+                if(confirm('페이지에 오류가 발생했습니다. 페이지를 새로 고치려면 확인을 눌러 주십시오.')) {
+                    document.location.reload();
+                }
+                break;
+            }
+        }
+    });
+}
+
+/**
+ * 스크랩
+ */
+var ingScrap = false;
+function scrap() {
+    var complete_mode = '';
+    if ( $('data_form').mem_gb.value == 'c' ) {
+        if ( ingScrap ) {
+            return;
+        }
+
+        ingScrap = true;
+        var url = '/zf_user/company/mandb-scrap-ajax';
+        var res_idx = $('data_form').res_idx.value;
+        new Ajax.Request(url, {     
+            parameters: {res_idx : res_idx, type : 'button'},
+            onSuccess: function (tr) {
+                if ( tr.responseJSON ) {
+                    var result = tr.responseJSON;
+
+                    if ( result.success == true ) {
+                        if (pandora == 'y') {
+                            if(!!window.opener && complete_mode!='y') {
+                                if ( !!window.opener.document.getElementById('side_hidden_scrap_talent_count') ) {
+                                    var hiddenCnt = opener.document.getElementById('side_hidden_scrap_talent_count').innerHTML;
+                                    var scrapCnt = parseInt(hiddenCnt);
+                                    scrapCnt++;
+                                    // 우측 사이드 메뉴 count 처리
+                                    opener.document.getElementById('side_hidden_scrap_talent_count').innerHTML = scrapCnt;
+                                    if (scrapCnt > 99) {
+                                        opener.document.getElementById('side_scrap_talent_count').innerHTML = '99+';
+                                    } else {
+                                        opener.document.getElementById('side_scrap_talent_count').innerHTML = scrapCnt;
+                                    }
+                                }
+                            }
+                        } else {
+                            if (document.getElementById('side_hidden_scrap_talent_count')) {
+                                var hiddenCnt = document.getElementById('side_hidden_scrap_talent_count').innerHTML;
+                                var scrapCnt = parseInt(hiddenCnt);
+
+                                scrapCnt++;
+                                // 우측 사이드 메뉴 count 처리
+                                sidewidgetcount(scrapCnt);
+                            }
+                        }
+                    	try { n_trackEvent('mandb_scrap', 'scrap_complete', res_idx, 'view'); } catch(e) {}
+                        alert(result.msg);
+                    } else {
+                	    alert(result.msg);
+                    }
+                }
+                ingScrap = false;
+            }
+            ,onException : function(e) {
+                alert('통신의 문제가 발생하였습니다.');
+                ingScrap = false;
+            }
+        });
+    } else {
+        var pageUrl = '';
+        if ( $('data_form').page_url.value ) {
+            pageUrl = $('data_form').page_url.value;
+        }
+        location.href = '/zf_user/login/index/page_url/' + pageUrl;
+    }
+}
+
+function sidewidgetcount(scrapCnt) {
+    $('side_hidden_scrap_talent_count').update(scrapCnt);
+
+    if(scrapCnt > 99) {
+        $('side_scrap_talent_count').update('99+');
+    } else {
+        $('side_scrap_talent_count').update(scrapCnt);
+    }
+}
+
+//SMS 발송 체크
+function checkSendingSMS(mem_idx) {
+    new Ajax.Request('/zf_user/memcom/sms/check-sending-sms-validation-ajax', {
+        parameters: {
+            type : 'mandb',
+            idx : mem_idx
+        },
+        asynchronous: false,
+        onSuccess: function(transport) {
+            var json = transport.responseText.evalJSON();
+            
+            if ( json.result == 'empty' ) {
+                alert('문자발송이 불가능한 번호입니다.');
+                return;
+            }
+
+            sendSMS(json.mem_idx);            
+        },
+
+        onFailure: function() {
+            alert('서버의 응답이 없습니다.\n다시 시도하여 주시기 바랍니다.');
+            return false;
+        }
+    });
+}
+
+//SMS 발송
+function sendSMS(mem_idx) {
+    $('smsForm').mode.value = 'group';
+    $('smsForm').mem_idx.value = mem_idx;
+    $('smsForm').type.value = 'mandb';
+
+    var targetWin = 'send_sms';
+    win_sms = window.open('about:blank', targetWin, 'width=527,height=670,scrollbars=no,status=no') ;
+
+    $('smsForm').target = targetWin;
+    $('smsForm').submit();
+    win_sms.focus();
+}
+
+// 이메일 발송
+function sendMail(mem_idx, res_idx) {
+    window.open('/zf_user/company/recruit-apply-sendmail?mode=person&mem_idx='+mem_idx+'&res_idx='+res_idx, 'sendmail', 'width=760, height=710, top=200, left=300, status=yes, resizable=no, scrollbars=yes').focus();
+}
+function sendProtectMail(mem_idx, res_idx, sKey) {
+    var url = '/zf_user/company/recruit-apply-sendmail?mode=person&level=protect&mem_idx='+mem_idx+'&res_idx='+res_idx,
+        sKey = sKey || '';
+
+    if ( sKey ) {
+        url += '&sKey=' + sKey;
+    }
+    
+    window.open(url, 'sendmail', 'width=760, height=710, top=200, left=300, status=yes, resizable=no, scrollbars=yes').focus();
+}
+
+//휴대폰 번호 유효성 검사
+function checkCellNumber(cell) {
+    var reg_pattern = /([^0-9]|^)01(0|1|6|7|8|9)\s*((\&gt;){0,2}|[\+\-\)\.\/\~\>\_]{0,2})\s*[1-9][0-9]{2,3}\s*((\&gt;){0,2}|[\+\-\)\.\/\~\>\_]{0,2})\s*[0-9]{4}/m;
+    
+    return reg_pattern.test(cell);
+}
+
+//기업회원 로그인
+function goCompanyLogin(wwwBaseUrl, wwwBaseUrlTarget) {
+    var wwwBaseUrl       = wwwBaseUrl || '',
+        wwwBaseUrlTarget = wwwBaseUrlTarget || '';
+    
+    if ( !confirm('기업회원으로 로그인 후, 이용하실 수 있습니다.\n\n로그인 하시겠습니까?') ) {
+        return;
+    }
+
+    //if ( wwwBaseUrlTarget ) {
+    //    window.open(wwwBaseUrl + '/zf_user/auth?url=%2Fzf_user%2Fmember%2Fresume-manage%2Fword-download%3Fres_idx%3D2241220%26template_cd%3D0%26mandb_view%3Dn');
+    //} else {
+        location.href = '/zf_user/auth?url=%2Fzf_user%2Fmember%2Fresume-manage%2Fword-download%3Fres_idx%3D2241220%26template_cd%3D0%26mandb_view%3Dn';
+    //}
+}
+
+function restrictCompany() {
+    alert('내부 정책에 따라, 귀사는 인재정보 열람 상품을 이용할 수 없습니다.\n\n문의사항은 고객센터(02-2025-4733)로 접수해주시기 바랍니다.');
+}
+
+// onload event
+Event.observe(window, 'load', function () {
+//    document.getElementById('edit_resume_layer').style.display = 'none';
+    
+    // 인쇄 모드일 경우
+    if ( $('data_form') ) {
+        var mode = $('data_form').mode.value;
+        
+        if ( mode == 'print' ) {
+            printResume();        
+        } else if ( mode == 'mobile' ) {
+            hideHeader();
+            hideDisablePrintArea();
+        } else if (mode == 'academy') {
+            hideHeader();
+        }else {
+            initHeader();
+        }
+    }
+
+	if ( $('attach_port_files_view') ) {
+    
+		$$('.portfolio_list_more img').invoke('observe','click',function(){
+			if ( $('more_btn').hasClassName('more')) {
+				$('more_btn').src = "http://www.saraminimage.co.kr/person/new/btn_portfolio_closed.png";
+				$('more_btn').addClassName('close');
+				$('more_btn').removeClassName('more');
+	
+				$('attach_port_files_view').select('.port_cell .hideLine').each( function (item) {
+					item.setStyle({'display':'block'});
+			    });
+			    
+			} else {
+				$('more_btn').src = "http://www.saraminimage.co.kr/person/new/btn_portfolio_more.png";
+				$('more_btn').addClassName('more');
+				$('more_btn').removeClassName('close');
+	
+				$('attach_port_files_view').select('.port_cell .hideLine').each( function (item) {
+					item.setStyle({'display':'none'});
+			    });
+			}
+		});
+	}	
+});
+
+</script>
+</head>
+
+<body style="text-align:center">
+    <!-- 워드 다운로드일 경우에는 노출시키지 않는다. -->
+     
+    
+    <!-- 상단 인재검색 서비스 신청 이미지 -->
+    
+        
+    <!-- //상단 인재검색 서비스 신청 이미지 -->
+    
+        
+    <!-- 이력서 본문 -->
+    <!-- table 넣고 싶지 않았는데 워드 다운로드 때문에 어쩔 수 없이 넣음. ㅠㅠ -->
+        <table width="645" border="0" cellspacing="0" cellpadding="0"><tr><td>
+        <div id="resume_print_area" class="resume-wrapper">
+        <div class="resume">
+            <!-- header (top icon & description) -->
+            <div id="resume_header">
+    <div class="item-header">
+        <div class="sec-btn-left">
+                    </div>
+        <div class="sec-btn-left h-subtext" style="padding-top:2px;">
+        	<span id="mandb_service_text" style="display:none;font-size:8pt;"></span>
+        </div>
+        <div class="sec-btn-right h-subtext" style="font-family:굴림,sans-serif;padding-top:2px;text-align:right">
+                        최근수정일 : 2016년 09월 27일 (화)                    </div>
+    </div>
+</div>            <!-- //header (top icon & description) -->
+            
+            <!-- 저장된 순서대로 항목별 렌더 -->
+            <!-- 이력서 제목 -->
+<div id="resume_title_view">
+    <a name="title_view_anchor"></a>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr><td class="res-title-view-new " valign="middle">다양한 프로젝트 협업 경험을 바탕으로 SI/SM 업무 및 웹, 솔루션 개발/운영!</td></tr>
+    </table>
+    
+</div>
+<!-- //이력서 제목 -->
+
+<!-- 지원분야/희망연봉 -->
+<div id="resume_apply_dept_view">
+    <div class="item-header">
+        &nbsp;
+            </div>
+    <table class="tbl-view" border="0" cellspacing="0" summary="지원분야/희망연봉" width="100%" >
+        <colgroup>
+        <col width="118">
+        <col width="320">
+        <col width="70">
+        <col>
+        </colgroup>
+        <tr>
+            <th>지원분야</th>
+            <td><label>웹/JAVA/JSP 프로그램 개발&nbsp;(경력/정규직)</label></td>
+            <th>희망연봉</th>
+            <td>3,000~3,200만원</td>
+        </tr>
+    </table>
+</div>
+<!-- //지원분야/희망연봉 -->
+<div id="basic_view" class="divide-view-item" style="">
+    <a name="basic_view_anchor"></a>
+        <div class="item-header res-item" style="text-align:left">
+        <h3><span class="item-title">기본정보</span></h3>
+            </div>
+        <div class="item-contents">
+        <div id="basic_profile" class="mb10">
+            <table class="tbl-view" border="0" cellspacing="0" summary="기본정보" width="100%">
+                <colgroup>
+                <col width="118">
+                <col width="70">
+                <col width="250">
+                <col width="70">
+                <col>
+                </colgroup>
+                <tr>
+                    <td rowspan="5" valign="middle" class="res-photo" style="text-align:center">
+                                                                        <img alt="" src="http://www.saramin.co.kr/zf_user/persons/picture?idx=2571163|24da9eb32dbe11d75508db2173a523dab29766a70b083703c209f77570405559" border="0" width="100" height="140" />                                                                </td>
+                    <th>이름</th>
+                    <td>
+                                                강동혁                                            </td>
+                    <th>나이/성별</th>
+                    <td>1987년 (30세)<span class="res-cut">&nbsp;|&nbsp;</span>男                    </td>
+                </tr>
+                                <tr>
+                    <th>주소</th>
+                    <td colspan="3">
+                                                (421-826) 경기 부천시 오정구 작동 393-3 2층                                            </td>
+                </tr>
+                <tr>
+                    <th>휴대폰</th>
+                    <td colspan="3">
+                        <span id="cell_area">
+                                                                                010-4058-9971                                                                            </span>
+                    </td>
+                                        </tr><tr>
+                                        <th>전화번호</th>
+                    <td colspan="3">
+                                                010-4058-9971                                            </td>
+                </tr>
+                                <tr>
+                    <th>이메일</th>
+                    <td colspan="3">
+                                                holybell87@naver.com                                            </td>
+                                    </tr>
+            </table>
+        </div>
+        <div id="basic-option" class="mb10">
+                        <table class="tbl-view" border="0" cellspacing="0" summary="통화가능시간" width="100%">
+                <colgroup>
+                <col width="118">
+                <col width="239">
+                <col width="81">
+                <col>
+                </colgroup>
+                                                <tr>
+                                        <th width="118">통화가능시간</th>
+                    <td width="239" >
+                        16:00 이후                    </td>
+                                        <th width="81">출근가능일</th>
+                    <td>즉시출근가능                    </td>
+                                    </tr>
+                                            </table>
+                    </div>
+            </div>
+    </div>
+<div id="school_view" class="divide-view-item">
+    <a name="school_view_anchor"></a>
+    <div class="item-header res-item">
+        <h3>
+            <span class="item-title">학력사항</span> 
+            <span class="res-cut"> | </span> 
+            <span class="title-person">최종학력 - <b>대학원(석사) 졸업예정</b></span>
+        </h3>
+            </div>
+    <div class="item-contents">
+        <div id="basic_school_view" class="mb10">
+            <!-- 초등학교, 중학교, 고입, 중입 검정고시 -->
+                        <table class="tbl-view" border="0" cellspacing="0" summary="학력사항" width="100%">
+                <colgroup>
+                <col width="118">
+                <col width="70">
+                <col width="230">
+                <col width="150">
+                <col>
+                </colgroup>
+                <tr>
+                    <th height="35">재학기간</th>
+                    <th>구분</th>
+                    <th>학교명</th>
+                    <th>전공</th>
+                    <th>학점</th>
+                </tr>
+                                                                                <tr>
+                        <td >
+                            2003.03 ~ 2006.02                        </td>
+                        <td  class="center-td">
+                                                        졸업                        </td>
+                        <td>
+                            도당고등학교                                                    </td>
+                        <td style="">
+                            문과계열                                                                                </td>
+                        <td class="center-td">-</td>
+                    </tr>
+                                                                                        <tr>
+                        <td rowspan="2">
+                            2006.03 ~ 2012.02                        </td>
+                        <td rowspan="2" class="center-td">
+                                                        졸업                        </td>
+                        <td>
+                            부천대학교                             (경기)                        </td>
+                        <td style="">
+                            전산정보처리학과                                                                                </td>
+                        <td class="center-td">3.78/4.5</td>
+                    </tr>
+                                                <tr>
+                            <td colspan="3">
+                                                                                                        
+                                    <h5>[졸업작품]</h5>
+                                    Android App R.T.O (Real Time Observation)                                                                                                </td>
+                        </tr>
+                                                                                        <tr>
+                        <td >
+                            2012.02 ~ 2012.08                        </td>
+                        <td  class="center-td">
+                                                        졸업                        </td>
+                        <td>
+                            학점은행제 학사                                                    </td>
+                        <td style="">
+                            컴퓨터공학과                                                                                </td>
+                        <td class="center-td">4.08/4.5</td>
+                    </tr>
+                                                                                        <tr>
+                        <td >
+                            2013.03 ~ 2017.02                        </td>
+                        <td  class="center-td">
+                                                        졸업예정                        </td>
+                        <td>
+                            숭실대학교 정보과학대학원(석사)                             (야간 / 서울)                        </td>
+                        <td style="">
+                            정보보안학과                                                                                </td>
+                        <td class="center-td">4.27/4.5</td>
+                    </tr>
+                                                                        </table>
+                        <!-- //고등학교, 대학교 -->
+        </div>
+        <!-- 직업전문학교/학원 -->
+                <!-- //직업전문학교/학원 -->
+    </div>
+</div><div id="career_view" class="divide-view-item">
+    <a name="career_view_anchor"></a>
+    <div class="item-header res-item">
+        <h3>
+            <span class="item-title">경력사항</span> 
+            <span class="res-cut"> | </span> 
+            <span class="title-person">
+                총 경력 - 
+                <b> 2년</b>
+                            </span>
+        </h3>
+            </div>
+    <div class="item-contents">
+                    <!-- 핵심역량 -->
+                          <div class="mb10">                
+                <table class="tbl-view" border="0" cellspacing="0" summary="핵심역량" width="100%">
+                  <colgroup>
+                    <col width="118" style="width:118px;">
+                    <col>
+                  </colgroup>
+                  <tbody>
+                    <tr>
+                      <th scope="row">핵심역량</th>
+                      <td>
+                      						<b>ㆍ</b>증권사 프로젝트 협업 경험 (2년), 증권사 SM 업무 경험 (5개월)<br>
+                      						<b>ㆍ</b>JAVA, JSP, MFC 등 프로그래밍 개발 경험 (3년)<br>
+                      						<b>ㆍ</b>다양한 프레임워크 활용 가능 (Bootstrap, Node.js, Mybatis 등)<br>
+                                            </td>
+                    </tr>
+                  </tbody>
+                </table>                
+              </div>
+                        <!-- //핵심역량 -->
+        
+            <!-- IT/개발직을 제외한 직종별 경력 -->
+                        <!-- //IT/개발직을 제외한 직종별 경력 -->
+        
+            <!-- 일반 경력 -->
+                    <div id="career_basic">
+                                    <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="경력사항" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="100">
+                    <col width="200">
+                    <col width="100">
+                    <col>
+                    </colgroup>
+                                        <tr>
+                        <th width="118" height="35">근무기간</th>
+                        <th colspan="4">
+                            상세경력
+                                                    </th>
+                    </tr>
+                                                            <tr>
+                        <td width="118" rowspan="6" style="vertical-align:top;">
+                            2011.10 ~ 2013.09<br />(2년)                        </td>
+                        <th width="100">회사명</th>
+                        <td colspan="3">㈜에이치티원</td>
+                    </tr>
+                                        <tr>
+                        <th width="100">직종</th>
+                        <td colspan="3">IT·인터넷 > 응용프로그래머</td>
+                    </tr>
+                                                                                <tr>
+                                                <th width="100">근무부서</th>
+                        <td >개발부</td>
+                                                
+                                                <th width="100">근무지역</th>
+                        <td >서울</td>
+                                            </tr>
+                                        <tr>
+                        <th width="100">직급(직책)</th>
+                        <td>
+                            사원                                                            (팀원)                        
+                                                         
+                                <span class="res-cut"> | </span> 2년차                                                    </td>
+                        <th width="100">연봉</th>
+                        <td>
+                            2,300만원                                                    </td>
+                    </tr>
+                                        <tr>
+                        <th width="100">담당업무</th>
+                        <td colspan="3" class="break-word">
+                                                      웹 페이지 개발/유지보수<br />
+WTS 화면개발/유지보수<br />
+HTS 화면개발                                                  </td>
+                    </tr>
+                                                            <tr>
+                        <th width="100">퇴사사유</th>
+                        <td colspan="3">유학</td>
+                    </tr>
+                                    </table>
+            </div>
+                                <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="경력사항" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="100">
+                    <col width="200">
+                    <col width="100">
+                    <col>
+                    </colgroup>
+                                                            <tr>
+                        <td width="118" rowspan="5" style="vertical-align:top;">
+                            2016.01 ~ 재직중<br />                        </td>
+                        <th width="100">회사명</th>
+                        <td colspan="3">언니왕</td>
+                    </tr>
+                                        <tr>
+                        <th width="100">직종</th>
+                        <td colspan="3">IT·인터넷 > 웹프로그래머</td>
+                    </tr>
+                                                                                <tr>
+                                                <th width="100">근무부서</th>
+                        <td >SD (서비스 개발부)</td>
+                                                
+                                                <th width="100">근무지역</th>
+                        <td >서울</td>
+                                            </tr>
+                                        <tr>
+                        <th width="100">직급(직책)</th>
+                        <td>
+                            사원                                                            (팀원)                        
+                                                         
+                                <span class="res-cut"> | </span> 1년차                                                    </td>
+                        <th width="100">연봉</th>
+                        <td>
+                            2,800만원                                                    </td>
+                    </tr>
+                                        <tr>
+                        <th width="100">담당업무</th>
+                        <td colspan="3" class="break-word">
+                                                      일반유저/관리자 웹 페이지 개발, 웹 서버 구축                                                  </td>
+                    </tr>
+                                                        </table>
+            </div>
+                        </div>
+                <!-- //일반 경력 -->
+            
+            <!-- IT/개발직 경력 -->        
+                        <!-- //IT/개발직 경력 -->
+            
+            <!-- 경력기술서 -->
+                        <!-- //경력기술서 -->
+            </div>
+</div>
+<div id="project_view" class="divide-view-item">
+    <a name="project_view_anchor"></a>
+    <div class="item-header res-item">
+        <h3><span class="item-title">참여프로젝트</span></h3>
+            </div>
+    <div class="item-contents">
+                            <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="참여프로젝트" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="20">
+                    <col width="75">
+                    <col>
+                    </colgroup>
+                                        <tr>
+                        <th width="118" height="35">프로젝트 기간</th>
+                        <th colspan="3">상세프로젝트</th>
+                    </tr>
+                                                            <tr>
+                        <td width="118" rowspan="5" style="vertical-align:top;">
+                            2016.05 ~ 진행중<br />                        </td>
+                        <th width="95" colspan="2">프로젝트명</th>
+                        <td class="break-word">다방페이 개발</td>
+                    </tr>
+                                        <tr>
+                        <th width="95" colspan="2">상세내용</th>
+                        <td class="break-word">1) 소속업체 : 언니왕<br />
+2) 의뢰업체 : 다방<br />
+3) 참여인원 : 7<br />
+4) 담당업무 : 다방페이 웹 프론트/백앤드 개발 (일반유저/관리자), 서버관리<br />
+5) 주요실적 : 카드결제를 통한 월세 자동결제, 연말 월세 세액공제, 매월 정기 결제에 따른 리스크 감소 등</td>
+                    </tr>
+                                        
+                    <!-- IT 개발 프로젝트 -->
+                                                                                            
+                                                                                                        <tr>
+                                                                <th width="20" rowspan="3">개발환경</th>
+                                                                <th width="75">OS</th>
+                                <td class="break-word">Windows 7</td>
+                            </tr>
+                                                                                                                                        <tr>
+                                                                <th width="75">언어</th>
+                                <td class="break-word">JAVA, JSP, JAVA SCRIPT, HTML</td>
+                            </tr>
+                                                                                                                                        <tr>
+                                                                <th width="75">DBMS</th>
+                                <td class="break-word">MySQL</td>
+                            </tr>
+                                                                                                                                                                            <!-- //IT 개발 프로젝트 -->
+                </table>
+            </div>
+                                <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="참여프로젝트" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="20">
+                    <col width="75">
+                    <col>
+                    </colgroup>
+                                                            <tr>
+                        <td width="118" rowspan="5" style="vertical-align:top;">
+                            2013.07 ~ 2013.09<br />(3개월)                        </td>
+                        <th width="95" colspan="2">프로젝트명</th>
+                        <td class="break-word">웹 표준화 정책에 따른 이트레이드증권 홈페이지/IR사이트 리뉴얼</td>
+                    </tr>
+                                        <tr>
+                        <th width="95" colspan="2">상세내용</th>
+                        <td class="break-word">1) 소속업체 : 에이치티원<br />
+2) 의뢰업체 : 이트레이드증권<br />
+3) 참여인원 : 7<br />
+4) 담당업무 : 이트레이드증권 홈페이지/IR사이트 수정</td>
+                    </tr>
+                                        
+                    <!-- IT 개발 프로젝트 -->
+                                                                                            
+                                                                                                        <tr>
+                                                                <th width="20" rowspan="3">개발환경</th>
+                                                                <th width="75">OS</th>
+                                <td class="break-word">Windows 7</td>
+                            </tr>
+                                                                                                                                        <tr>
+                                                                <th width="75">언어</th>
+                                <td class="break-word">JAVA, JSP, JAVA SCRIPT, HTML, XML</td>
+                            </tr>
+                                                                                                                                        <tr>
+                                                                <th width="75">DBMS</th>
+                                <td class="break-word">Oracle</td>
+                            </tr>
+                                                                                                                                                                            <!-- //IT 개발 프로젝트 -->
+                </table>
+            </div>
+                                <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="참여프로젝트" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="20">
+                    <col width="75">
+                    <col>
+                    </colgroup>
+                                                            <tr>
+                        <td width="118" rowspan="5" style="vertical-align:top;">
+                            2012.11 ~ 2013.05<br />(7개월)                        </td>
+                        <th width="95" colspan="2">프로젝트명</th>
+                        <td class="break-word">선물옵션 전용 HTS '오르다 F1'</td>
+                    </tr>
+                                        <tr>
+                        <th width="95" colspan="2">상세내용</th>
+                        <td class="break-word">1) 소속업체 : 에이치티원<br />
+2) 의뢰업체 : LIG투자증권<br />
+3) 참여인원 : 8<br />
+4) 담당업무 : 오르다 F1 화면 개발<br />
+5) 주요실적 : 증권사 최초의 DMA(Direct Market Access) 지원 선물옵션 전용 HTS 개발을 통해 주로 기관과 외국인이 사용하던 DMA 주문 방식을 일반 개인 투자자들에게 제공</td>
+                    </tr>
+                                        
+                    <!-- IT 개발 프로젝트 -->
+                                                                                            
+                                                                                                        <tr>
+                                                                <th width="20" rowspan="3">개발환경</th>
+                                                                <th width="75">OS</th>
+                                <td class="break-word">Windows 7</td>
+                            </tr>
+                                                                                                                                        <tr>
+                                                                <th width="75">언어</th>
+                                <td class="break-word">MFC, XML</td>
+                            </tr>
+                                                                                                                                        <tr>
+                                                                <th width="75">DBMS</th>
+                                <td class="break-word">Oracle</td>
+                            </tr>
+                                                                                                                                                                            <!-- //IT 개발 프로젝트 -->
+                </table>
+            </div>
+                                <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="참여프로젝트" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="20">
+                    <col width="75">
+                    <col>
+                    </colgroup>
+                                                            <tr>
+                        <td width="118" rowspan="5" style="vertical-align:top;">
+                            2012.02 ~ 2012.08<br />(7개월)                        </td>
+                        <th width="95" colspan="2">프로젝트명</th>
+                        <td class="break-word">차세대 프로젝트</td>
+                    </tr>
+                                        <tr>
+                        <th width="95" colspan="2">상세내용</th>
+                        <td class="break-word">1) 소속업체 : 에이치티원<br />
+2) 의뢰업체 : 이트레이드증권<br />
+3) 참여인원 : 1<br />
+4) 담당업무 : 이트레이드증권 웹 사이트 및 WTS 전면 수정<br />
+5) 주요실적 : 차세대 원장시스템 구축을 통한 주문 및 체결 속도 확보, 업무 체계 개선</td>
+                    </tr>
+                                        
+                    <!-- IT 개발 프로젝트 -->
+                                                                                            
+                                                                                                        <tr>
+                                                                <th width="20" rowspan="3">개발환경</th>
+                                                                <th width="75">OS</th>
+                                <td class="break-word">Windows 7</td>
+                            </tr>
+                                                                                                                                        <tr>
+                                                                <th width="75">언어</th>
+                                <td class="break-word">JAVA, JSP, JAVA SCRIPT, FLEX, FLASH, HTML, ACTION SCRIPT</td>
+                            </tr>
+                                                                                                                                        <tr>
+                                                                <th width="75">DBMS</th>
+                                <td class="break-word">Oracle</td>
+                            </tr>
+                                                                                                                                                                            <!-- //IT 개발 프로젝트 -->
+                </table>
+            </div>
+                                <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="참여프로젝트" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="20">
+                    <col width="75">
+                    <col>
+                    </colgroup>
+                                                            <tr>
+                        <td width="118" rowspan="5" style="vertical-align:top;">
+                            2011.10 ~ 2012.02<br />(5개월)                        </td>
+                        <th width="95" colspan="2">프로젝트명</th>
+                        <td class="break-word">이트레이드증권 SM업무</td>
+                    </tr>
+                                        <tr>
+                        <th width="95" colspan="2">상세내용</th>
+                        <td class="break-word">1) 소속업체 : 에이치티원<br />
+2) 의뢰업체 : 이트레이드증권<br />
+3) 참여인원 : 1<br />
+4) 담당업무 : 이트레이드증권 웹 사이트 신규개발/유지보수, WTS 화면 개발/유지보수</td>
+                    </tr>
+                                        
+                    <!-- IT 개발 프로젝트 -->
+                                                                                            
+                                                                                                        <tr>
+                                                                <th width="20" rowspan="3">개발환경</th>
+                                                                <th width="75">OS</th>
+                                <td class="break-word">Windows 7</td>
+                            </tr>
+                                                                                                                                        <tr>
+                                                                <th width="75">언어</th>
+                                <td class="break-word">JAVA, JSP, JAVA SCRIPT, FLEX, FLASH, HTML, ACTION SCRIPT</td>
+                            </tr>
+                                                                                                                                        <tr>
+                                                                <th width="75">DBMS</th>
+                                <td class="break-word">Oracle</td>
+                            </tr>
+                                                                                                                                                                            <!-- //IT 개발 프로젝트 -->
+                </table>
+            </div>
+                        </div>    
+</div>
+<div id="activity_view" class="divide-view-item">
+    <a name="activity_view_anchor"></a>
+    <div class="item-header res-item">
+            <h3 style="position:relative"><span class="item-title">주요활동 및 사회경험</span></h3>
+            </div>
+    <div class="item-contents">
+                            <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="주요활동 및 사회경험" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="95">
+                    <col>
+                    </colgroup>
+                                        <tr>
+                        <th width="118" height="35">활동기간</th>
+                        <th colspan="2">상세활동</th>
+                    </tr>
+                                                            <tr>
+                        <td width="118" rowspan="3" style="vertical-align:top;">
+                            2015.07 ~ 2015.07<br />(1개월)                        </td>
+                        <th width="95">구분</th>
+                        <td>사회활동</td>
+                    </tr>
+                    <tr>
+                        <th width="95">활동기관</th>
+                        <td>강남 Hackers 어학원</td>
+                    </tr>
+                                        <tr>
+                        <th width="95">활동내용</th>
+                        <td class="break-word">TOEFL 및 TOEIC Study Group 팀장 (2개월)<br />
+Study 일정 계획 및 관리</td>
+                    </tr>
+                                    </table>
+            </div>
+                                <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="주요활동 및 사회경험" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="95">
+                    <col>
+                    </colgroup>
+                                                            <tr>
+                        <td width="118" rowspan="3" style="vertical-align:top;">
+                            2010.04 ~ 2011.02<br />(11개월)                        </td>
+                        <th width="95">구분</th>
+                        <td>동아리</td>
+                    </tr>
+                    <tr>
+                        <th width="95">활동기관</th>
+                        <td>부천대학 학과 동아리 바이러스</td>
+                    </tr>
+                                        <tr>
+                        <th width="95">활동내용</th>
+                        <td class="break-word">학과 홈페이지 관리 (11개월)<br />
+후배 멘토링</td>
+                    </tr>
+                                    </table>
+            </div>
+                                <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="주요활동 및 사회경험" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="95">
+                    <col>
+                    </colgroup>
+                                                            <tr>
+                        <td width="118" rowspan="3" style="vertical-align:top;">
+                            2009.06 ~ 2009.12<br />(7개월)                        </td>
+                        <th width="95">구분</th>
+                        <td>아르바이트</td>
+                    </tr>
+                    <tr>
+                        <th width="95">활동기관</th>
+                        <td>경기도 부천시 주경야돈</td>
+                    </tr>
+                                        <tr>
+                        <th width="95">활동내용</th>
+                        <td class="break-word">고깃집 주경야돈 야간 아르바이트 (7개월)<br />
+홀서빙 및 주방보조</td>
+                    </tr>
+                                    </table>
+            </div>
+                        </div>
+</div><div id="abroad_view" class="divide-view-item">
+    <a name="abroad_view_anchor"></a>
+    <div class="item-header res-item">
+        <h3><span class="item-title">해외연수 및 해외경험</span></h3>
+            </div>
+    <div class="item-contents">
+                            <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="해외연수 및 해외경험" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="95">
+                    <col>
+                    </colgroup>
+                                        <tr>
+                        <th width="118" height="35">활동기간</th>
+                        <th colspan="2">상세활동</th>
+                    </tr>
+                                        <tr>
+                        <td width="118" rowspan="4" style="vertical-align:top;">
+                            2014.01 ~ 2014.12<br />(12개월)                        </td>
+                        <th width="95" >국가명</th>
+                        <td>미국</td>
+                    </tr>
+                                        <tr>
+                        <th width="95">기관/단체</th>
+                        <td>Towson University</td>
+                    </tr>
+                                                            <tr>
+                        <th width="95">목적</th>
+                        <td>교환학생</td>
+                    </tr>
+                                                            <tr>
+                        <th width="95">활동내용</th>
+                        <td class="break-word">대학원 수업 참여 (1년)<br />
+MySQL, Swing을 이용한 JAVA 응용프로그램 개발 (3개월)</td>
+                    </tr>
+                                    </table>
+            </div>
+                        </div>
+</div><div id="education_view" class="divide-view-item">
+    <a name="education_view_anchor"></a>
+    <div class="item-header res-item">
+        <h3><span class="item-title">교육이수내역</span></h3>
+            </div>
+    <div class="item-contents">
+                            <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="교육이수내역" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="95">
+                    <col>
+                    </colgroup>
+                                        <tr>
+                        <th width="118" height="35">교육기간</th>
+                        <th colspan="2">상세내용</th>
+                    </tr>
+                                                            <tr>
+                        <td width="118" rowspan="3" style="vertical-align:top;">
+                            2011.06 ~ 2011.08<br />(3개월)                        </td>
+                        <th width="95">교육명</th>
+                        <td>JAVA 프로그램개발 전문가 과정</td>
+                    </tr>
+                    <tr>
+                        <th width="95">교육기관</th>
+                        <td>한국산업인력공단</td>
+                    </tr>
+                                        <tr>
+                        <th width="95">교육내용</th>
+                        <td class="break-word">Object Oriented Programming with Java.<br />
+Servlet and JSP.<br />
+MVC와 Struts Framework 2 & iBATIS Framework.<br />
+UML기반의 CBD 프로젝트 실무.<br />
+기업 맞춤형 실무 프로젝트.</td>
+                    </tr>
+                                    </table>
+            </div>
+                        </div>
+</div><div id="license_view" class="divide-view-item">
+    <a name="license_view_anchor"></a>
+    <div class="item-header res-item">
+        <h3><span class="item-title">자격증/면허증</span></h3>
+            </div>
+    <div class="item-contents">
+        <table class="tbl-view" border="0" cellspacing="0" summary="자격증/면허증" width="100%">
+            <colgroup>
+            <col width="213">
+            <col width="197">
+            <col width="105">
+            <col>
+            </colgroup>
+            <tr>
+                <th height="35">자격증/면허증</th>
+                <th>발행처/발행기관</th>
+                <th>합격구분</th>
+                <th>취득일</th>
+            </tr>
+                        <tr>
+                <td class="center-td">정보처리기사</td>
+                <td class="center-td">한국산업인력공단</td>
+                <td class="center-td">최종합격</td>
+                <td class="center-td">2012.11 </td>
+            </tr>
+                        <tr>
+                <td class="center-td">컴퓨터활용능력2급</td>
+                <td class="center-td">대한상공회의소</td>
+                <td class="center-td">최종합격</td>
+                <td class="center-td">2012.05 </td>
+            </tr>
+                        <tr>
+                <td class="center-td">Oracle Certified Java Programmer(OCJP)</td>
+                <td class="center-td">Oracle</td>
+                <td class="center-td">최종합격</td>
+                <td class="center-td">2011.07 </td>
+            </tr>
+                        <tr>
+                <td class="center-td">1종보통운전면허</td>
+                <td class="center-td">경찰청(운전면허시험관리단)</td>
+                <td class="center-td">최종합격</td>
+                <td class="center-td">2006.07 </td>
+            </tr>
+                    </table>
+    </div>
+</div><div id="language_exam_view" class="divide-view-item">
+    <a name="language_exam_view_anchor"></a>
+    <div class="item-header res-item">
+        <h3><span class="item-title">어학시험</span></h3>
+            </div>
+    <div class="item-contents">    
+        <table class="tbl-view" border="0" cellspacing="0" summary="어학시험" width="100%">
+            <colgroup>
+            <col width="140">
+            <col width="255">
+            <col width="120">
+            <col>
+            </colgroup>
+            <tr>
+                <th height="35">언어</th>
+                <th>어학시험</th>
+                <th>시험점수(등급)</th>
+                <th>취득일</th>
+            </tr>
+                        <tr>
+                <td class="center-td">영어</td>
+                <td class="center-td">TOEIC</td>
+                <td class="center-td">
+                    655점                                                        </td>
+                <td class="center-td">2015.08 </td>
+            </tr>
+                    </table>
+    </div>
+</div><div id="oa_ability_view" class="divide-view-item">
+    <a name="oa_ability_view_anchor"></a>
+    <div class="item-header res-item">
+        <h3><span class="item-title">OA능력</span></h3>
+            </div>
+    <div class="item-contents">
+        <table class="tbl-view" border="0" cellspacing="0" summary="OA능력" width="100%">
+            <colgroup>
+            <col width="161">
+            <col width="161">
+            <col width="161">
+            <col>
+            </colgroup>
+            <tr>
+                <th height="35">문서작성<br /><span class="h-subtext">(한글/MS-Word)</span></th>
+                <th>스프레드시트<br /><span class="h-subtext">(Excel)</span></th>
+                <th>프리젠테이션<br /><span class="h-subtext">(PowerPoint)</span></th>
+                <th>인터넷<br /><span class="h-subtext">(정보검색/outlook)</span></th>
+            </tr>
+            <tr>
+                <td class="center-td">
+                    업무 바로 가능                                    </td>
+                <td class="center-td">기본 sheet작성 가능</td>
+                <td class="center-td">업무 바로 가능</td>
+                <td class="center-td">기본 검색/활용 가능</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="personal_view" class="divide-view-item">
+    <a name="personal_view_anchor"></a>
+    <div class="item-header res-item">
+        <h3><span class="item-title">개인 신상정보</span></h3>
+            </div>
+    <div class="item-contents">
+        <table class="tbl-view" border="0" cellspacing="0" summary="개인 신상정보" width="100%">
+            <colgroup>
+            <col width="100">
+            <col width="221">
+            <col width="90">
+            <col>
+            </colgroup>
+                        <tr>
+                                    <th>결혼여부</th>
+                    <td >미혼</td>
+                                                    <th>취미/특기</th>
+                    <td >
+                        스노우보딩, 펜팔 / 고민상담                    </td>
+                            </tr>
+                                                            <tr>
+                <th>병역대상</th>
+                <td colspan="3" class="break-word">
+                [군필] 2007.03 ~ 2009.05                                    <span class="res-cut"> | </span> 공군                                                    <span class="res-cut"> | </span> 병장                                                    <span class="res-cut"> | </span> 만기제대                                            </tr>
+                    </table>
+    </div>
+</div>
+<div id="family_view" class="divide-view-item">
+    <a name="family_view_anchor"></a>
+    <div class="item-header res-item">
+        <h3><span class="item-title">가족관계</span></h3>
+            </div>
+    <div class="item-contents">
+        <table class="tbl-view" border="0" cellspacing="0" summary="가족관계" width="100%">
+            <colgroup>
+            <col width="75">
+            <col width="75">
+            <col width="75">
+            <col width="95">
+            <col width="75">
+            <col>
+            </colgroup>
+                        <tr>
+                <th height="35">형제관계</th>
+                <td colspan="5">2남 중 2째</td>
+            </tr>
+                                    <tr>
+                <th height="35">관계</th>
+                <th>성명</th>
+                <th>연령</th>
+                <th height="35">현재직업</th>
+                <th>동거여부</th>
+                <th>한줄소개</th>
+            </tr>
+                                    <tr>
+                <td class="center-td">아버지</td>
+                <td class="center-td">강순경</td>
+                <td class="center-td">57세</td>
+                <td class="center-td">요식업</td>
+                <td class="center-td">동거</td>
+                <td class="">성실함과 친절함으로 20년 넘게 요식업을 하고 계신 아버지</td>
+            </tr>
+                                    <tr>
+                <td class="center-td">어머니</td>
+                <td class="center-td">김순애</td>
+                <td class="center-td">56세</td>
+                <td class="center-td">요식업</td>
+                <td class="center-td">동거</td>
+                <td class="">다정다감하시고 언제나 든든한 힘이 되어주시는 어머니</td>
+            </tr>
+                                    <tr>
+                <td class="center-td">형</td>
+                <td class="center-td">강동원</td>
+                <td class="center-td">31세</td>
+                <td class="center-td">무역업</td>
+                <td class="center-td">동거</td>
+                <td class="">중국 유학파 출신의 활발한 성격의 소유자</td>
+            </tr>
+                                </table>
+    </div>
+</div>
+<div id="character_view" class="divide-view-item">
+    <a name="character_view_anchor"></a>
+    <div class="item-header res-item">
+        <h3><span class="item-title">강점/성격</span></h3>
+            </div>
+        <div class="mb10">
+    	<table class="tbl-view" cellpadding="0" cellspacing="0" summary="강점/성격" width="100%">
+    		<colgroup>
+    			<col width="100">
+    			<col width="*">
+    		</colgroup>
+    		    		<tr>
+    			<th width="100">강점</th>
+    			<td>책임감이 강함, 정리정돈을 잘함, 집중력이 뛰어남, 이해력이 우수함, 분석능력이 우수함, 예술적 감각이 탁월함</td>
+    		</tr>
+    		    		    		<tr>
+    			<th>성격</th>
+    			<td>차분함, 신중함, 섬세함, 온화함, 활발함, 침착함</td>
+    		</tr>
+    		    	</table>
+    </div>
+    </div>
+<div id="standard_introduction_view" class="divide-view-item" style="page-break-before: always;">
+    <div class="item-header res-item">
+        <h3><span class="item-title">자기소개서</span></h3>
+    </div>
+    <div class="item-contents">
+                    <table class="tbl-view" border="0" cellspacing="0" summary="자기소개서" width="100%">
+                                                                <tr>
+                    <th height="35"><b>이루고 싶은 인생의 목표</b></th>
+                </tr>
+                <tr>
+                    <td class="career break-word" valign="top" height="100%">
+                        <span id="introduce_contents">
+                            첫째, '항상 변화하는 사람'<font color="#089dee"></font><br />
+밝고 활기 넘치는 곳에서 일하면서 항상 자신의 부족함을 깨닫고 더 나아지기 위해 노력하고자 합니다. 이러한 노력을 회사발전의 원동력으로 삼아 기업맞춤형 인재가 되고 싶습니다.<font color="#279b7b"></font><br />
+<br />
+둘째, '모두에게 존중 받는 사람'<font color="#4bcdeb"></font><br />
+자신의 일과 삶을 사랑하고, 고객과 동료들에게 신뢰를 주고 모범이 되고 싶고, 주변 사람들에게 귀를 기울이며 항상 챙겨주는 사람이 되고 싶습니다.<br />
+<br />
+셋째, '다양한 분야를 경험하는 사람'<font color="#6ffe9b"></font><br />
+현재 위치에 만족하지 않고 내가 하고자 하는 더 많은 일들을 찾아 경험하고 느끼면서 나 자신을 더 도전적이고 열정적인 사람으로 만들고자 합니다.<font color="#c0ffee"></font>                        </span>
+                                            </td>
+                </tr>
+                                                                <tr>
+                    <th height="35"><b>성장과정을 통한 자기소개</b></th>
+                </tr>
+                <tr>
+                    <td class="career break-word" valign="top" height="100%">
+                        <span id="introduce_contents">
+                            <font color="#089dee"></font><font color="#279b7b"></font>저는 책임감 있는 사람입니다. 부모님께서는 28년째 같은 곳에서 중식당을 운영하고 계십니다. 매일 같은 시간에 성실하게 일해오시는 부모님의 모습을 통해 꾸준히 자신이 맡은 자리를 지키는 자세의 중요함을 배웠습니다. 이러한 성장배경 가운데 자연스럽게 책임감 있는 자세를 함양하게 되었고, 이 같은 자세는 어디서 일을 하던지 늘 신뢰받는 사람이 되는데 큰 도움이 되었습니다. IT분야에서 가장 중요하게 생각되는 것은 안정성이라고 생각합니다. 제가 배운 책임감을 가지고 저에게 주어진 시스템 개발 및 유지보수 업무를 안정성 있게 수행하겠습니다.<font color="#4bcdeb"></font><font color="#6ffe9b"></font><font color="#c0ffee"></font>                        </span>
+                                            </td>
+                </tr>
+                                                                <tr>
+                    <th height="35"><b>직무에 대한 강점 및 약점</b></th>
+                </tr>
+                <tr>
+                    <td class="career break-word" valign="top" height="100%">
+                        <span id="introduce_contents">
+                            저는 전산정보처리학 전공을 바탕으로 다양한 프로그램 개발과 학과 홈페이지 관리, 'JAVA 프로그램개발 전문가과정'교육 수료, 프로그램개발 협업 등을 통해서 IT개발에 필요한 기본 직무능력을 갖추고 있습니다.<font color="#089dee"></font><br />
+첫째, 대학에서 전산정보처리학 전공 수업을 통해 IT개발 언어 및 Database에 대한 기본 실무 지식을 쌓았습니다. 단순히 Visual Studio, Eclipse, MySQL 등 IT개발 Tool을 익히는데 그치지 않고, 학과 홈페이지 개발 및 운영, 학생 성적 관리 프로그램 및 모바일 Application 등 여러 프로그램을 개발하며 실력을 쌓아왔습니다.<font color="#279b7b"></font><br />
+둘째, 전문성을 함양하기 위해 이노비즈 청년 취업아카데미를 통해 2개월 동안 'JAVA 프로그램 전문가과정'교육을 끈기 있게 수료하였습니다. 이 교육을 통해 기업의 실무 프로젝트를 간접적으로 경험할 수 있었고, 웹사이트를 개발하는데 더욱 전문적인 개발기술을 배울 수 있었습니다.<font color="#4bcdeb"></font><br />
+셋째, 2년간 증권사의 다양한 프로젝트를 수행하며 협업능력을 키웠습니다. 특히 이트레이드증권의 차세대 시스템 구축을 통한 주문 및 체결 속도 확보, 업무 체계 개선을 통해 프로젝트 관리 방법에 대한 경험과 팀워크의 중요성을 깨달을 수 있었습니다.<br />
+반면 매사에 신중하다 보니 시간관리에 어려움을 겪었습니다. 이러한 어려움을 극복하기 위해 플래너를 작성하여 항상 시간을 관리하는 습관을 길렀습니다. 일을 데드라인보다 먼저 끝내 여유시간을 확보하고 꼼꼼히 검토하는 과정을 반복하여 오류를 최소화 할 수 있었습니다.<font color="#6ffe9b"></font><br />
+이러한 저의 IT에 대한 기본 실무능력과 팀워크, 꼼꼼한 검토과정을 통한 시스템 안정성 확보를 바탕으로 회사의 IT운영시스템이 보다 더 스마트하고 안정적으로 구축, 운영될 수 있도록 IT Specialist로 성장, 기여하겠습니다.<font color="#c0ffee"></font>                        </span>
+                                            </td>
+                </tr>
+                                                                <tr>
+                    <th height="35"><b>업무수행 시 필요역량과 본인의 노력</b></th>
+                </tr>
+                <tr>
+                    <td class="career break-word" valign="top" height="100%">
+                        <span id="introduce_contents">
+                            <font color="#089dee"></font><font color="#279b7b"></font>개발자로서 가장 중요한 점은 전문성을 배양하는 것이라 생각합니다. 세계에서 IT분야는 나날이 중요해 지고 있습니다. 최근 부각되고 있는 보안뿐만 아니라 여러 사회적, 잠재적 문제를 해결하기 위한 정책도 생성되고 개정되고 있으며, 이러한 요구에 빠르게 대응해야 하는 부서가 바로 IT부서라고 생각합니다.<br />
+많은 분들이 쓸만한 개발자가 없다는 이야기를 하십니다. 그만큼 개발 분야에서 전문성을 획득하는 것은 매우 어려운 일이라 판단됩니다. 그래서 저는 지금도 프로그래밍 책을 보면서 꼼꼼하게 코딩 연습을 하고, 대학원을 다니며 부족한 점을 채우기 위해 노력하고 있습니다. 일을 하면서 프로그래밍에 대한 전문 지식을 쌓기 위해 항상 선배님들에게 묻고 또 묻는 자세로, 제 분야에서만큼은 확실하다는 평가를 듣고자 노력했습니다.<br />
+다음으로 일정 관리하는 것이 어렵다는 이야기를 들었습니다. 개발을 하다 보면 예상치 못한 변수가 발생하고, 그럴 때마다 업무가 한꺼번에 밀려들어와 힘들어 하시는 분들을 자주 보았습니다. 그래서 저는 일을 계획할 때, 변수까지 고려한 정확한 일정을 짜면서 업무를 수행합니다. 또한 잦은 철야 근무에도 버틸 수 있도록 꾸준히 체력 관리도 하고 있습니다.<font color="#4bcdeb"></font><font color="#6ffe9b"></font><font color="#c0ffee"></font>                        </span>
+                                            </td>
+                </tr>
+                                                                <tr>
+                    <th height="35"><b>직업선택 시 중요 고려 사항</b></th>
+                </tr>
+                <tr>
+                    <td class="career break-word" valign="top" height="100%">
+                        <span id="introduce_contents">
+                            <font color="#089dee"></font><font color="#279b7b"></font>제가 생각하는 직업관은 2가지 정도로 축약할 수 있습니다.<br />
+첫째로 가장 잘할 수 있는 일을 하는 것입니다. 지금까지 스터디 그룹의 팀장 수행, 차세대 원장시스템 구축을 포함한 증권사의 다양한 프로젝트에서의 프로그램 개발 및 유지보수 경험을 통해서 저의 강점과 자질을 확인할 수 있었고, 저의 이런 장점을 극대화 시킬 수 있는 업종은 IT업종이라 판단하였습니다.<br />
+둘째로 자부심을 가지며 일할 수 있는 곳에서 일하는 것입니다. 저는 무지한 사람으로 비치는 것을 싫어해서 끊임없이 무엇인가를 알고자 하며, 객관적이고 명백한 기준에 의해 결정을 내리고, 상황에 가장 적합한 방법을 찾기 위해 항상 정보를 수집하는 '머리형 타입'의 성격을 가지고 있습니다. 그래서 무엇이든지 열심히 하겠다는 열정적인 자세를 갖추고 있으며, 고객과 동료들에게 신뢰를 주고, 항상 모범이 되고자 합니다. 저의 이런 장점을 극대화 시킬 수 있고 저의 직업관과 비전을 실현할 수 있는 기업에서 기업의 성과창출에 기여하며 기업과 함께 동반 성장하는 인재가 되고 싶습니다.<font color="#4bcdeb"></font><font color="#6ffe9b"></font><font color="#c0ffee"></font>                        </span>
+                                            </td>
+                </tr>
+                                                                <tr>
+                    <th height="35"><b>도전했던 경험</b></th>
+                </tr>
+                <tr>
+                    <td class="career break-word" valign="top" height="100%">
+                        <span id="introduce_contents">
+                            <font color="#089dee"></font><font color="#279b7b"></font>말 보다는 행동으로 보여주는 것을 원칙으로 삼았던 저는 '변화를 두려워하지 않고 도전하는 삶의 자세를 갖자'라는 목표로 끊임없이 무엇인가를 경험하기 위한 도전을 이어왔습니다.<br />
+1년 동안 미국으로 교환학생을 다녀온 적이 있습니다. 영어공부뿐만 아니라 타국에서의 생활을 통해 자립심을 기르고 낯선 환경에 도전하는 적극성을 통해 도전정신을 기르고 싶었기 때문입니다. 친구 한 명 없는 타지에서 낯선 외국인들과 친해지기 위해 그들의 문화와 인사말 등을 미리 익혀두어 친화력 있게 그들을 대했습니다. 그 결과 오랜 시간 걸리지 않고 다양한 나라의 외국인들과 빠르게 친해질 수 있었습니다.<br />
+교환학생을 다녀온 후 TOEIC 시험을 준비하고자 한달 동안 어학원에 다녔습니다. 정규수업 후에 스터디 모임을 하였고 팀장을 선출해야 하는데 모두가 꺼려했습니다. 그래서 책임감을 가지고 자진해서 팀장을 맡았습니다. 제가 팀장으로서 강조했던 부분은 '화목한 분위기'였습니다. 이 부분만큼은 철저하게 하고자 팀원들의 애로사항이 있으면 경청하고, 불만 사항은 최대한 개선하고자 노력했습니다. 이렇게 리더십을 발휘한 결과, 팀원들의 성적이 향상되었고 지금까지도 그들과 좋은 만남을 이어가고 있습니다.<font color="#4bcdeb"></font><font color="#6ffe9b"></font><font color="#c0ffee"></font>                        </span>
+                                            </td>
+                </tr>
+                                                                <tr>
+                    <th height="35"><b>입사 후 포부</b></th>
+                </tr>
+                <tr>
+                    <td class="career break-word" valign="top" height="100%">
+                        <span id="introduce_contents">
+                            <font color="#089dee"></font><font color="#279b7b"></font>제가 가장 잘 할 수 있는 IT분야에 대한 열정과 전문성을 바탕으로 안정성 있는 시스템 개발을 실천하는 전문가로 성장하기 위한 '3단계 목표'가 있습니다.<br />
+입사 초기에는 전체적인 업무 프로세스와 직무에 대한 필수적인 지식들을 습득하고, 맡은 분야를 혼자서 처리할 수 있도록 시스템 개발 및 운영업무에 대해 빠르게 이해할 수 있도록 노력하겠습니다. 그리고 업무와 관련된 알고리즘과 코딩능력을 배양하는데 힘쓰겠습니다. 뿐만 아니라 사내 동호회를 통해 직원들과의 친목과 끈끈한 팀워크를 다지겠습니다.<br />
+입사 후 5년 뒤에는 신입사원과 상사를 이어주는 멘토 역할을 하고 싶습니다. 대학 멘토링 활동을 통해 제가 가진 지식과 경험을 전달하여 성과를 내는 성취감을 느낀 경험이 있습니다. 입사 후에도 업무에 대한 조언을 통해 팀의 업무 효율성을 증대시키고, 부서 내에서 후배 신입사원들의 고충을 들어주고, 회사생활에 도움을 줄 수 있는 따뜻한 선배로서, 상사에게는 듬직한 부하직원으로서 역할을 수행하겠습니다.<br />
+입사 후 10년 뒤에는 한 부서의 리더로서 부서원들의 전문성 개발을 위해 더 많은 교육의 기회를 부여할 것이며, 스스로도 자기계발에 솔선수범하는 모습을 보여 줄 것입니다. 또한 PM으로서 고객들에게 최적의 솔루션과 해결책을 제공해 줄 수 있는 전문성을 갖춘 리더가 되겠습니다.<font color="#4bcdeb"></font><font color="#6ffe9b"></font><font color="#c0ffee"></font>                        </span>
+                                            </td>
+                </tr>
+                                            </table>
+            </div>
+</div>
+            <!-- //저장된 순서대로 항목별 렌더 -->
+            
+            <!-- footer -->
+            <div id="resume_footer">
+                <div class="sign">
+                    위의 모든 내용은 사실과 다름없음을 확인합니다.<br /> 
+                    작성일 :<b> 2016년 09월 27일 (화)</b>
+                     / 작성자 : <b>강동혁</b></div>
+            </div>        
+            <!-- //footer -->
+            
+                    </div>
+    </div>
+        </td></tr></table>
+        <!-- //이력서 본문 -->
+    
+    <!-- 인재정보 뷰일 때 하단에 목록으로 아이콘 -->
+        <!-- //인재정보 뷰일 때 하단에 목록으로 아이콘 -->
+    
+    <!-- 하단 인재검색 서비스 신청 이미지(데이터 매칭으로 인하여 제외) -->
+        <!-- //하단 인재검색 서비스 신청 이미지 -->
+    
+    </body>
+</html>
