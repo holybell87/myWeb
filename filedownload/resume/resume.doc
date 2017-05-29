@@ -1,500 +1,38 @@
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="robots" content="noindex,nofollow">
-<link href="http://www.saraminimage.co.kr/css_new/sub_global.css" rel="stylesheet" type="text/css">
+<link href="http://www.saraminimage.co.kr/cssutf8/sub_global.css" rel="stylesheet" type="text/css">
 <link href="http://www.saraminimage.co.kr/css/ui/reset-fonts.css" rel="stylesheet" type="text/css" media="screen, print">
-<link href="http://www.saraminimage.co.kr/css/resume-20160622.css" rel="stylesheet" type="text/css" media="screen, print">
+<link href="http://www.saraminimage.co.kr/cssutf8/resume-20170106.css" rel="stylesheet" type="text/css" media="screen, print">
 <script type="text/javascript" src="http://www.saraminimage.co.kr/js/libs/prototype-1.6.0.3.js"></script>
 <script type="text/javascript" src="http://www.saraminimage.co.kr/js/libs/pngHack.mini.js"></script>
-<title>ÀÌ·Â¼­ º¸±â</title>
+<title>ì´ë ¥ì„œ ë³´ê¸°</title>
 
 <style type="text/css">
 #content { width:695px;text-align:center; }
 .resume #resume_header { margin-top:20px }
 .resume #resume_title_view { margin-top:5px }
 
-.ly-balloon-yell { position:absolute; z-index:10; margin-top:12px; border:1px solid #bccc7a; background:#fcfdce; text-align:left; padding:8px 9px 6px;font-family:µ¸¿ò,±¼¸²,sans-serif; font-size:11px; color:#444444; line-height:17px; letter-spacing:-1px }
+.ly-balloon-yell { position:absolute; z-index:10; margin-top:12px; border:1px solid #bccc7a; background:#fcfdce; text-align:left; padding:8px 9px 6px;font-family:ë‹ì›€,êµ´ë¦¼,sans-serif; font-size:11px; color:#444444; line-height:17px; letter-spacing:-1px }
 .ly-balloon-yell p { padding:0; margin:0 }
 .ly-balloon-yell .edge-top-short { position:absolute; top:-6px; width:9px; height:6px; background:url(http://www.saraminimage.co.kr/style_guide/2011/wsg/edge_y.gif) no-repeat 0 0; font-size:0 }
     .break-word {-ms-word-break:break-all;word-break:break-all}
 </style>
-<script type="text/javascript">
-/**
- * header ÃÊ±âÈ­
- */
-var pandora = '';
-
-function initHeader() {
-    if ( !$('data_form') || !$('scrap_btn')) {
-        return;
-    }
-    var form     = $('data_form');
-    var mode     = $('mode');
-    var scrapBtn = $('scrap_btn');
-    var mandbBtn = $('mandb_btn');
-    var printBtn = $('print_btn');
-    var pdfBtn   = $('pdf_btn');
-    var emailBtn = $('email_btn');
-    var smsBtn   = $('sms_btn');
-    var editBtn  = $('edit_btn');
-
-    if ( !form.event_resume_auth && mode.value != 'print' ) {
-        printBtn.show();
-    }
-
-    if ( form.edit_icon_fl && form.edit_icon_fl.value == 'y' ) {
-        editBtn.show();
-    }
-    
-    // ½ºÅ©·¦ ¹öÆ°
-    if ( form.scrap_service.value == true ) {
-        scrapBtn.show();
-    }
-
-    if ( form.mem_gb.value == 'c' ) {
-        if ( form.company_cd && form.company_cd.value == 8 ) {
-            return;
-        }
-        // sms ¹ß¼Û ¹öÆ°
-        if (form.talent_service.value == false) {
-            if (form.sms_service.value == true) {
-                smsBtn.show();
-            }
-        }
-
-        if (pandora == 'y') {
-            if (form.talent_service.value == true && form.cell_open.value == false) {
-                mandbBtn.show();
-            }
-        } else {
-            if (form.talent_service.value == true && form.has_talent_service.value == true) {
-                mandbBtn.show();
-            }
-        }
-
-        var serviceText = '';
-        if ( form.mandb_search_cnt ) {
-            serviceText += '&nbsp;¢ºÀÎÀç ¿¬¶ôÃ³º¸±â : ';
-            serviceText += '<font color="#e10b00"><b>';
-            serviceText += form.mandb_search_cnt_text.value
-            serviceText += '</b></font>°Ç';
-        }
-        if(serviceText){
-            //$('mandb_service_text').innerHTML = serviceText;
-            //$('mandb_service_text').show();
-        }
-    }
-
-    // ÀÌ¸ÞÀÏ ¹ß¼Û ¹öÆ°
-    if ( form.email_service.value == true ) {
-        emailBtn.show();
-    }
-}
-
-function hideDisablePrintArea() {
-//    $('resume_header').select('span').invoke('hide');
-    //$$('.mandb-bar').invoke('hide');
-    if ( $('request_mandb_top') ) {
-        $('request_mandb_top').hide();
-    }
-    if ( $('request_mandb_bottom') ) {
-        $('request_mandb_bottom').hide();
-    }
-    /*
-    if ( $('data_form').talent_service.value == true && $('introduce_contents') ) {
-        $('introduce_contents').hide();
-        if ( $('divPng') ) {
-            $('divPng').hide();
-        }
-    }
-    */
-    if ( $('attach_files_view') ) {
-        $('attach_files_view').hide();
-    }
-    
-    if ( $('attach_port_files_view') ) {
-        $('attach_port_files_view').hide();
-    }
-    
-    if ( $('attachment_view') ) {
-        $('attachment_view').hide();
-    }
-}
-
-function showDisablePrintArea() {
-    //$$('.mandb-bar').invoke('show');
-    /*
-    if ( $('data_form').talent_service.value == true && $('introduce_contents') ) {
-        $('introduce_contents').show();
-        if ( $('divPng') ) {
-            $('divPng').show();
-        }
-    }
-    */
-    if ( $('attach_files_view') ) {
-        $('attach_files_view').show();
-    }
-    if ( $('attach_port_files_view') ) {
-        $('attach_port_files_view').show();
-    }
-    if ( $('attachment_view') ) {
-        $('attachment_view').show();
-    }
-}
-
-function hideHeader() {
-    $('resume_header').select('span').invoke('hide');
-}
-
-/**
- * ¼öÁ¤ ·¹ÀÌ¾î ¿­±â
- */
-function showEditResumeLayer(el) {
-    if ( $('template_cd').value == 2 ) {
-        goEditingResume();
-        return;
-    }
-    
-    var pos = $(el).positionedOffset();
-    var topPos  = pos.top + 11;
-    var leftPos = pos.left - 26;
-    $('edit_resume_layer').setStyle({ top : topPos + 'px', left : leftPos + 'px' });
-    $('edit_resume_layer').show();
-
-    setTimeout(function() {
-        $('resume_print_area').onclick = function () {
-            hideEditResumeLayer();
-        };
-    }, 1000);
-}
-
-/**
- * ¼öÁ¤ ·¹ÀÌ¾î ´Ý±â
- */
-function hideEditResumeLayer() {
-    $('edit_resume_layer').hide();
-    $('resume_print_area').onclick = '';
-
-    $('resume_print_area').stopObserving('click');
-}
-
-/**
- * ÀÌ·Â¼­ ¼öÁ¤ ÆäÀÌÁö·Î ÀÌµ¿
- */
-function goEditingResume() {
-    if ( opener && !opener.closed ) {
-        opener.location.href = '/zf_user/member/resume-manage/write?res_idx=' + $('data_form').res_idx.value;
-        self.close();
-    }
-}
-
-/**
- * ÀÚ±â¼Ò°³¼­ ¼öÁ¤ ÆäÀÌÁö·Î ÀÌµ¿
- */
-function goEditingIntroduce() {
-    if ( opener && !opener.closed ) {
-        parent.opener.location.href = '/zf_user/resume/write-resume-contents?write_mode=modify&res_idx=' + $('data_form').res_idx.value;
-        self.close();
-    }
-}
-
-/**
- * ÀÎ¼â
- */
-function printResume() {
-    if ( $('data_form').controller.value == 'mandb' || $('data_form').event_resume_auth ) {
-        printArea();
-    } else {
-        hideDisablePrintArea();
-        window.print();    
-        initHeader();
-        showDisablePrintArea();
-    }
-}
-
-/**
- * ¿µ¿ª ÀÎ¼â
- */
-function printArea() {
-    var url = '/zf_user/popup/areaPrint/printId/resume_print_area';
-	window.open(url, 'printWin', 'width=750, height=600, scrollbars=yes');
-}
-
-/**
- * ÀÎÀçµðºñ »ç¿ë ·¹ÀÌ¾î
- */
-function useConfirmMandb(el, confirmLayerId) {
-    var url = '/zf_user/jobs/talent/use-confirm';
-    var res_idx = $('data_form').res_idx.value;
-    
-	new Ajax.Request(url, {
-	    parameters: {res_idx : res_idx},
-	    onSuccess: function (tr) {
-	    	if (tr.responseJSON) {
-	            var result = tr.responseJSON;
-	            var layerId = '';
-
-	            if ( result.userGroup == 'c' && result.mandb_search_cnt > 0 ) {
-	            	//$('mandb_num').innerHTML = '<b>'+ (result.mandb_search_cnt-1) + '°Ç</b>';
-
-	            	layerId = confirmLayerId;
-	            } else {
-		            layerId = 'service-guide-layer';
-	            }
-
-	            if ( layerId ) {
-    	            elPos = $(el).positionedOffset();
-                	
-                	$(layerId).style.top  = elPos.top - 100;
-                    $(layerId).style.left = 200;
-                    
-                	$(layerId).show();
-	            }
-	        }
-	    },
-	    onComplete: function (tr) {
-	    	switch ( tr.status ) {
-	        case 200 :
-                break;
-	        case 203 :
-                // 203 Non-Authoritative Information
-                alert('·Î±×¾Æ¿ô µÇ¾ú½À´Ï´Ù. ´Ù½Ã ·Î±×ÀÎÇØ ÁÖ½Ê½Ã¿À.');
-                location.reload();
-                break;
-	        case 500 :
-                alert('¼­¹ö¿¡¼­ ¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù. Àá½ÃÈÄ ´Ù½Ã ½ÃµµÇØ ÁÖ½Ê½Ã¿À.');
-                break;
-	        default :
-                if(confirm('ÆäÀÌÁö¿¡ ¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù. ÆäÀÌÁö¸¦ »õ·Î °íÄ¡·Á¸é È®ÀÎÀ» ´­·¯ ÁÖ½Ê½Ã¿À.')) {
-                    document.location.reload();
-                }
-                break;
-            }
-        }
-    });
-}
-
-/**
- * ½ºÅ©·¦
- */
-var ingScrap = false;
-function scrap() {
-    var complete_mode = '';
-    if ( $('data_form').mem_gb.value == 'c' ) {
-        if ( ingScrap ) {
-            return;
-        }
-
-        ingScrap = true;
-        var url = '/zf_user/company/mandb-scrap-ajax';
-        var res_idx = $('data_form').res_idx.value;
-        new Ajax.Request(url, {     
-            parameters: {res_idx : res_idx, type : 'button'},
-            onSuccess: function (tr) {
-                if ( tr.responseJSON ) {
-                    var result = tr.responseJSON;
-
-                    if ( result.success == true ) {
-                        if (pandora == 'y') {
-                            if(!!window.opener && complete_mode!='y') {
-                                if ( !!window.opener.document.getElementById('side_hidden_scrap_talent_count') ) {
-                                    var hiddenCnt = opener.document.getElementById('side_hidden_scrap_talent_count').innerHTML;
-                                    var scrapCnt = parseInt(hiddenCnt);
-                                    scrapCnt++;
-                                    // ¿ìÃø »çÀÌµå ¸Þ´º count Ã³¸®
-                                    opener.document.getElementById('side_hidden_scrap_talent_count').innerHTML = scrapCnt;
-                                    if (scrapCnt > 99) {
-                                        opener.document.getElementById('side_scrap_talent_count').innerHTML = '99+';
-                                    } else {
-                                        opener.document.getElementById('side_scrap_talent_count').innerHTML = scrapCnt;
-                                    }
-                                }
-                            }
-                        } else {
-                            if (document.getElementById('side_hidden_scrap_talent_count')) {
-                                var hiddenCnt = document.getElementById('side_hidden_scrap_talent_count').innerHTML;
-                                var scrapCnt = parseInt(hiddenCnt);
-
-                                scrapCnt++;
-                                // ¿ìÃø »çÀÌµå ¸Þ´º count Ã³¸®
-                                sidewidgetcount(scrapCnt);
-                            }
-                        }
-                    	try { n_trackEvent('mandb_scrap', 'scrap_complete', res_idx, 'view'); } catch(e) {}
-                        alert(result.msg);
-                    } else {
-                	    alert(result.msg);
-                    }
-                }
-                ingScrap = false;
-            }
-            ,onException : function(e) {
-                alert('Åë½ÅÀÇ ¹®Á¦°¡ ¹ß»ýÇÏ¿´½À´Ï´Ù.');
-                ingScrap = false;
-            }
-        });
-    } else {
-        var pageUrl = '';
-        if ( $('data_form').page_url.value ) {
-            pageUrl = $('data_form').page_url.value;
-        }
-        location.href = '/zf_user/login/index/page_url/' + pageUrl;
-    }
-}
-
-function sidewidgetcount(scrapCnt) {
-    $('side_hidden_scrap_talent_count').update(scrapCnt);
-
-    if(scrapCnt > 99) {
-        $('side_scrap_talent_count').update('99+');
-    } else {
-        $('side_scrap_talent_count').update(scrapCnt);
-    }
-}
-
-//SMS ¹ß¼Û Ã¼Å©
-function checkSendingSMS(mem_idx) {
-    new Ajax.Request('/zf_user/memcom/sms/check-sending-sms-validation-ajax', {
-        parameters: {
-            type : 'mandb',
-            idx : mem_idx
-        },
-        asynchronous: false,
-        onSuccess: function(transport) {
-            var json = transport.responseText.evalJSON();
-            
-            if ( json.result == 'empty' ) {
-                alert('¹®ÀÚ¹ß¼ÛÀÌ ºÒ°¡´ÉÇÑ ¹øÈ£ÀÔ´Ï´Ù.');
-                return;
-            }
-
-            sendSMS(json.mem_idx);            
-        },
-
-        onFailure: function() {
-            alert('¼­¹öÀÇ ÀÀ´äÀÌ ¾ø½À´Ï´Ù.\n´Ù½Ã ½ÃµµÇÏ¿© ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.');
-            return false;
-        }
-    });
-}
-
-//SMS ¹ß¼Û
-function sendSMS(mem_idx) {
-    $('smsForm').mode.value = 'group';
-    $('smsForm').mem_idx.value = mem_idx;
-    $('smsForm').type.value = 'mandb';
-
-    var targetWin = 'send_sms';
-    win_sms = window.open('about:blank', targetWin, 'width=527,height=670,scrollbars=no,status=no') ;
-
-    $('smsForm').target = targetWin;
-    $('smsForm').submit();
-    win_sms.focus();
-}
-
-// ÀÌ¸ÞÀÏ ¹ß¼Û
-function sendMail(mem_idx, res_idx) {
-    window.open('/zf_user/company/recruit-apply-sendmail?mode=person&mem_idx='+mem_idx+'&res_idx='+res_idx, 'sendmail', 'width=760, height=710, top=200, left=300, status=yes, resizable=no, scrollbars=yes').focus();
-}
-function sendProtectMail(mem_idx, res_idx, sKey) {
-    var url = '/zf_user/company/recruit-apply-sendmail?mode=person&level=protect&mem_idx='+mem_idx+'&res_idx='+res_idx,
-        sKey = sKey || '';
-
-    if ( sKey ) {
-        url += '&sKey=' + sKey;
-    }
-    
-    window.open(url, 'sendmail', 'width=760, height=710, top=200, left=300, status=yes, resizable=no, scrollbars=yes').focus();
-}
-
-//ÈÞ´ëÆù ¹øÈ£ À¯È¿¼º °Ë»ç
-function checkCellNumber(cell) {
-    var reg_pattern = /([^0-9]|^)01(0|1|6|7|8|9)\s*((\&gt;){0,2}|[\+\-\)\.\/\~\>\_]{0,2})\s*[1-9][0-9]{2,3}\s*((\&gt;){0,2}|[\+\-\)\.\/\~\>\_]{0,2})\s*[0-9]{4}/m;
-    
-    return reg_pattern.test(cell);
-}
-
-//±â¾÷È¸¿ø ·Î±×ÀÎ
-function goCompanyLogin(wwwBaseUrl, wwwBaseUrlTarget) {
-    var wwwBaseUrl       = wwwBaseUrl || '',
-        wwwBaseUrlTarget = wwwBaseUrlTarget || '';
-    
-    if ( !confirm('±â¾÷È¸¿øÀ¸·Î ·Î±×ÀÎ ÈÄ, ÀÌ¿ëÇÏ½Ç ¼ö ÀÖ½À´Ï´Ù.\n\n·Î±×ÀÎ ÇÏ½Ã°Ú½À´Ï±î?') ) {
-        return;
-    }
-
-    //if ( wwwBaseUrlTarget ) {
-    //    window.open(wwwBaseUrl + '/zf_user/auth?url=%2Fzf_user%2Fmember%2Fresume-manage%2Fword-download%3Fres_idx%3D2241220%26template_cd%3D0%26mandb_view%3Dn');
-    //} else {
-        location.href = '/zf_user/auth?url=%2Fzf_user%2Fmember%2Fresume-manage%2Fword-download%3Fres_idx%3D2241220%26template_cd%3D0%26mandb_view%3Dn';
-    //}
-}
-
-function restrictCompany() {
-    alert('³»ºÎ Á¤Ã¥¿¡ µû¶ó, ±Í»ç´Â ÀÎÀçÁ¤º¸ ¿­¶÷ »óÇ°À» ÀÌ¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.\n\n¹®ÀÇ»çÇ×Àº °í°´¼¾ÅÍ(02-2025-4733)·Î Á¢¼öÇØÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.');
-}
-
-// onload event
-Event.observe(window, 'load', function () {
-//    document.getElementById('edit_resume_layer').style.display = 'none';
-    
-    // ÀÎ¼â ¸ðµåÀÏ °æ¿ì
-    if ( $('data_form') ) {
-        var mode = $('data_form').mode.value;
-        
-        if ( mode == 'print' ) {
-            printResume();        
-        } else if ( mode == 'mobile' ) {
-            hideHeader();
-            hideDisablePrintArea();
-        } else if (mode == 'academy') {
-            hideHeader();
-        }else {
-            initHeader();
-        }
-    }
-
-	if ( $('attach_port_files_view') ) {
-    
-		$$('.portfolio_list_more img').invoke('observe','click',function(){
-			if ( $('more_btn').hasClassName('more')) {
-				$('more_btn').src = "http://www.saraminimage.co.kr/person/new/btn_portfolio_closed.png";
-				$('more_btn').addClassName('close');
-				$('more_btn').removeClassName('more');
-	
-				$('attach_port_files_view').select('.port_cell .hideLine').each( function (item) {
-					item.setStyle({'display':'block'});
-			    });
-			    
-			} else {
-				$('more_btn').src = "http://www.saraminimage.co.kr/person/new/btn_portfolio_more.png";
-				$('more_btn').addClassName('more');
-				$('more_btn').removeClassName('close');
-	
-				$('attach_port_files_view').select('.port_cell .hideLine').each( function (item) {
-					item.setStyle({'display':'none'});
-			    });
-			}
-		});
-	}	
-});
-
-</script>
 </head>
 
 <body style="text-align:center">
-    <!-- ¿öµå ´Ù¿î·ÎµåÀÏ °æ¿ì¿¡´Â ³ëÃâ½ÃÅ°Áö ¾Ê´Â´Ù. -->
+    <!-- ì›Œë“œ ë‹¤ìš´ë¡œë“œì¼ ê²½ìš°ì—ëŠ” ë…¸ì¶œì‹œí‚¤ì§€ ì•ŠëŠ”ë‹¤. -->
      
     
-    <!-- »ó´Ü ÀÎÀç°Ë»ö ¼­ºñ½º ½ÅÃ» ÀÌ¹ÌÁö -->
+    <!-- ìƒë‹¨ ì¸ìž¬ê²€ìƒ‰ ì„œë¹„ìŠ¤ ì‹ ì²­ ì´ë¯¸ì§€ -->
     
         
-    <!-- //»ó´Ü ÀÎÀç°Ë»ö ¼­ºñ½º ½ÅÃ» ÀÌ¹ÌÁö -->
+    <!-- //ìƒë‹¨ ì¸ìž¬ê²€ìƒ‰ ì„œë¹„ìŠ¤ ì‹ ì²­ ì´ë¯¸ì§€ -->
     
         
-    <!-- ÀÌ·Â¼­ º»¹® -->
-    <!-- table ³Ö°í ½ÍÁö ¾Ê¾Ò´Âµ¥ ¿öµå ´Ù¿î·Îµå ¶§¹®¿¡ ¾îÂ¿ ¼ö ¾øÀÌ ³ÖÀ½. ¤Ð¤Ð -->
+    <!-- ì´ë ¥ì„œ ë³¸ë¬¸ -->
+    <!-- table ë„£ê³  ì‹¶ì§€ ì•Šì•˜ëŠ”ë° ì›Œë“œ ë‹¤ìš´ë¡œë“œ ë•Œë¬¸ì— ì–´ì©” ìˆ˜ ì—†ì´ ë„£ìŒ. ã… ã…  -->
         <table width="645" border="0" cellspacing="0" cellpadding="0"><tr><td>
         <div id="resume_print_area" class="resume-wrapper">
         <div class="resume">
@@ -506,28 +44,29 @@ Event.observe(window, 'load', function () {
         <div class="sec-btn-left h-subtext" style="padding-top:2px;">
         	<span id="mandb_service_text" style="display:none;font-size:8pt;"></span>
         </div>
-        <div class="sec-btn-right h-subtext" style="font-family:±¼¸²,sans-serif;padding-top:2px;text-align:right">
-                        ÃÖ±Ù¼öÁ¤ÀÏ : 2016³â 09¿ù 27ÀÏ (È­)                    </div>
+        <div class="sec-btn-right h-subtext" style="font-family:êµ´ë¦¼,sans-serif;padding-top:2px;text-align:right">
+                        ìµœê·¼ìˆ˜ì •ì¼ : 2017ë…„ 05ì›” 27ì¼ (í† )                    </div>
     </div>
+   
 </div>            <!-- //header (top icon & description) -->
             
-            <!-- ÀúÀåµÈ ¼ø¼­´ë·Î Ç×¸ñº° ·»´õ -->
-            <!-- ÀÌ·Â¼­ Á¦¸ñ -->
+            <!-- ì €ìž¥ëœ ìˆœì„œëŒ€ë¡œ í•­ëª©ë³„ ë Œë” -->
+            <!-- ì´ë ¥ì„œ ì œëª© -->
 <div id="resume_title_view">
     <a name="title_view_anchor"></a>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr><td class="res-title-view-new " valign="middle">´Ù¾çÇÑ ÇÁ·ÎÁ§Æ® Çù¾÷ °æÇèÀ» ¹ÙÅÁÀ¸·Î SI/SM ¾÷¹« ¹× À¥, ¼Ö·ç¼Ç °³¹ß/¿î¿µ!</td></tr>
+        <tr><td class="res-title-view-new " valign="middle">ê²½ë ¥ 3ë…„ì°¨ ìžë°” ì›¹(Web) ê°œë°œìžìž…ë‹ˆë‹¤.</td></tr>
     </table>
     
 </div>
-<!-- //ÀÌ·Â¼­ Á¦¸ñ -->
+<!-- //ì´ë ¥ì„œ ì œëª© -->
 
-<!-- Áö¿øºÐ¾ß/Èñ¸Á¿¬ºÀ -->
+<!-- ì§€ì›ë¶„ì•¼/í¬ë§ì—°ë´‰ -->
 <div id="resume_apply_dept_view">
     <div class="item-header">
         &nbsp;
             </div>
-    <table class="tbl-view" border="0" cellspacing="0" summary="Áö¿øºÐ¾ß/Èñ¸Á¿¬ºÀ" width="100%" >
+    <table class="tbl-view" border="0" cellspacing="0" summary="ì§€ì›ë¶„ì•¼/í¬ë§ì—°ë´‰" width="100%" >
         <colgroup>
         <col width="118">
         <col width="320">
@@ -535,22 +74,22 @@ Event.observe(window, 'load', function () {
         <col>
         </colgroup>
         <tr>
-            <th>Áö¿øºÐ¾ß</th>
-            <td><label>À¥/JAVA/JSP ÇÁ·Î±×·¥ °³¹ß&nbsp;(°æ·Â/Á¤±ÔÁ÷)</label></td>
-            <th>Èñ¸Á¿¬ºÀ</th>
-            <td>3,000~3,200¸¸¿ø</td>
+            <th>ì§€ì›ë¶„ì•¼</th>
+            <td><label>ì›¹í”„ë¡œê·¸ëž˜ë¨¸ (JAVA)&nbsp;(ê²½ë ¥/ì •ê·œì§)</label></td>
+            <th>í¬ë§ì—°ë´‰</th>
+            <td>3,200~3,400ë§Œì›</td>
         </tr>
     </table>
 </div>
-<!-- //Áö¿øºÐ¾ß/Èñ¸Á¿¬ºÀ -->
+<!-- //ì§€ì›ë¶„ì•¼/í¬ë§ì—°ë´‰ -->
 <div id="basic_view" class="divide-view-item" style="">
     <a name="basic_view_anchor"></a>
         <div class="item-header res-item" style="text-align:left">
-        <h3><span class="item-title">±âº»Á¤º¸</span></h3>
+        <h3><span class="item-title">ê¸°ë³¸ì •ë³´</span></h3>
             </div>
         <div class="item-contents">
         <div id="basic_profile" class="mb10">
-            <table class="tbl-view" border="0" cellspacing="0" summary="±âº»Á¤º¸" width="100%">
+            <table class="tbl-view" border="0" cellspacing="0" summary="ê¸°ë³¸ì •ë³´" width="100%">
                 <colgroup>
                 <col width="118">
                 <col width="70">
@@ -560,38 +99,38 @@ Event.observe(window, 'load', function () {
                 </colgroup>
                 <tr>
                     <td rowspan="5" valign="middle" class="res-photo" style="text-align:center">
-                                                                        <img alt="" src="http://www.saramin.co.kr/zf_user/persons/picture?idx=2571163|24da9eb32dbe11d75508db2173a523dab29766a70b083703c209f77570405559" border="0" width="100" height="140" />                                                                </td>
-                    <th>ÀÌ¸§</th>
+                                                                        <img alt="" src="http://www.saramin.co.kr/zf_user/persons/picture?idx=2571163|6dee5503a61071a0018d2aed4a8491117177a591a66fc0367d66da4637701e5a" border="0" width="100" height="140" />                                                                </td>
+                    <th>ì´ë¦„</th>
                     <td>
-                                                °­µ¿Çõ                                            </td>
-                    <th>³ªÀÌ/¼ºº°</th>
-                    <td>1987³â (30¼¼)<span class="res-cut">&nbsp;|&nbsp;</span>Ñû                    </td>
+                                                ê°•ë™í˜                                            </td>
+                    <th>ë‚˜ì´/ì„±ë³„</th>
+                    <td>1987ë…„ (31ì„¸)<span class="res-cut">&nbsp;|&nbsp;</span>ç”·                    </td>
                 </tr>
                                 <tr>
-                    <th>ÁÖ¼Ò</th>
+                    <th>ì£¼ì†Œ</th>
                     <td colspan="3">
-                                                (421-826) °æ±â ºÎÃµ½Ã ¿ÀÁ¤±¸ ÀÛµ¿ 393-3 2Ãþ                                            </td>
+                                                (403-030) ì¸ì²œ ë¶€í‰êµ¬ ì²­ì²œë™ 300, ì‚¼ìµì•„íŒŒíŠ¸ 1ë™ 502í˜¸                                            </td>
                 </tr>
                 <tr>
-                    <th>ÈÞ´ëÆù</th>
+                    <th>íœ´ëŒ€í°</th>
                     <td colspan="3">
                         <span id="cell_area">
                                                                                 010-4058-9971                                                                            </span>
-                    </td>
+                                            </td>
                                         </tr><tr>
-                                        <th>ÀüÈ­¹øÈ£</th>
+                                        <th>ì „í™”ë²ˆí˜¸</th>
                     <td colspan="3">
-                                                010-4058-9971                                            </td>
+                                        -                                            </td>
                 </tr>
                                 <tr>
-                    <th>ÀÌ¸ÞÀÏ</th>
+                    <th>ì´ë©”ì¼</th>
                     <td colspan="3">
                                                 holybell87@naver.com                                            </td>
                                     </tr>
             </table>
         </div>
         <div id="basic-option" class="mb10">
-                        <table class="tbl-view" border="0" cellspacing="0" summary="ÅëÈ­°¡´É½Ã°£" width="100%">
+                        <table class="tbl-view" border="0" cellspacing="0" summary="í†µí™”ê°€ëŠ¥ì‹œê°„" width="100%">
                 <colgroup>
                 <col width="118">
                 <col width="239">
@@ -599,29 +138,27 @@ Event.observe(window, 'load', function () {
                 <col>
                 </colgroup>
                                                 <tr>
-                                        <th width="118">ÅëÈ­°¡´É½Ã°£</th>
-                    <td width="239" >
-                        16:00 ÀÌÈÄ                    </td>
-                                        <th width="81">Ãâ±Ù°¡´ÉÀÏ</th>
-                    <td>Áï½ÃÃâ±Ù°¡´É                    </td>
+                                        <th width="118">í†µí™”ê°€ëŠ¥ì‹œê°„</th>
+                    <td  colspan="3">
+                        14:00 ì´í›„                    </td>
                                     </tr>
                                             </table>
                     </div>
-            </div>
+                                </div>
     </div>
 <div id="school_view" class="divide-view-item">
     <a name="school_view_anchor"></a>
     <div class="item-header res-item">
         <h3>
-            <span class="item-title">ÇÐ·Â»çÇ×</span> 
+            <span class="item-title">í•™ë ¥ì‚¬í•­</span> 
             <span class="res-cut"> | </span> 
-            <span class="title-person">ÃÖÁ¾ÇÐ·Â - <b>´ëÇÐ¿ø(¼®»ç) Á¹¾÷¿¹Á¤</b></span>
+            <span class="title-person">ìµœì¢…í•™ë ¥ - <b>ëŒ€í•™ì›(ì„ì‚¬) ì¡¸ì—…</b></span>
         </h3>
             </div>
     <div class="item-contents">
         <div id="basic_school_view" class="mb10">
-            <!-- ÃÊµîÇÐ±³, ÁßÇÐ±³, °íÀÔ, ÁßÀÔ °ËÁ¤°í½Ã -->
-                        <table class="tbl-view" border="0" cellspacing="0" summary="ÇÐ·Â»çÇ×" width="100%">
+            <!-- ì´ˆë“±í•™êµ, ì¤‘í•™êµ, ê³ ìž…, ì¤‘ìž… ê²€ì •ê³ ì‹œ -->
+                        <table class="tbl-view" border="0" cellspacing="0" summary="í•™ë ¥ì‚¬í•­" width="100%">
                 <colgroup>
                 <col width="118">
                 <col width="70">
@@ -630,109 +167,109 @@ Event.observe(window, 'load', function () {
                 <col>
                 </colgroup>
                 <tr>
-                    <th height="35">ÀçÇÐ±â°£</th>
-                    <th>±¸ºÐ</th>
-                    <th>ÇÐ±³¸í</th>
-                    <th>Àü°ø</th>
-                    <th>ÇÐÁ¡</th>
+                    <th height="35">ìž¬í•™ê¸°ê°„</th>
+                    <th>êµ¬ë¶„</th>
+                    <th>í•™êµëª…</th>
+                    <th>ì „ê³µ</th>
+                    <th>í•™ì </th>
                 </tr>
                                                                                 <tr>
                         <td >
                             2003.03 ~ 2006.02                        </td>
                         <td  class="center-td">
-                                                        Á¹¾÷                        </td>
+                                                        ì¡¸ì—…                        </td>
                         <td>
-                            µµ´ç°íµîÇÐ±³                                                    </td>
+                            ë„ë‹¹ê³ ë“±í•™êµ                                                    </td>
                         <td style="">
-                            ¹®°ú°è¿­                                                                                </td>
+                            ë¬¸ê³¼ê³„ì—´                                                                                </td>
                         <td class="center-td">-</td>
                     </tr>
                                                                                         <tr>
                         <td rowspan="2">
                             2006.03 ~ 2012.02                        </td>
                         <td rowspan="2" class="center-td">
-                                                        Á¹¾÷                        </td>
+                                                        ì¡¸ì—…                        </td>
                         <td>
-                            ºÎÃµ´ëÇÐ±³                             (°æ±â)                        </td>
+                            ë¶€ì²œëŒ€í•™êµ                             (ê²½ê¸°)                        </td>
                         <td style="">
-                            Àü»êÁ¤º¸Ã³¸®ÇÐ°ú                                                                                </td>
+                            ì „ì‚°ì •ë³´ì²˜ë¦¬í•™ê³¼                                                                                </td>
                         <td class="center-td">3.78/4.5</td>
                     </tr>
                                                 <tr>
                             <td colspan="3">
                                                                                                         
-                                    <h5>[Á¹¾÷ÀÛÇ°]</h5>
+                                    <h5>[ì¡¸ì—…ìž‘í’ˆ]</h5>
                                     Android App R.T.O (Real Time Observation)                                                                                                </td>
                         </tr>
                                                                                         <tr>
                         <td >
                             2012.02 ~ 2012.08                        </td>
                         <td  class="center-td">
-                                                        Á¹¾÷                        </td>
+                                                        ì¡¸ì—…                        </td>
                         <td>
-                            ÇÐÁ¡ÀºÇàÁ¦ ÇÐ»ç                                                    </td>
+                            í•™ì ì€í–‰ì œ í•™ì‚¬ëŒ€í•™êµ                                                    </td>
                         <td style="">
-                            ÄÄÇ»ÅÍ°øÇÐ°ú                                                                                </td>
+                            ì»´í“¨í„°ê³µí•™ê³¼                                                                                </td>
                         <td class="center-td">4.08/4.5</td>
                     </tr>
                                                                                         <tr>
                         <td >
                             2013.03 ~ 2017.02                        </td>
                         <td  class="center-td">
-                                                        Á¹¾÷¿¹Á¤                        </td>
+                                                        ì¡¸ì—…                        </td>
                         <td>
-                            ¼þ½Ç´ëÇÐ±³ Á¤º¸°úÇÐ´ëÇÐ¿ø(¼®»ç)                             (¾ß°£ / ¼­¿ï)                        </td>
+                            ìˆ­ì‹¤ëŒ€í•™êµ ì •ë³´ê³¼í•™ëŒ€í•™ì›(ì„ì‚¬)                             (ì•¼ê°„ / ì„œìš¸)                        </td>
                         <td style="">
-                            Á¤º¸º¸¾ÈÇÐ°ú                                                                                </td>
+                            ì •ë³´ë³´ì•ˆí•™ê³¼                                                                                </td>
                         <td class="center-td">4.27/4.5</td>
                     </tr>
                                                                         </table>
-                        <!-- //°íµîÇÐ±³, ´ëÇÐ±³ -->
+                        <!-- //ê³ ë“±í•™êµ, ëŒ€í•™êµ -->
         </div>
-        <!-- Á÷¾÷Àü¹®ÇÐ±³/ÇÐ¿ø -->
-                <!-- //Á÷¾÷Àü¹®ÇÐ±³/ÇÐ¿ø -->
+        <!-- ì§ì—…ì „ë¬¸í•™êµ/í•™ì› -->
+                <!-- //ì§ì—…ì „ë¬¸í•™êµ/í•™ì› -->
     </div>
-</div><div id="career_view" class="divide-view-item">
+</div>    <div id="career_view" class="divide-view-item">
     <a name="career_view_anchor"></a>
     <div class="item-header res-item">
         <h3>
-            <span class="item-title">°æ·Â»çÇ×</span> 
-            <span class="res-cut"> | </span> 
+                <span class="item-title">ê²½ë ¥ì‚¬í•­</span>
+                <span class="res-cut"> | </span>
             <span class="title-person">
-                ÃÑ °æ·Â - 
-                <b> 2³â</b>
-                            </span>
+                ì´ ê²½ë ¥ - 
+                <b> 3ë…„ 4ê°œì›”</b>
+                                </span>
         </h3>
             </div>
     <div class="item-contents">
-                    <!-- ÇÙ½É¿ª·® -->
-                          <div class="mb10">                
-                <table class="tbl-view" border="0" cellspacing="0" summary="ÇÙ½É¿ª·®" width="100%">
+                    <!-- í•µì‹¬ì—­ëŸ‰ -->
+                                <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="í•µì‹¬ì—­ëŸ‰" width="100%">
                   <colgroup>
                     <col width="118" style="width:118px;">
                     <col>
                   </colgroup>
                   <tbody>
                     <tr>
-                      <th scope="row">ÇÙ½É¿ª·®</th>
+                      <th scope="row">í•µì‹¬ì—­ëŸ‰</th>
                       <td>
-                      						<b>¤ý</b>Áõ±Ç»ç ÇÁ·ÎÁ§Æ® Çù¾÷ °æÇè (2³â), Áõ±Ç»ç SM ¾÷¹« °æÇè (5°³¿ù)<br>
-                      						<b>¤ý</b>JAVA, JSP, MFC µî ÇÁ·Î±×·¡¹Ö °³¹ß °æÇè (3³â)<br>
-                      						<b>¤ý</b>´Ù¾çÇÑ ÇÁ·¹ÀÓ¿öÅ© È°¿ë °¡´É (Bootstrap, Node.js, Mybatis µî)<br>
+                      						<b>ã†</b>ì¦ê¶Œì‚¬ í”„ë¡œì íŠ¸ í˜‘ì—…, ì¦ê¶Œì‚¬ SM ì—…ë¬´ ê²½í—˜ (2ë…„)<br>
+                      						<b>ã†</b>JAVA, JSP, MFC ë“± í”„ë¡œê·¸ëž˜ë° ê°œë°œ ê²½í—˜ (3ë…„)<br>
+                      						<b>ã†</b>ë‹¤ì–‘í•œ ì–¸ì–´ ë° í”„ë ˆìž„ì›Œí¬ í™œìš© ê°€ëŠ¥ (jQuery, Ajax, Bootstrap, Node.js, Mybatis, Spring ë“±)<br>
                                             </td>
                     </tr>
                   </tbody>
-                </table>                
+                        </table>
               </div>
-                        <!-- //ÇÙ½É¿ª·® -->
-        
-            <!-- IT/°³¹ßÁ÷À» Á¦¿ÜÇÑ Á÷Á¾º° °æ·Â -->
-                        <!-- //IT/°³¹ßÁ÷À» Á¦¿ÜÇÑ Á÷Á¾º° °æ·Â -->
-        
-            <!-- ÀÏ¹Ý °æ·Â -->
-                    <div id="career_basic">
+                        <!-- //í•µì‹¬ì—­ëŸ‰ -->
+
+            <!-- IT/ê°œë°œì§ì„ ì œì™¸í•œ ì§ì¢…ë³„ ê²½ë ¥ -->
+                            <!-- //IT/ê°œë°œì§ì„ ì œì™¸í•œ ì§ì¢…ë³„ ê²½ë ¥ -->
+
+            <!-- ì¼ë°˜ ê²½ë ¥ -->
+                        <div id="career_basic">
                                     <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="°æ·Â»çÇ×" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="ê²½ë ¥ì‚¬í•­" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="100">
@@ -741,53 +278,47 @@ Event.observe(window, 'load', function () {
                     <col>
                     </colgroup>
                                         <tr>
-                        <th width="118" height="35">±Ù¹«±â°£</th>
+                        <th width="118" height="35">ê·¼ë¬´ê¸°ê°„</th>
                         <th colspan="4">
-                            »ó¼¼°æ·Â
+                            ìƒì„¸ê²½ë ¥
                                                     </th>
                     </tr>
                                                             <tr>
-                        <td width="118" rowspan="6" style="vertical-align:top;">
-                            2011.10 ~ 2013.09<br />(2³â)                        </td>
-                        <th width="100">È¸»ç¸í</th>
-                        <td colspan="3">¢ß¿¡ÀÌÄ¡Æ¼¿ø</td>
+                        <td width="118" rowspan="5" style="vertical-align:top;">
+                            2016.01 ~ ìž¬ì§ì¤‘<br />                        </td>
+                        <th width="100">íšŒì‚¬ëª…</th>
+                        <td colspan="3">ë©”ì´íŠ¸ì½”í¼ë ˆì´ì…˜</td>
                     </tr>
                                         <tr>
-                        <th width="100">Á÷Á¾</th>
-                        <td colspan="3">IT¡¤ÀÎÅÍ³Ý > ÀÀ¿ëÇÁ·Î±×·¡¸Ó</td>
+                        <th width="100">ì§ì¢…</th>
+                        <td colspan="3">ITÂ·ì¸í„°ë„· > ì›¹í”„ë¡œê·¸ëž˜ë¨¸</td>
                     </tr>
                                                                                 <tr>
-                                                <th width="100">±Ù¹«ºÎ¼­</th>
-                        <td >°³¹ßºÎ</td>
+                                                <th width="100">ê·¼ë¬´ë¶€ì„œ</th>
+                        <td >SD (ì„œë¹„ìŠ¤ ê°œë°œë¶€)</td>
                                                 
-                                                <th width="100">±Ù¹«Áö¿ª</th>
-                        <td >¼­¿ï</td>
+                                                <th width="100">ê·¼ë¬´ì§€ì—­</th>
+                        <td >ì„œìš¸</td>
                                             </tr>
                                         <tr>
-                        <th width="100">Á÷±Þ(Á÷Ã¥)</th>
+                        <th width="100">ì§ê¸‰(ì§ì±…)</th>
                         <td>
-                            »ç¿ø                                                            (ÆÀ¿ø)                        
+                            ì‚¬ì›                                                            (íŒ€ì›)                        
                                                          
-                                <span class="res-cut"> | </span> 2³âÂ÷                                                    </td>
-                        <th width="100">¿¬ºÀ</th>
+                                <span class="res-cut"> | </span> 1ë…„ì°¨                                                    </td>
+                        <th width="100">ì—°ë´‰</th>
                         <td>
-                            2,300¸¸¿ø                                                    </td>
+                            2,800ë§Œì›                                                    </td>
                     </tr>
                                         <tr>
-                        <th width="100">´ã´ç¾÷¹«</th>
+                        <th width="100">ë‹´ë‹¹ì—…ë¬´</th>
                         <td colspan="3" class="break-word">
-                                                      À¥ ÆäÀÌÁö °³¹ß/À¯Áöº¸¼ö<br />
-WTS È­¸é°³¹ß/À¯Áöº¸¼ö<br />
-HTS È­¸é°³¹ß                                                  </td>
+                                                      Client/Admin Web Front-end/Back-end ê°œë°œ                                                  </td>
                     </tr>
-                                                            <tr>
-                        <th width="100">Åð»ç»çÀ¯</th>
-                        <td colspan="3">À¯ÇÐ</td>
-                    </tr>
-                                    </table>
+                                                        </table>
             </div>
                                 <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="°æ·Â»çÇ×" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="ê²½ë ¥ì‚¬í•­" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="100">
@@ -796,57 +327,63 @@ HTS È­¸é°³¹ß                                                  </td>
                     <col>
                     </colgroup>
                                                             <tr>
-                        <td width="118" rowspan="5" style="vertical-align:top;">
-                            2016.01 ~ ÀçÁ÷Áß<br />                        </td>
-                        <th width="100">È¸»ç¸í</th>
-                        <td colspan="3">¾ð´Ï¿Õ</td>
+                        <td width="118" rowspan="6" style="vertical-align:top;">
+                            2011.10 ~ 2013.09<br />(2ë…„)                        </td>
+                        <th width="100">íšŒì‚¬ëª…</th>
+                        <td colspan="3">ì—ì´ì¹˜í‹°ì›</td>
                     </tr>
                                         <tr>
-                        <th width="100">Á÷Á¾</th>
-                        <td colspan="3">IT¡¤ÀÎÅÍ³Ý > À¥ÇÁ·Î±×·¡¸Ó</td>
+                        <th width="100">ì§ì¢…</th>
+                        <td colspan="3">ITÂ·ì¸í„°ë„· > ì‘ìš©í”„ë¡œê·¸ëž˜ë¨¸</td>
                     </tr>
                                                                                 <tr>
-                                                <th width="100">±Ù¹«ºÎ¼­</th>
-                        <td >SD (¼­ºñ½º °³¹ßºÎ)</td>
+                                                <th width="100">ê·¼ë¬´ë¶€ì„œ</th>
+                        <td >ê°œë°œë¶€</td>
                                                 
-                                                <th width="100">±Ù¹«Áö¿ª</th>
-                        <td >¼­¿ï</td>
+                                                <th width="100">ê·¼ë¬´ì§€ì—­</th>
+                        <td >ì„œìš¸</td>
                                             </tr>
                                         <tr>
-                        <th width="100">Á÷±Þ(Á÷Ã¥)</th>
+                        <th width="100">ì§ê¸‰(ì§ì±…)</th>
                         <td>
-                            »ç¿ø                                                            (ÆÀ¿ø)                        
+                            ì‚¬ì›                                                            (íŒ€ì›)                        
                                                          
-                                <span class="res-cut"> | </span> 1³âÂ÷                                                    </td>
-                        <th width="100">¿¬ºÀ</th>
+                                <span class="res-cut"> | </span> 2ë…„ì°¨                                                    </td>
+                        <th width="100">ì—°ë´‰</th>
                         <td>
-                            2,800¸¸¿ø                                                    </td>
+                            2,300ë§Œì›                                                    </td>
                     </tr>
                                         <tr>
-                        <th width="100">´ã´ç¾÷¹«</th>
+                        <th width="100">ë‹´ë‹¹ì—…ë¬´</th>
                         <td colspan="3" class="break-word">
-                                                      ÀÏ¹ÝÀ¯Àú/°ü¸®ÀÚ À¥ ÆäÀÌÁö °³¹ß, À¥ ¼­¹ö ±¸Ãà                                                  </td>
+                                                      Web Front-end ê°œë°œ/ìœ ì§€ë³´ìˆ˜<br />
+WTS í™”ë©´ê°œë°œ/ìœ ì§€ë³´ìˆ˜<br />
+HTS í™”ë©´ê°œë°œ                                                  </td>
                     </tr>
-                                                        </table>
+                                                            <tr>
+                        <th width="100">í‡´ì‚¬ì‚¬ìœ </th>
+                        <td colspan="3">ìœ í•™</td>
+                    </tr>
+                                    </table>
             </div>
                         </div>
-                <!-- //ÀÏ¹Ý °æ·Â -->
-            
-            <!-- IT/°³¹ßÁ÷ °æ·Â -->        
-                        <!-- //IT/°³¹ßÁ÷ °æ·Â -->
-            
-            <!-- °æ·Â±â¼ú¼­ -->
-                        <!-- //°æ·Â±â¼ú¼­ -->
+                <!-- //ì¼ë°˜ ê²½ë ¥ -->
+
+                <!-- IT/ê°œë°œì§ ê²½ë ¥ -->
+                        <!-- //IT/ê°œë°œì§ ê²½ë ¥ -->
+
+            <!-- ê²½ë ¥ê¸°ìˆ ì„œ -->
+                        <!-- //ê²½ë ¥ê¸°ìˆ ì„œ -->
             </div>
-</div>
-<div id="project_view" class="divide-view-item">
+    </div>
+    <div id="project_view" class="divide-view-item">
     <a name="project_view_anchor"></a>
     <div class="item-header res-item">
-        <h3><span class="item-title">Âü¿©ÇÁ·ÎÁ§Æ®</span></h3>
+        <h3><span class="item-title">ì°¸ì—¬í”„ë¡œì íŠ¸</span></h3>
             </div>
     <div class="item-contents">
                             <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="Âü¿©ÇÁ·ÎÁ§Æ®" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="ì°¸ì—¬í”„ë¡œì íŠ¸" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="20">
@@ -854,44 +391,71 @@ HTS È­¸é°³¹ß                                                  </td>
                     <col>
                     </colgroup>
                                         <tr>
-                        <th width="118" height="35">ÇÁ·ÎÁ§Æ® ±â°£</th>
-                        <th colspan="3">»ó¼¼ÇÁ·ÎÁ§Æ®</th>
+                        <th width="118" height="35">í”„ë¡œì íŠ¸ ê¸°ê°„</th>
+                        <th colspan="3">ìƒì„¸í”„ë¡œì íŠ¸</th>
                     </tr>
                                                             <tr>
-                        <td width="118" rowspan="5" style="vertical-align:top;">
-                            2016.05 ~ ÁøÇàÁß<br />                        </td>
-                        <th width="95" colspan="2">ÇÁ·ÎÁ§Æ®¸í</th>
-                        <td class="break-word">´Ù¹æÆäÀÌ °³¹ß</td>
+                        <td width="118" rowspan="2" style="vertical-align:top;">
+                            2017.01 ~ ì§„í–‰ì¤‘<br />                        </td>
+                        <th width="95" colspan="2">í”„ë¡œì íŠ¸ëª…</th>
+                        <td class="break-word">ì§¬ì§¬ì´ (ì‹¬ë¶€ë¦„ ëŒ€í–‰ ì„œë¹„ìŠ¤)</td>
                     </tr>
                                         <tr>
-                        <th width="95" colspan="2">»ó¼¼³»¿ë</th>
-                        <td class="break-word">1) ¼Ò¼Ó¾÷Ã¼ : ¾ð´Ï¿Õ<br />
-2) ÀÇ·Ú¾÷Ã¼ : ´Ù¹æ<br />
-3) Âü¿©ÀÎ¿ø : 7<br />
-4) ´ã´ç¾÷¹« : ´Ù¹æÆäÀÌ À¥ ÇÁ·ÐÆ®/¹é¾Øµå °³¹ß (ÀÏ¹ÝÀ¯Àú/°ü¸®ÀÚ), ¼­¹ö°ü¸®<br />
-5) ÁÖ¿ä½ÇÀû : Ä«µå°áÁ¦¸¦ ÅëÇÑ ¿ù¼¼ ÀÚµ¿°áÁ¦, ¿¬¸» ¿ù¼¼ ¼¼¾×°øÁ¦, ¸Å¿ù Á¤±â °áÁ¦¿¡ µû¸¥ ¸®½ºÅ© °¨¼Ò µî</td>
+                        <th width="95" colspan="2">ìƒì„¸ë‚´ìš©</th>
+                        <td class="break-word">1) ì†Œì†ì—…ì²´ : ë©”ì´íŠ¸ì½”í¼ë ˆì´ì…˜<br />
+2) ì°¸ì—¬ì¸ì› : 6<br />
+3) ë‹´ë‹¹ì—…ë¬´ : ì§¬ì§¬ì´ Web Front-end/Back-end ê°œë°œ (ê³ ê°/ê´€ë¦¬ìž)<br />
+4) ê¸°íƒ€ : svnì„ ì´ìš©í•œ ì†ŒìŠ¤ê´€ë¦¬, Naver Smart Editor 2.8 ì‚¬ìš©, RESTful API ê°œë°œ</td>
                     </tr>
                                         
-                    <!-- IT °³¹ß ÇÁ·ÎÁ§Æ® -->
+                    <!-- IT ê°œë°œ í”„ë¡œì íŠ¸ -->
+                                        <!-- //IT ê°œë°œ í”„ë¡œì íŠ¸ -->
+                </table>
+            </div>
+                                <div class="mb10">
+                <table class="tbl-view" border="0" cellspacing="0" summary="ì°¸ì—¬í”„ë¡œì íŠ¸" width="100%">
+                    <colgroup>
+                    <col width="118">
+                    <col width="20">
+                    <col width="75">
+                    <col>
+                    </colgroup>
+                                                            <tr>
+                        <td width="118" rowspan="5" style="vertical-align:top;">
+                            2016.05 ~ 2016.11<br />(7ê°œì›”)                        </td>
+                        <th width="95" colspan="2">í”„ë¡œì íŠ¸ëª…</th>
+                        <td class="break-word">ë‹¤ë°©íŽ˜ì´ (ì›”ì„¸ ì¹´ë“œê²°ì œ ì„œë¹„ìŠ¤)</td>
+                    </tr>
+                                        <tr>
+                        <th width="95" colspan="2">ìƒì„¸ë‚´ìš©</th>
+                        <td class="break-word">1) ì†Œì†ì—…ì²´ : ë©”ì´íŠ¸ì½”í¼ë ˆì´ì…˜<br />
+2) ì˜ë¢°ì—…ì²´ : ë‹¤ë°©<br />
+3) ì°¸ì—¬ì¸ì› : 7<br />
+4) ë‹´ë‹¹ì—…ë¬´ : ë‹¤ë°©íŽ˜ì´ Web Front-end/Back-end ê°œë°œ (ê³ ê°/ê´€ë¦¬ìž), ì„œë²„ê´€ë¦¬<br />
+5) ì£¼ìš”ì‹¤ì  : ì¹´ë“œê²°ì œë¥¼ í†µí•œ ì›”ì„¸ ìžë™ê²°ì œ, ì—°ë§ ì›”ì„¸ ì„¸ì•¡ê³µì œ, ë§¤ì›” ì •ê¸° ê²°ì œì— ë”°ë¥¸ ë¦¬ìŠ¤í¬ ê°ì†Œ ë“±<br />
+6) ê¸°íƒ€ : githubë¥¼ ì´ìš©í•œ ì†ŒìŠ¤ê´€ë¦¬, Naver Smart Editor 2.8 ì‚¬ìš©, FDK ì—°ë™, SMS/Email ë°œì†¡ê¸°ëŠ¥ êµ¬í˜„, AWS S3 ì‚¬ìš©, Spring Framework ì‚¬ìš©</td>
+                    </tr>
+                                        
+                    <!-- IT ê°œë°œ í”„ë¡œì íŠ¸ -->
                                                                                             
                                                                                                         <tr>
-                                                                <th width="20" rowspan="3">°³¹ßÈ¯°æ</th>
+                                                                <th width="20" rowspan="3">ê°œë°œí™˜ê²½</th>
                                                                 <th width="75">OS</th>
                                 <td class="break-word">Windows 7</td>
                             </tr>
                                                                                                                                         <tr>
-                                                                <th width="75">¾ð¾î</th>
-                                <td class="break-word">JAVA, JSP, JAVA SCRIPT, HTML</td>
+                                                                <th width="75">ì–¸ì–´</th>
+                                <td class="break-word">Java, JSP, Java Script, jQuery, Ajax, Spring</td>
                             </tr>
                                                                                                                                         <tr>
                                                                 <th width="75">DBMS</th>
                                 <td class="break-word">MySQL</td>
                             </tr>
-                                                                                                                                                                            <!-- //IT °³¹ß ÇÁ·ÎÁ§Æ® -->
+                                                                                                                                                                            <!-- //IT ê°œë°œ í”„ë¡œì íŠ¸ -->
                 </table>
             </div>
                                 <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="Âü¿©ÇÁ·ÎÁ§Æ®" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="ì°¸ì—¬í”„ë¡œì íŠ¸" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="20">
@@ -900,38 +464,38 @@ HTS È­¸é°³¹ß                                                  </td>
                     </colgroup>
                                                             <tr>
                         <td width="118" rowspan="5" style="vertical-align:top;">
-                            2013.07 ~ 2013.09<br />(3°³¿ù)                        </td>
-                        <th width="95" colspan="2">ÇÁ·ÎÁ§Æ®¸í</th>
-                        <td class="break-word">À¥ Ç¥ÁØÈ­ Á¤Ã¥¿¡ µû¸¥ ÀÌÆ®·¹ÀÌµåÁõ±Ç È¨ÆäÀÌÁö/IR»çÀÌÆ® ¸®´º¾ó</td>
+                            2013.07 ~ 2013.09<br />(3ê°œì›”)                        </td>
+                        <th width="95" colspan="2">í”„ë¡œì íŠ¸ëª…</th>
+                        <td class="break-word">ì›¹ í‘œì¤€í™” ì •ì±…ì— ë”°ë¥¸ ì´ë² ìŠ¤íŠ¸íˆ¬ìžì¦ê¶Œ í™ˆíŽ˜ì´ì§€/IRì‚¬ì´íŠ¸ ë¦¬ë‰´ì–¼</td>
                     </tr>
                                         <tr>
-                        <th width="95" colspan="2">»ó¼¼³»¿ë</th>
-                        <td class="break-word">1) ¼Ò¼Ó¾÷Ã¼ : ¿¡ÀÌÄ¡Æ¼¿ø<br />
-2) ÀÇ·Ú¾÷Ã¼ : ÀÌÆ®·¹ÀÌµåÁõ±Ç<br />
-3) Âü¿©ÀÎ¿ø : 7<br />
-4) ´ã´ç¾÷¹« : ÀÌÆ®·¹ÀÌµåÁõ±Ç È¨ÆäÀÌÁö/IR»çÀÌÆ® ¼öÁ¤</td>
+                        <th width="95" colspan="2">ìƒì„¸ë‚´ìš©</th>
+                        <td class="break-word">1) ì†Œì†ì—…ì²´ : ì—ì´ì¹˜í‹°ì›<br />
+2) ì˜ë¢°ì—…ì²´ : ì´ë² ìŠ¤íŠ¸íˆ¬ìžì¦ê¶Œ<br />
+3) ì°¸ì—¬ì¸ì› : 7<br />
+4) ë‹´ë‹¹ì—…ë¬´ : ì´ë² ìŠ¤íŠ¸íˆ¬ìžì¦ê¶Œ í™ˆíŽ˜ì´ì§€/IRì‚¬ì´íŠ¸ ìˆ˜ì •</td>
                     </tr>
                                         
-                    <!-- IT °³¹ß ÇÁ·ÎÁ§Æ® -->
+                    <!-- IT ê°œë°œ í”„ë¡œì íŠ¸ -->
                                                                                             
                                                                                                         <tr>
-                                                                <th width="20" rowspan="3">°³¹ßÈ¯°æ</th>
+                                                                <th width="20" rowspan="3">ê°œë°œí™˜ê²½</th>
                                                                 <th width="75">OS</th>
                                 <td class="break-word">Windows 7</td>
                             </tr>
                                                                                                                                         <tr>
-                                                                <th width="75">¾ð¾î</th>
-                                <td class="break-word">JAVA, JSP, JAVA SCRIPT, HTML, XML</td>
+                                                                <th width="75">ì–¸ì–´</th>
+                                <td class="break-word">Java, JSP, Java Script, XML</td>
                             </tr>
                                                                                                                                         <tr>
                                                                 <th width="75">DBMS</th>
                                 <td class="break-word">Oracle</td>
                             </tr>
-                                                                                                                                                                            <!-- //IT °³¹ß ÇÁ·ÎÁ§Æ® -->
+                                                                                                                                                                            <!-- //IT ê°œë°œ í”„ë¡œì íŠ¸ -->
                 </table>
             </div>
                                 <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="Âü¿©ÇÁ·ÎÁ§Æ®" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="ì°¸ì—¬í”„ë¡œì íŠ¸" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="20">
@@ -940,39 +504,39 @@ HTS È­¸é°³¹ß                                                  </td>
                     </colgroup>
                                                             <tr>
                         <td width="118" rowspan="5" style="vertical-align:top;">
-                            2012.11 ~ 2013.05<br />(7°³¿ù)                        </td>
-                        <th width="95" colspan="2">ÇÁ·ÎÁ§Æ®¸í</th>
-                        <td class="break-word">¼±¹°¿É¼Ç Àü¿ë HTS '¿À¸£´Ù F1'</td>
+                            2012.11 ~ 2013.05<br />(7ê°œì›”)                        </td>
+                        <th width="95" colspan="2">í”„ë¡œì íŠ¸ëª…</th>
+                        <td class="break-word">ì„ ë¬¼ì˜µì…˜ ì „ìš© HTS 'ì˜¤ë¥´ë‹¤ F1'</td>
                     </tr>
                                         <tr>
-                        <th width="95" colspan="2">»ó¼¼³»¿ë</th>
-                        <td class="break-word">1) ¼Ò¼Ó¾÷Ã¼ : ¿¡ÀÌÄ¡Æ¼¿ø<br />
-2) ÀÇ·Ú¾÷Ã¼ : LIGÅõÀÚÁõ±Ç<br />
-3) Âü¿©ÀÎ¿ø : 8<br />
-4) ´ã´ç¾÷¹« : ¿À¸£´Ù F1 È­¸é °³¹ß<br />
-5) ÁÖ¿ä½ÇÀû : Áõ±Ç»ç ÃÖÃÊÀÇ DMA(Direct Market Access) Áö¿ø ¼±¹°¿É¼Ç Àü¿ë HTS °³¹ßÀ» ÅëÇØ ÁÖ·Î ±â°ü°ú ¿Ü±¹ÀÎÀÌ »ç¿ëÇÏ´ø DMA ÁÖ¹® ¹æ½ÄÀ» ÀÏ¹Ý °³ÀÎ ÅõÀÚÀÚµé¿¡°Ô Á¦°ø</td>
+                        <th width="95" colspan="2">ìƒì„¸ë‚´ìš©</th>
+                        <td class="break-word">1) ì†Œì†ì—…ì²´ : ì—ì´ì¹˜í‹°ì›<br />
+2) ì˜ë¢°ì—…ì²´ : LIGíˆ¬ìžì¦ê¶Œ<br />
+3) ì°¸ì—¬ì¸ì› : 8<br />
+4) ë‹´ë‹¹ì—…ë¬´ : ì˜¤ë¥´ë‹¤ F1 í™”ë©´ ê°œë°œ<br />
+5) ì£¼ìš”ì‹¤ì  : ì¦ê¶Œì‚¬ ìµœì´ˆì˜ DMA(Direct Market Access) ì§€ì› ì„ ë¬¼ì˜µì…˜ ì „ìš© HTS ê°œë°œì„ í†µí•´ ì£¼ë¡œ ê¸°ê´€ê³¼ ì™¸êµ­ì¸ì´ ì‚¬ìš©í•˜ë˜ DMA ì£¼ë¬¸ ë°©ì‹ì„ ì¼ë°˜ ê°œì¸ íˆ¬ìžìžë“¤ì—ê²Œ ì œê³µ</td>
                     </tr>
                                         
-                    <!-- IT °³¹ß ÇÁ·ÎÁ§Æ® -->
+                    <!-- IT ê°œë°œ í”„ë¡œì íŠ¸ -->
                                                                                             
                                                                                                         <tr>
-                                                                <th width="20" rowspan="3">°³¹ßÈ¯°æ</th>
+                                                                <th width="20" rowspan="3">ê°œë°œí™˜ê²½</th>
                                                                 <th width="75">OS</th>
                                 <td class="break-word">Windows 7</td>
                             </tr>
                                                                                                                                         <tr>
-                                                                <th width="75">¾ð¾î</th>
+                                                                <th width="75">ì–¸ì–´</th>
                                 <td class="break-word">MFC, XML</td>
                             </tr>
                                                                                                                                         <tr>
                                                                 <th width="75">DBMS</th>
                                 <td class="break-word">Oracle</td>
                             </tr>
-                                                                                                                                                                            <!-- //IT °³¹ß ÇÁ·ÎÁ§Æ® -->
+                                                                                                                                                                            <!-- //IT ê°œë°œ í”„ë¡œì íŠ¸ -->
                 </table>
             </div>
                                 <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="Âü¿©ÇÁ·ÎÁ§Æ®" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="ì°¸ì—¬í”„ë¡œì íŠ¸" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="20">
@@ -981,39 +545,39 @@ HTS È­¸é°³¹ß                                                  </td>
                     </colgroup>
                                                             <tr>
                         <td width="118" rowspan="5" style="vertical-align:top;">
-                            2012.02 ~ 2012.08<br />(7°³¿ù)                        </td>
-                        <th width="95" colspan="2">ÇÁ·ÎÁ§Æ®¸í</th>
-                        <td class="break-word">Â÷¼¼´ë ÇÁ·ÎÁ§Æ®</td>
+                            2012.02 ~ 2012.08<br />(7ê°œì›”)                        </td>
+                        <th width="95" colspan="2">í”„ë¡œì íŠ¸ëª…</th>
+                        <td class="break-word">ì°¨ì„¸ëŒ€ í”„ë¡œì íŠ¸</td>
                     </tr>
                                         <tr>
-                        <th width="95" colspan="2">»ó¼¼³»¿ë</th>
-                        <td class="break-word">1) ¼Ò¼Ó¾÷Ã¼ : ¿¡ÀÌÄ¡Æ¼¿ø<br />
-2) ÀÇ·Ú¾÷Ã¼ : ÀÌÆ®·¹ÀÌµåÁõ±Ç<br />
-3) Âü¿©ÀÎ¿ø : 1<br />
-4) ´ã´ç¾÷¹« : ÀÌÆ®·¹ÀÌµåÁõ±Ç À¥ »çÀÌÆ® ¹× WTS Àü¸é ¼öÁ¤<br />
-5) ÁÖ¿ä½ÇÀû : Â÷¼¼´ë ¿øÀå½Ã½ºÅÛ ±¸ÃàÀ» ÅëÇÑ ÁÖ¹® ¹× Ã¼°á ¼Óµµ È®º¸, ¾÷¹« Ã¼°è °³¼±</td>
+                        <th width="95" colspan="2">ìƒì„¸ë‚´ìš©</th>
+                        <td class="break-word">1) ì†Œì†ì—…ì²´ : ì—ì´ì¹˜í‹°ì›<br />
+2) ì˜ë¢°ì—…ì²´ : ì´ë² ìŠ¤íŠ¸íˆ¬ìžì¦ê¶Œ<br />
+3) ì°¸ì—¬ì¸ì› : 1<br />
+4) ë‹´ë‹¹ì—…ë¬´ : ì´ë² ìŠ¤íŠ¸íˆ¬ìžì¦ê¶Œ ì›¹ ì‚¬ì´íŠ¸ ë° WTS ì „ë©´ ìˆ˜ì •<br />
+5) ì£¼ìš”ì‹¤ì  : ì°¨ì„¸ëŒ€ ì›ìž¥ì‹œìŠ¤í…œ êµ¬ì¶•ì„ í†µí•œ ì£¼ë¬¸ ë° ì²´ê²° ì†ë„ í™•ë³´, ì—…ë¬´ ì²´ê³„ ê°œì„ </td>
                     </tr>
                                         
-                    <!-- IT °³¹ß ÇÁ·ÎÁ§Æ® -->
+                    <!-- IT ê°œë°œ í”„ë¡œì íŠ¸ -->
                                                                                             
                                                                                                         <tr>
-                                                                <th width="20" rowspan="3">°³¹ßÈ¯°æ</th>
+                                                                <th width="20" rowspan="3">ê°œë°œí™˜ê²½</th>
                                                                 <th width="75">OS</th>
                                 <td class="break-word">Windows 7</td>
                             </tr>
                                                                                                                                         <tr>
-                                                                <th width="75">¾ð¾î</th>
-                                <td class="break-word">JAVA, JSP, JAVA SCRIPT, FLEX, FLASH, HTML, ACTION SCRIPT</td>
+                                                                <th width="75">ì–¸ì–´</th>
+                                <td class="break-word">Java, JSP, Java Script, FLEX, FLASH, Action Script</td>
                             </tr>
                                                                                                                                         <tr>
                                                                 <th width="75">DBMS</th>
                                 <td class="break-word">Oracle</td>
                             </tr>
-                                                                                                                                                                            <!-- //IT °³¹ß ÇÁ·ÎÁ§Æ® -->
+                                                                                                                                                                            <!-- //IT ê°œë°œ í”„ë¡œì íŠ¸ -->
                 </table>
             </div>
                                 <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="Âü¿©ÇÁ·ÎÁ§Æ®" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="ì°¸ì—¬í”„ë¡œì íŠ¸" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="20">
@@ -1022,34 +586,34 @@ HTS È­¸é°³¹ß                                                  </td>
                     </colgroup>
                                                             <tr>
                         <td width="118" rowspan="5" style="vertical-align:top;">
-                            2011.10 ~ 2012.02<br />(5°³¿ù)                        </td>
-                        <th width="95" colspan="2">ÇÁ·ÎÁ§Æ®¸í</th>
-                        <td class="break-word">ÀÌÆ®·¹ÀÌµåÁõ±Ç SM¾÷¹«</td>
+                            2011.10 ~ 2012.02<br />(5ê°œì›”)                        </td>
+                        <th width="95" colspan="2">í”„ë¡œì íŠ¸ëª…</th>
+                        <td class="break-word">ì´ë² ìŠ¤íŠ¸íˆ¬ìžì¦ê¶Œ SMì—…ë¬´</td>
                     </tr>
                                         <tr>
-                        <th width="95" colspan="2">»ó¼¼³»¿ë</th>
-                        <td class="break-word">1) ¼Ò¼Ó¾÷Ã¼ : ¿¡ÀÌÄ¡Æ¼¿ø<br />
-2) ÀÇ·Ú¾÷Ã¼ : ÀÌÆ®·¹ÀÌµåÁõ±Ç<br />
-3) Âü¿©ÀÎ¿ø : 1<br />
-4) ´ã´ç¾÷¹« : ÀÌÆ®·¹ÀÌµåÁõ±Ç À¥ »çÀÌÆ® ½Å±Ô°³¹ß/À¯Áöº¸¼ö, WTS È­¸é °³¹ß/À¯Áöº¸¼ö</td>
+                        <th width="95" colspan="2">ìƒì„¸ë‚´ìš©</th>
+                        <td class="break-word">1) ì†Œì†ì—…ì²´ : ì—ì´ì¹˜í‹°ì›<br />
+2) ì˜ë¢°ì—…ì²´ : ì´ë² ìŠ¤íŠ¸íˆ¬ìžì¦ê¶Œ<br />
+3) ì°¸ì—¬ì¸ì› : 1<br />
+4) ë‹´ë‹¹ì—…ë¬´ : ì´ë² ìŠ¤íŠ¸íˆ¬ìžì¦ê¶Œ ì›¹ ì‚¬ì´íŠ¸ ì‹ ê·œê°œë°œ/ìœ ì§€ë³´ìˆ˜, WTS í™”ë©´ ê°œë°œ/ìœ ì§€ë³´ìˆ˜</td>
                     </tr>
                                         
-                    <!-- IT °³¹ß ÇÁ·ÎÁ§Æ® -->
+                    <!-- IT ê°œë°œ í”„ë¡œì íŠ¸ -->
                                                                                             
                                                                                                         <tr>
-                                                                <th width="20" rowspan="3">°³¹ßÈ¯°æ</th>
+                                                                <th width="20" rowspan="3">ê°œë°œí™˜ê²½</th>
                                                                 <th width="75">OS</th>
                                 <td class="break-word">Windows 7</td>
                             </tr>
                                                                                                                                         <tr>
-                                                                <th width="75">¾ð¾î</th>
-                                <td class="break-word">JAVA, JSP, JAVA SCRIPT, FLEX, FLASH, HTML, ACTION SCRIPT</td>
+                                                                <th width="75">ì–¸ì–´</th>
+                                <td class="break-word">Java, JSP, Java Script, FLEX, FLASH, Action Script</td>
                             </tr>
                                                                                                                                         <tr>
                                                                 <th width="75">DBMS</th>
                                 <td class="break-word">Oracle</td>
                             </tr>
-                                                                                                                                                                            <!-- //IT °³¹ß ÇÁ·ÎÁ§Æ® -->
+                                                                                                                                                                            <!-- //IT ê°œë°œ í”„ë¡œì íŠ¸ -->
                 </table>
             </div>
                         </div>    
@@ -1057,39 +621,39 @@ HTS È­¸é°³¹ß                                                  </td>
 <div id="activity_view" class="divide-view-item">
     <a name="activity_view_anchor"></a>
     <div class="item-header res-item">
-            <h3 style="position:relative"><span class="item-title">ÁÖ¿äÈ°µ¿ ¹× »çÈ¸°æÇè</span></h3>
+            <h3 style="position:relative"><span class="item-title">ì£¼ìš”í™œë™ ë° ì‚¬íšŒê²½í—˜</span></h3>
             </div>
     <div class="item-contents">
                             <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="ÁÖ¿äÈ°µ¿ ¹× »çÈ¸°æÇè" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="ì£¼ìš”í™œë™ ë° ì‚¬íšŒê²½í—˜" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="95">
                     <col>
                     </colgroup>
                                         <tr>
-                        <th width="118" height="35">È°µ¿±â°£</th>
-                        <th colspan="2">»ó¼¼È°µ¿</th>
+                        <th width="118" height="35">í™œë™ê¸°ê°„</th>
+                        <th colspan="2">ìƒì„¸í™œë™</th>
                     </tr>
                                                             <tr>
                         <td width="118" rowspan="3" style="vertical-align:top;">
-                            2015.07 ~ 2015.07<br />(1°³¿ù)                        </td>
-                        <th width="95">±¸ºÐ</th>
-                        <td>»çÈ¸È°µ¿</td>
+                            2015.07 ~ 2015.07<br />(1ê°œì›”)                        </td>
+                        <th width="95">êµ¬ë¶„</th>
+                        <td>ì‚¬íšŒí™œë™</td>
                     </tr>
                     <tr>
-                        <th width="95">È°µ¿±â°ü</th>
-                        <td>°­³² Hackers ¾îÇÐ¿ø</td>
+                        <th width="95">í™œë™ê¸°ê´€</th>
+                        <td>ê°•ë‚¨ Hackers ì–´í•™ì›</td>
                     </tr>
                                         <tr>
-                        <th width="95">È°µ¿³»¿ë</th>
-                        <td class="break-word">TOEFL ¹× TOEIC Study Group ÆÀÀå (2°³¿ù)<br />
-Study ÀÏÁ¤ °èÈ¹ ¹× °ü¸®</td>
+                        <th width="95">í™œë™ë‚´ìš©</th>
+                        <td class="break-word">TOEFL ë° TOEIC Study Group íŒ€ìž¥ (2ê°œì›”)<br />
+Study ì¼ì • ê³„íš ë° ê´€ë¦¬</td>
                     </tr>
                                     </table>
             </div>
                                 <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="ÁÖ¿äÈ°µ¿ ¹× »çÈ¸°æÇè" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="ì£¼ìš”í™œë™ ë° ì‚¬íšŒê²½í—˜" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="95">
@@ -1097,23 +661,23 @@ Study ÀÏÁ¤ °èÈ¹ ¹× °ü¸®</td>
                     </colgroup>
                                                             <tr>
                         <td width="118" rowspan="3" style="vertical-align:top;">
-                            2010.04 ~ 2011.02<br />(11°³¿ù)                        </td>
-                        <th width="95">±¸ºÐ</th>
-                        <td>µ¿¾Æ¸®</td>
+                            2010.04 ~ 2011.02<br />(11ê°œì›”)                        </td>
+                        <th width="95">êµ¬ë¶„</th>
+                        <td>ë™ì•„ë¦¬</td>
                     </tr>
                     <tr>
-                        <th width="95">È°µ¿±â°ü</th>
-                        <td>ºÎÃµ´ëÇÐ ÇÐ°ú µ¿¾Æ¸® ¹ÙÀÌ·¯½º</td>
+                        <th width="95">í™œë™ê¸°ê´€</th>
+                        <td>ë¶€ì²œëŒ€í•™ í•™ê³¼ ë™ì•„ë¦¬ ë°”ì´ëŸ¬ìŠ¤</td>
                     </tr>
                                         <tr>
-                        <th width="95">È°µ¿³»¿ë</th>
-                        <td class="break-word">ÇÐ°ú È¨ÆäÀÌÁö °ü¸® (11°³¿ù)<br />
-ÈÄ¹è ¸àÅä¸µ</td>
+                        <th width="95">í™œë™ë‚´ìš©</th>
+                        <td class="break-word">í•™ê³¼ í™ˆíŽ˜ì´ì§€ ê´€ë¦¬ (11ê°œì›”)<br />
+í›„ë°° ë©˜í† ë§</td>
                     </tr>
                                     </table>
             </div>
                                 <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="ÁÖ¿äÈ°µ¿ ¹× »çÈ¸°æÇè" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="ì£¼ìš”í™œë™ ë° ì‚¬íšŒê²½í—˜" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="95">
@@ -1121,18 +685,18 @@ Study ÀÏÁ¤ °èÈ¹ ¹× °ü¸®</td>
                     </colgroup>
                                                             <tr>
                         <td width="118" rowspan="3" style="vertical-align:top;">
-                            2009.06 ~ 2009.12<br />(7°³¿ù)                        </td>
-                        <th width="95">±¸ºÐ</th>
-                        <td>¾Æ¸£¹ÙÀÌÆ®</td>
+                            2009.06 ~ 2009.12<br />(7ê°œì›”)                        </td>
+                        <th width="95">êµ¬ë¶„</th>
+                        <td>ì•„ë¥´ë°”ì´íŠ¸</td>
                     </tr>
                     <tr>
-                        <th width="95">È°µ¿±â°ü</th>
-                        <td>°æ±âµµ ºÎÃµ½Ã ÁÖ°æ¾ßµ·</td>
+                        <th width="95">í™œë™ê¸°ê´€</th>
+                        <td>ê²½ê¸°ë„ ë¶€ì²œì‹œ ì£¼ê²½ì•¼ëˆ</td>
                     </tr>
                                         <tr>
-                        <th width="95">È°µ¿³»¿ë</th>
-                        <td class="break-word">°í±êÁý ÁÖ°æ¾ßµ· ¾ß°£ ¾Æ¸£¹ÙÀÌÆ® (7°³¿ù)<br />
-È¦¼­ºù ¹× ÁÖ¹æº¸Á¶</td>
+                        <th width="95">í™œë™ë‚´ìš©</th>
+                        <td class="break-word">ê³ ê¹ƒì§‘ ì£¼ê²½ì•¼ëˆ ì•¼ê°„ ì•„ë¥´ë°”ì´íŠ¸ (7ê°œì›”)<br />
+í™€ì„œë¹™ ë° ì£¼ë°©ë³´ì¡°</td>
                     </tr>
                                     </table>
             </div>
@@ -1140,38 +704,42 @@ Study ÀÏÁ¤ °èÈ¹ ¹× °ü¸®</td>
 </div><div id="abroad_view" class="divide-view-item">
     <a name="abroad_view_anchor"></a>
     <div class="item-header res-item">
-        <h3><span class="item-title">ÇØ¿Ü¿¬¼ö ¹× ÇØ¿Ü°æÇè</span></h3>
+        <h3><span class="item-title">í•´ì™¸ì—°ìˆ˜ ë° í•´ì™¸ê²½í—˜</span></h3>
             </div>
     <div class="item-contents">
                             <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="ÇØ¿Ü¿¬¼ö ¹× ÇØ¿Ü°æÇè" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="í•´ì™¸ì—°ìˆ˜ ë° í•´ì™¸ê²½í—˜" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="95">
                     <col>
                     </colgroup>
                                         <tr>
-                        <th width="118" height="35">È°µ¿±â°£</th>
-                        <th colspan="2">»ó¼¼È°µ¿</th>
+                        <th width="118" height="35">í™œë™ê¸°ê°„</th>
+                        <th colspan="2">ìƒì„¸í™œë™</th>
                     </tr>
                                         <tr>
                         <td width="118" rowspan="4" style="vertical-align:top;">
-                            2014.01 ~ 2014.12<br />(12°³¿ù)                        </td>
-                        <th width="95" >±¹°¡¸í</th>
-                        <td>¹Ì±¹</td>
+                            2014.01 ~ 2014.12<br />(12ê°œì›”)                        </td>
+                        <th width="95" >êµ­ê°€ëª…</th>
+                        <td>ë¯¸êµ­</td>
                     </tr>
                                         <tr>
-                        <th width="95">±â°ü/´ÜÃ¼</th>
+                        <th width="95">ê¸°ê´€/ë‹¨ì²´</th>
                         <td>Towson University</td>
                     </tr>
                                                             <tr>
-                        <th width="95">¸ñÀû</th>
-                        <td>±³È¯ÇÐ»ý</td>
+                        <th width="95">ëª©ì </th>
+                        <td>êµí™˜í•™ìƒ</td>
                     </tr>
                                                             <tr>
-                        <th width="95">È°µ¿³»¿ë</th>
-                        <td class="break-word">´ëÇÐ¿ø ¼ö¾÷ Âü¿© (1³â)<br />
-MySQL, SwingÀ» ÀÌ¿ëÇÑ JAVA ÀÀ¿ëÇÁ·Î±×·¥ °³¹ß (3°³¿ù)</td>
+                        <th width="95">í™œë™ë‚´ìš©</th>
+                        <td class="break-word">ëŒ€í•™ì› ìˆ˜ì—… ì°¸ì—¬ (1ë…„)<br />
+ë¯¸êµ­ ëŒ€í•™ì› êµí™˜í•™ìƒ: ì–´í•™ê³µë¶€ ë° í•´ì™¸ë¬¸í™”ì²´í—˜<br />
+ìˆ˜ê°•ë‚´ì—­:<br />
+1. Data Structures and Algorithm Analysis in Java.<br />
+2. Computer Networks.<br />
+3. Database Management Systems.</td>
                     </tr>
                                     </table>
             </div>
@@ -1179,37 +747,37 @@ MySQL, SwingÀ» ÀÌ¿ëÇÑ JAVA ÀÀ¿ëÇÁ·Î±×·¥ °³¹ß (3°³¿ù)</td>
 </div><div id="education_view" class="divide-view-item">
     <a name="education_view_anchor"></a>
     <div class="item-header res-item">
-        <h3><span class="item-title">±³À°ÀÌ¼ö³»¿ª</span></h3>
+        <h3><span class="item-title">êµìœ¡ì´ìˆ˜ë‚´ì—­</span></h3>
             </div>
     <div class="item-contents">
                             <div class="mb10">
-                <table class="tbl-view" border="0" cellspacing="0" summary="±³À°ÀÌ¼ö³»¿ª" width="100%">
+                <table class="tbl-view" border="0" cellspacing="0" summary="êµìœ¡ì´ìˆ˜ë‚´ì—­" width="100%">
                     <colgroup>
                     <col width="118">
                     <col width="95">
                     <col>
                     </colgroup>
                                         <tr>
-                        <th width="118" height="35">±³À°±â°£</th>
-                        <th colspan="2">»ó¼¼³»¿ë</th>
+                        <th width="118" height="35">êµìœ¡ê¸°ê°„</th>
+                        <th colspan="2">ìƒì„¸ë‚´ìš©</th>
                     </tr>
                                                             <tr>
                         <td width="118" rowspan="3" style="vertical-align:top;">
-                            2011.06 ~ 2011.08<br />(3°³¿ù)                        </td>
-                        <th width="95">±³À°¸í</th>
-                        <td>JAVA ÇÁ·Î±×·¥°³¹ß Àü¹®°¡ °úÁ¤</td>
+                            2011.06 ~ 2011.08<br />(3ê°œì›”)                        </td>
+                        <th width="95">êµìœ¡ëª…</th>
+                        <td>JAVA í”„ë¡œê·¸ëž¨ê°œë°œ ì „ë¬¸ê°€ ê³¼ì •</td>
                     </tr>
                     <tr>
-                        <th width="95">±³À°±â°ü</th>
-                        <td>ÇÑ±¹»ê¾÷ÀÎ·Â°ø´Ü</td>
+                        <th width="95">êµìœ¡ê¸°ê´€</th>
+                        <td>í•œêµ­ì‚°ì—…ì¸ë ¥ê³µë‹¨</td>
                     </tr>
                                         <tr>
-                        <th width="95">±³À°³»¿ë</th>
+                        <th width="95">êµìœ¡ë‚´ìš©</th>
                         <td class="break-word">Object Oriented Programming with Java.<br />
 Servlet and JSP.<br />
-MVC¿Í Struts Framework 2 & iBATIS Framework.<br />
-UML±â¹ÝÀÇ CBD ÇÁ·ÎÁ§Æ® ½Ç¹«.<br />
-±â¾÷ ¸ÂÃãÇü ½Ç¹« ÇÁ·ÎÁ§Æ®.</td>
+MVCì™€ Struts Framework 2 & iBATIS Framework.<br />
+UMLê¸°ë°˜ì˜ CBD í”„ë¡œì íŠ¸ ì‹¤ë¬´.<br />
+ê¸°ì—… ë§žì¶¤í˜• ì‹¤ë¬´ í”„ë¡œì íŠ¸.</td>
                     </tr>
                                     </table>
             </div>
@@ -1217,10 +785,10 @@ UML±â¹ÝÀÇ CBD ÇÁ·ÎÁ§Æ® ½Ç¹«.<br />
 </div><div id="license_view" class="divide-view-item">
     <a name="license_view_anchor"></a>
     <div class="item-header res-item">
-        <h3><span class="item-title">ÀÚ°ÝÁõ/¸éÇãÁõ</span></h3>
+        <h3><span class="item-title">ìžê²©ì¦/ë©´í—ˆì¦</span></h3>
             </div>
     <div class="item-contents">
-        <table class="tbl-view" border="0" cellspacing="0" summary="ÀÚ°ÝÁõ/¸éÇãÁõ" width="100%">
+        <table class="tbl-view" border="0" cellspacing="0" summary="ìžê²©ì¦/ë©´í—ˆì¦" width="100%">
             <colgroup>
             <col width="213">
             <col width="197">
@@ -1228,33 +796,33 @@ UML±â¹ÝÀÇ CBD ÇÁ·ÎÁ§Æ® ½Ç¹«.<br />
             <col>
             </colgroup>
             <tr>
-                <th height="35">ÀÚ°ÝÁõ/¸éÇãÁõ</th>
-                <th>¹ßÇàÃ³/¹ßÇà±â°ü</th>
-                <th>ÇÕ°Ý±¸ºÐ</th>
-                <th>ÃëµæÀÏ</th>
+                <th height="35">ìžê²©ì¦/ë©´í—ˆì¦</th>
+                <th>ë°œí–‰ì²˜/ë°œí–‰ê¸°ê´€</th>
+                <th>í•©ê²©êµ¬ë¶„</th>
+                <th>ì·¨ë“ì¼</th>
             </tr>
                         <tr>
-                <td class="center-td">Á¤º¸Ã³¸®±â»ç</td>
-                <td class="center-td">ÇÑ±¹»ê¾÷ÀÎ·Â°ø´Ü</td>
-                <td class="center-td">ÃÖÁ¾ÇÕ°Ý</td>
+                <td class="center-td">ì •ë³´ì²˜ë¦¬ê¸°ì‚¬</td>
+                <td class="center-td">í•œêµ­ì‚°ì—…ì¸ë ¥ê³µë‹¨</td>
+                <td class="center-td">ìµœì¢…í•©ê²©</td>
                 <td class="center-td">2012.11 </td>
             </tr>
                         <tr>
-                <td class="center-td">ÄÄÇ»ÅÍÈ°¿ë´É·Â2±Þ</td>
-                <td class="center-td">´ëÇÑ»ó°øÈ¸ÀÇ¼Ò</td>
-                <td class="center-td">ÃÖÁ¾ÇÕ°Ý</td>
+                <td class="center-td">ì»´í“¨í„°í™œìš©ëŠ¥ë ¥2ê¸‰</td>
+                <td class="center-td">ëŒ€í•œìƒê³µíšŒì˜ì†Œ</td>
+                <td class="center-td">ìµœì¢…í•©ê²©</td>
                 <td class="center-td">2012.05 </td>
             </tr>
                         <tr>
                 <td class="center-td">Oracle Certified Java Programmer(OCJP)</td>
                 <td class="center-td">Oracle</td>
-                <td class="center-td">ÃÖÁ¾ÇÕ°Ý</td>
+                <td class="center-td">ìµœì¢…í•©ê²©</td>
                 <td class="center-td">2011.07 </td>
             </tr>
                         <tr>
-                <td class="center-td">1Á¾º¸Åë¿îÀü¸éÇã</td>
-                <td class="center-td">°æÂûÃ»(¿îÀü¸éÇã½ÃÇè°ü¸®´Ü)</td>
-                <td class="center-td">ÃÖÁ¾ÇÕ°Ý</td>
+                <td class="center-td">1ì¢…ë³´í†µìš´ì „ë©´í—ˆ</td>
+                <td class="center-td">ê²½ì°°ì²­(ìš´ì „ë©´í—ˆì‹œí—˜ê´€ë¦¬ë‹¨)</td>
+                <td class="center-td">ìµœì¢…í•©ê²©</td>
                 <td class="center-td">2006.07 </td>
             </tr>
                     </table>
@@ -1262,10 +830,10 @@ UML±â¹ÝÀÇ CBD ÇÁ·ÎÁ§Æ® ½Ç¹«.<br />
 </div><div id="language_exam_view" class="divide-view-item">
     <a name="language_exam_view_anchor"></a>
     <div class="item-header res-item">
-        <h3><span class="item-title">¾îÇÐ½ÃÇè</span></h3>
+        <h3><span class="item-title">ì–´í•™ì‹œí—˜</span></h3>
             </div>
     <div class="item-contents">    
-        <table class="tbl-view" border="0" cellspacing="0" summary="¾îÇÐ½ÃÇè" width="100%">
+        <table class="tbl-view" border="0" cellspacing="0" summary="ì–´í•™ì‹œí—˜" width="100%">
             <colgroup>
             <col width="140">
             <col width="255">
@@ -1273,16 +841,16 @@ UML±â¹ÝÀÇ CBD ÇÁ·ÎÁ§Æ® ½Ç¹«.<br />
             <col>
             </colgroup>
             <tr>
-                <th height="35">¾ð¾î</th>
-                <th>¾îÇÐ½ÃÇè</th>
-                <th>½ÃÇèÁ¡¼ö(µî±Þ)</th>
-                <th>ÃëµæÀÏ</th>
+                <th height="35">ì–¸ì–´</th>
+                <th>ì–´í•™ì‹œí—˜</th>
+                <th>ì‹œí—˜ì ìˆ˜(ë“±ê¸‰)</th>
+                <th>ì·¨ë“ì¼</th>
             </tr>
                         <tr>
-                <td class="center-td">¿µ¾î</td>
+                <td class="center-td">ì˜ì–´</td>
                 <td class="center-td">TOEIC</td>
                 <td class="center-td">
-                    655Á¡                                                        </td>
+                    655ì                                                         </td>
                 <td class="center-td">2015.08 </td>
             </tr>
                     </table>
@@ -1290,10 +858,10 @@ UML±â¹ÝÀÇ CBD ÇÁ·ÎÁ§Æ® ½Ç¹«.<br />
 </div><div id="oa_ability_view" class="divide-view-item">
     <a name="oa_ability_view_anchor"></a>
     <div class="item-header res-item">
-        <h3><span class="item-title">OA´É·Â</span></h3>
+        <h3><span class="item-title">OAëŠ¥ë ¥</span></h3>
             </div>
     <div class="item-contents">
-        <table class="tbl-view" border="0" cellspacing="0" summary="OA´É·Â" width="100%">
+        <table class="tbl-view" border="0" cellspacing="0" summary="OAëŠ¥ë ¥" width="100%">
             <colgroup>
             <col width="161">
             <col width="161">
@@ -1301,17 +869,17 @@ UML±â¹ÝÀÇ CBD ÇÁ·ÎÁ§Æ® ½Ç¹«.<br />
             <col>
             </colgroup>
             <tr>
-                <th height="35">¹®¼­ÀÛ¼º<br /><span class="h-subtext">(ÇÑ±Û/MS-Word)</span></th>
-                <th>½ºÇÁ·¹µå½ÃÆ®<br /><span class="h-subtext">(Excel)</span></th>
-                <th>ÇÁ¸®Á¨Å×ÀÌ¼Ç<br /><span class="h-subtext">(PowerPoint)</span></th>
-                <th>ÀÎÅÍ³Ý<br /><span class="h-subtext">(Á¤º¸°Ë»ö/outlook)</span></th>
+                <th height="35">ë¬¸ì„œìž‘ì„±<br /><span class="h-subtext">(í•œê¸€/MS-Word)</span></th>
+                <th>ìŠ¤í”„ë ˆë“œì‹œíŠ¸<br /><span class="h-subtext">(Excel)</span></th>
+                <th>í”„ë¦¬ì  í…Œì´ì…˜<br /><span class="h-subtext">(PowerPoint)</span></th>
+                <th>ì¸í„°ë„·<br /><span class="h-subtext">(ì •ë³´ê²€ìƒ‰/outlook)</span></th>
             </tr>
             <tr>
                 <td class="center-td">
-                    ¾÷¹« ¹Ù·Î °¡´É                                    </td>
-                <td class="center-td">±âº» sheetÀÛ¼º °¡´É</td>
-                <td class="center-td">¾÷¹« ¹Ù·Î °¡´É</td>
-                <td class="center-td">±âº» °Ë»ö/È°¿ë °¡´É</td>
+                    ì—…ë¬´ ë°”ë¡œ ê°€ëŠ¥                                    </td>
+                <td class="center-td">ê¸°ë³¸ sheetìž‘ì„± ê°€ëŠ¥</td>
+                <td class="center-td">ì—…ë¬´ ë°”ë¡œ ê°€ëŠ¥</td>
+                <td class="center-td">ê¸°ë³¸ ê²€ìƒ‰/í™œìš© ê°€ëŠ¥</td>
             </tr>
         </table>
     </div>
@@ -1319,10 +887,10 @@ UML±â¹ÝÀÇ CBD ÇÁ·ÎÁ§Æ® ½Ç¹«.<br />
 <div id="personal_view" class="divide-view-item">
     <a name="personal_view_anchor"></a>
     <div class="item-header res-item">
-        <h3><span class="item-title">°³ÀÎ ½Å»óÁ¤º¸</span></h3>
+        <h3><span class="item-title">ê°œì¸ ì‹ ìƒì •ë³´</span></h3>
             </div>
     <div class="item-contents">
-        <table class="tbl-view" border="0" cellspacing="0" summary="°³ÀÎ ½Å»óÁ¤º¸" width="100%">
+        <table class="tbl-view" border="0" cellspacing="0" summary="ê°œì¸ ì‹ ìƒì •ë³´" width="100%">
             <colgroup>
             <col width="100">
             <col width="221">
@@ -1330,26 +898,26 @@ UML±â¹ÝÀÇ CBD ÇÁ·ÎÁ§Æ® ½Ç¹«.<br />
             <col>
             </colgroup>
                         <tr>
-                                    <th>°áÈ¥¿©ºÎ</th>
-                    <td >¹ÌÈ¥</td>
-                                                    <th>Ãë¹Ì/Æ¯±â</th>
+                                    <th>ê²°í˜¼ì—¬ë¶€</th>
+                    <td >ê¸°í˜¼</td>
+                                                    <th>ì·¨ë¯¸/íŠ¹ê¸°</th>
                     <td >
-                        ½º³ë¿ìº¸µù, ÆæÆÈ / °í¹Î»ó´ã                    </td>
+                        ìŠ¤ë…¸ìš°ë³´ë”©, í—¬ìŠ¤ / ê³ ë¯¼ìƒë‹´                    </td>
                             </tr>
                                                             <tr>
-                <th>º´¿ª´ë»ó</th>
+                <th>ë³‘ì—­ëŒ€ìƒ</th>
                 <td colspan="3" class="break-word">
-                [±ºÇÊ] 2007.03 ~ 2009.05                                    <span class="res-cut"> | </span> °ø±º                                                    <span class="res-cut"> | </span> º´Àå                                                    <span class="res-cut"> | </span> ¸¸±âÁ¦´ë                                            </tr>
+                [êµ°í•„] 2007.03 ~ 2009.05                                    <span class="res-cut"> | </span> ê³µêµ°                                                    <span class="res-cut"> | </span> ë³‘ìž¥                                                    <span class="res-cut"> | </span> ë§Œê¸°ì œëŒ€                                            </tr>
                     </table>
     </div>
 </div>
 <div id="family_view" class="divide-view-item">
     <a name="family_view_anchor"></a>
     <div class="item-header res-item">
-        <h3><span class="item-title">°¡Á·°ü°è</span></h3>
+        <h3><span class="item-title">ê°€ì¡±ê´€ê³„</span></h3>
             </div>
     <div class="item-contents">
-        <table class="tbl-view" border="0" cellspacing="0" summary="°¡Á·°ü°è" width="100%">
+        <table class="tbl-view" border="0" cellspacing="0" summary="ê°€ì¡±ê´€ê³„" width="100%">
             <colgroup>
             <col width="75">
             <col width="75">
@@ -1359,40 +927,40 @@ UML±â¹ÝÀÇ CBD ÇÁ·ÎÁ§Æ® ½Ç¹«.<br />
             <col>
             </colgroup>
                         <tr>
-                <th height="35">ÇüÁ¦°ü°è</th>
-                <td colspan="5">2³² Áß 2Â°</td>
+                <th height="35">í˜•ì œê´€ê³„</th>
+                <td colspan="5">2ë‚¨ ì¤‘ 2ì§¸</td>
             </tr>
                                     <tr>
-                <th height="35">°ü°è</th>
-                <th>¼º¸í</th>
-                <th>¿¬·É</th>
-                <th height="35">ÇöÀçÁ÷¾÷</th>
-                <th>µ¿°Å¿©ºÎ</th>
-                <th>ÇÑÁÙ¼Ò°³</th>
+                <th height="35">ê´€ê³„</th>
+                <th>ì„±ëª…</th>
+                <th>ì—°ë ¹</th>
+                <th height="35">í˜„ìž¬ì§ì—…</th>
+                <th>ë™ê±°ì—¬ë¶€</th>
+                <th>í•œì¤„ì†Œê°œ</th>
             </tr>
                                     <tr>
-                <td class="center-td">¾Æ¹öÁö</td>
-                <td class="center-td">°­¼ø°æ</td>
-                <td class="center-td">57¼¼</td>
-                <td class="center-td">¿ä½Ä¾÷</td>
-                <td class="center-td">µ¿°Å</td>
-                <td class="">¼º½ÇÇÔ°ú Ä£ÀýÇÔÀ¸·Î 20³â ³Ñ°Ô ¿ä½Ä¾÷À» ÇÏ°í °è½Å ¾Æ¹öÁö</td>
+                <td class="center-td">ì•„ë²„ì§€</td>
+                <td class="center-td">ê°•ìˆœê²½</td>
+                <td class="center-td">58ì„¸</td>
+                <td class="center-td">ìš”ì‹ì—…</td>
+                <td class="center-td">ë™ê±°</td>
+                <td class="">ì„±ì‹¤í•¨ê³¼ ì¹œì ˆí•¨ìœ¼ë¡œ 20ë…„ ë„˜ê²Œ ìš”ì‹ì—…ì„ í•˜ê³  ê³„ì‹  ì•„ë²„ì§€</td>
             </tr>
                                     <tr>
-                <td class="center-td">¾î¸Ó´Ï</td>
-                <td class="center-td">±è¼ø¾Ö</td>
-                <td class="center-td">56¼¼</td>
-                <td class="center-td">¿ä½Ä¾÷</td>
-                <td class="center-td">µ¿°Å</td>
-                <td class="">´ÙÁ¤´Ù°¨ÇÏ½Ã°í ¾ðÁ¦³ª µçµçÇÑ ÈûÀÌ µÇ¾îÁÖ½Ã´Â ¾î¸Ó´Ï</td>
+                <td class="center-td">ì–´ë¨¸ë‹ˆ</td>
+                <td class="center-td">ê¹€ìˆœì• </td>
+                <td class="center-td">57ì„¸</td>
+                <td class="center-td">ìš”ì‹ì—…</td>
+                <td class="center-td">ë™ê±°</td>
+                <td class="">ë‹¤ì •ë‹¤ê°í•˜ì‹œê³  ì–¸ì œë‚˜ ë“ ë“ í•œ íž˜ì´ ë˜ì–´ì£¼ì‹œëŠ” ì–´ë¨¸ë‹ˆ</td>
             </tr>
                                     <tr>
-                <td class="center-td">Çü</td>
-                <td class="center-td">°­µ¿¿ø</td>
-                <td class="center-td">31¼¼</td>
-                <td class="center-td">¹«¿ª¾÷</td>
-                <td class="center-td">µ¿°Å</td>
-                <td class="">Áß±¹ À¯ÇÐÆÄ Ãâ½ÅÀÇ È°¹ßÇÑ ¼º°ÝÀÇ ¼ÒÀ¯ÀÚ</td>
+                <td class="center-td">í˜•</td>
+                <td class="center-td">ê°•ë™ì›</td>
+                <td class="center-td">32ì„¸</td>
+                <td class="center-td">ë¬´ì—­ì—…</td>
+                <td class="center-td">ë™ê±°</td>
+                <td class="">ì¤‘êµ­ ìœ í•™íŒŒ ì¶œì‹ ì˜ í™œë°œí•œ ì„±ê²©ì˜ ì†Œìœ ìž</td>
             </tr>
                                 </table>
     </div>
@@ -1400,139 +968,166 @@ UML±â¹ÝÀÇ CBD ÇÁ·ÎÁ§Æ® ½Ç¹«.<br />
 <div id="character_view" class="divide-view-item">
     <a name="character_view_anchor"></a>
     <div class="item-header res-item">
-        <h3><span class="item-title">°­Á¡/¼º°Ý</span></h3>
+        <h3><span class="item-title">ê°•ì /ì„±ê²©</span></h3>
             </div>
         <div class="mb10">
-    	<table class="tbl-view" cellpadding="0" cellspacing="0" summary="°­Á¡/¼º°Ý" width="100%">
+    	<table class="tbl-view" cellpadding="0" cellspacing="0" summary="ê°•ì /ì„±ê²©" width="100%">
     		<colgroup>
     			<col width="100">
     			<col width="*">
     		</colgroup>
     		    		<tr>
-    			<th width="100">°­Á¡</th>
-    			<td>Ã¥ÀÓ°¨ÀÌ °­ÇÔ, Á¤¸®Á¤µ·À» ÀßÇÔ, ÁýÁß·ÂÀÌ ¶Ù¾î³², ÀÌÇØ·ÂÀÌ ¿ì¼öÇÔ, ºÐ¼®´É·ÂÀÌ ¿ì¼öÇÔ, ¿¹¼úÀû °¨°¢ÀÌ Å¹¿ùÇÔ</td>
+    			<th width="100">ê°•ì </th>
+    			<td>ì±…ìž„ê°ì´ ê°•í•¨, ì •ë¦¬ì •ëˆì„ ìž˜í•¨, ì§‘ì¤‘ë ¥ì´ ë›°ì–´ë‚¨, ì´í•´ë ¥ì´ ìš°ìˆ˜í•¨, ë¶„ì„ëŠ¥ë ¥ì´ ìš°ìˆ˜í•¨, ì˜ˆìˆ ì  ê°ê°ì´ íƒì›”í•¨</td>
     		</tr>
     		    		    		<tr>
-    			<th>¼º°Ý</th>
-    			<td>Â÷ºÐÇÔ, ½ÅÁßÇÔ, ¼¶¼¼ÇÔ, ¿ÂÈ­ÇÔ, È°¹ßÇÔ, Ä§ÂøÇÔ</td>
+    			<th>ì„±ê²©</th>
+    			<td>ì°¨ë¶„í•¨, ì‹ ì¤‘í•¨, ì„¬ì„¸í•¨, ì˜¨í™”í•¨, í™œë°œí•¨, ì¹¨ì°©í•¨</td>
     		</tr>
     		    	</table>
     </div>
     </div>
 <div id="standard_introduction_view" class="divide-view-item" style="page-break-before: always;">
     <div class="item-header res-item">
-        <h3><span class="item-title">ÀÚ±â¼Ò°³¼­</span></h3>
+        <h3><span class="item-title">ìžê¸°ì†Œê°œì„œ</span></h3>
     </div>
     <div class="item-contents">
-                    <table class="tbl-view" border="0" cellspacing="0" summary="ÀÚ±â¼Ò°³¼­" width="100%">
+                    <table class="tbl-view" border="0" cellspacing="0" summary="ìžê¸°ì†Œê°œì„œ" width="100%">
                                                                 <tr>
-                    <th height="35"><b>ÀÌ·ç°í ½ÍÀº ÀÎ»ýÀÇ ¸ñÇ¥</b></th>
+                    <th height="35"><b>ì´ë£¨ê³  ì‹¶ì€ ì¸ìƒì˜ ëª©í‘œ</b></th>
                 </tr>
                 <tr>
                     <td class="career break-word" valign="top" height="100%">
                         <span id="introduce_contents">
-                            Ã¹Â°, 'Ç×»ó º¯È­ÇÏ´Â »ç¶÷'<font color="#089dee"></font><br />
-¹à°í È°±â ³ÑÄ¡´Â °÷¿¡¼­ ÀÏÇÏ¸é¼­ Ç×»ó ÀÚ½ÅÀÇ ºÎÁ·ÇÔÀ» ±ú´Ý°í ´õ ³ª¾ÆÁö±â À§ÇØ ³ë·ÂÇÏ°íÀÚ ÇÕ´Ï´Ù. ÀÌ·¯ÇÑ ³ë·ÂÀ» È¸»ç¹ßÀüÀÇ ¿øµ¿·ÂÀ¸·Î »ï¾Æ ±â¾÷¸ÂÃãÇü ÀÎÀç°¡ µÇ°í ½Í½À´Ï´Ù.<font color="#279b7b"></font><br />
+                            <font color="#08dc9a"></font><font color="#2b998d"></font>ì²«ì§¸, 'í•­ìƒ ë³€í™”í•˜ëŠ” ì‚¬ëžŒ'<br />
+ë°ê³  í™œê¸° ë„˜ì¹˜ëŠ” ê³³ì—ì„œ ì¼í•˜ë©´ì„œ í•­ìƒ ìžì‹ ì˜ ë¶€ì¡±í•¨ì„ ê¹¨ë‹«ê³  ë” ë‚˜ì•„ì§€ê¸° ìœ„í•´ ë…¸ë ¥í•˜ê³ ìž í•©ë‹ˆë‹¤. ì´ëŸ¬í•œ ë…¸ë ¥ì„ íšŒì‚¬ë°œì „ì˜ ì›ë™ë ¥ìœ¼ë¡œ ì‚¼ì•„ ê¸°ì—…ë§žì¶¤í˜• ì¸ìž¬ê°€ ë˜ê³  ì‹¶ìŠµë‹ˆë‹¤.<br />
 <br />
-µÑÂ°, '¸ðµÎ¿¡°Ô Á¸Áß ¹Þ´Â »ç¶÷'<font color="#4bcdeb"></font><br />
-ÀÚ½ÅÀÇ ÀÏ°ú »îÀ» »ç¶ûÇÏ°í, °í°´°ú µ¿·áµé¿¡°Ô ½Å·Ú¸¦ ÁÖ°í ¸ð¹üÀÌ µÇ°í ½Í°í, ÁÖº¯ »ç¶÷µé¿¡°Ô ±Í¸¦ ±â¿ïÀÌ¸ç Ç×»ó Ã¬°ÜÁÖ´Â »ç¶÷ÀÌ µÇ°í ½Í½À´Ï´Ù.<br />
+ë‘˜ì§¸, 'ëª¨ë‘ì—ê²Œ ì¡´ì¤‘ ë°›ëŠ” ì‚¬ëžŒ'<br />
+ìžì‹ ì˜ ì¼ê³¼ ì‚¶ì„ ì‚¬ëž‘í•˜ê³ , ê³ ê°ê³¼ ë™ë£Œë“¤ì—ê²Œ ì‹ ë¢°ë¥¼ ì£¼ê³  ëª¨ë²”ì´ ë˜ê³  ì‹¶ê³ , ì£¼ë³€ ì‚¬ëžŒë“¤ì—ê²Œ ê·€ë¥¼ ê¸°ìš¸ì´ë©° í•­ìƒ ì±™ê²¨ì£¼ëŠ” ì‚¬ëžŒì´ ë˜ê³  ì‹¶ìŠµë‹ˆë‹¤.<br />
 <br />
-¼ÂÂ°, '´Ù¾çÇÑ ºÐ¾ß¸¦ °æÇèÇÏ´Â »ç¶÷'<font color="#6ffe9b"></font><br />
-ÇöÀç À§Ä¡¿¡ ¸¸Á·ÇÏÁö ¾Ê°í ³»°¡ ÇÏ°íÀÚ ÇÏ´Â ´õ ¸¹Àº ÀÏµéÀ» Ã£¾Æ °æÇèÇÏ°í ´À³¢¸é¼­ ³ª ÀÚ½ÅÀ» ´õ µµÀüÀûÀÌ°í ¿­Á¤ÀûÀÎ »ç¶÷À¸·Î ¸¸µé°íÀÚ ÇÕ´Ï´Ù.<font color="#c0ffee"></font>                        </span>
+ì…‹ì§¸, 'ë‹¤ì–‘í•œ ë¶„ì•¼ë¥¼ ê²½í—˜í•˜ëŠ” ì‚¬ëžŒ'<br />
+í˜„ìž¬ ìœ„ì¹˜ì— ë§Œì¡±í•˜ì§€ ì•Šê³  ë‚´ê°€ í•˜ê³ ìž í•˜ëŠ” ë” ë§Žì€ ì¼ë“¤ì„ ì°¾ì•„ ê²½í—˜í•˜ê³  ëŠë¼ë©´ì„œ ë‚˜ ìžì‹ ì„ ë” ë„ì „ì ì´ê³  ì—´ì •ì ì¸ ì‚¬ëžŒìœ¼ë¡œ ë§Œë“¤ê³ ìž í•©ë‹ˆë‹¤.<font color="#4bc7f6"></font><font color="#6eb69e"></font><font color="#c0ffee"></font>                        </span>
                                             </td>
                 </tr>
                                                                 <tr>
-                    <th height="35"><b>¼ºÀå°úÁ¤À» ÅëÇÑ ÀÚ±â¼Ò°³</b></th>
+                    <th height="35"><b>í˜„ìž¬ ê°€ìž¥ ìžì‹  ìžˆëŠ” ê°œë°œë¶„ì•¼ì™€ í–¥í›„ ì „ë¬¸ê°€ê°€ ë˜ê³  ì‹¶ì€ ê°œë°œë¶„ì•¼</b></th>
                 </tr>
                 <tr>
                     <td class="career break-word" valign="top" height="100%">
                         <span id="introduce_contents">
-                            <font color="#089dee"></font><font color="#279b7b"></font>Àú´Â Ã¥ÀÓ°¨ ÀÖ´Â »ç¶÷ÀÔ´Ï´Ù. ºÎ¸ð´Ô²²¼­´Â 28³âÂ° °°Àº °÷¿¡¼­ Áß½Ä´çÀ» ¿î¿µÇÏ°í °è½Ê´Ï´Ù. ¸ÅÀÏ °°Àº ½Ã°£¿¡ ¼º½ÇÇÏ°Ô ÀÏÇØ¿À½Ã´Â ºÎ¸ð´ÔÀÇ ¸ð½ÀÀ» ÅëÇØ ²ÙÁØÈ÷ ÀÚ½ÅÀÌ ¸ÃÀº ÀÚ¸®¸¦ ÁöÅ°´Â ÀÚ¼¼ÀÇ Áß¿äÇÔÀ» ¹è¿ü½À´Ï´Ù. ÀÌ·¯ÇÑ ¼ºÀå¹è°æ °¡¿îµ¥ ÀÚ¿¬½º·´°Ô Ã¥ÀÓ°¨ ÀÖ´Â ÀÚ¼¼¸¦ ÇÔ¾çÇÏ°Ô µÇ¾ú°í, ÀÌ °°Àº ÀÚ¼¼´Â ¾îµð¼­ ÀÏÀ» ÇÏ´øÁö ´Ã ½Å·Ú¹Þ´Â »ç¶÷ÀÌ µÇ´Âµ¥ Å« µµ¿òÀÌ µÇ¾ú½À´Ï´Ù. ITºÐ¾ß¿¡¼­ °¡Àå Áß¿äÇÏ°Ô »ý°¢µÇ´Â °ÍÀº ¾ÈÁ¤¼ºÀÌ¶ó°í »ý°¢ÇÕ´Ï´Ù. Á¦°¡ ¹è¿î Ã¥ÀÓ°¨À» °¡Áö°í Àú¿¡°Ô ÁÖ¾îÁø ½Ã½ºÅÛ °³¹ß ¹× À¯Áöº¸¼ö ¾÷¹«¸¦ ¾ÈÁ¤¼º ÀÖ°Ô ¼öÇàÇÏ°Ú½À´Ï´Ù.<font color="#4bcdeb"></font><font color="#6ffe9b"></font><font color="#c0ffee"></font>                        </span>
+                            <font color="#08dc9a"></font><font color="#2b998d"></font>ëŠ” ì•½ 3ë…„ ë™ì•ˆ ì—¬ëŸ¬ í”„ë¡œì íŠ¸ì— ì°¸ì—¬í•˜ë©´ì„œ ë‹¤ì–‘í•œ ì–¸ì–´ë¥¼ í†µí•´ ê°œë°œì„ í•´ì™”ìŠµë‹ˆë‹¤.<br />
+ì²« íšŒì‚¬ì— ìž…ì‚¬ í›„ ì°¸ì—¬í•œ ì²« í”„ë¡œì íŠ¸ì—ì„œ JSP, JAVA, XMLë¿ë§Œ ì•„ë‹ˆë¼ Flash, Action Script, Flex ë“± ë‹¤ì†Œ ì ‘í•˜ê¸° ì‰½ì§€ ì•Šì€ ë¶„ì•¼ë„ ê³µë¶€í•˜ê³  í™œìš©í•˜ì˜€ìŠµë‹ˆë‹¤. ë‹¹ì‹œì—ëŠ” ìµìˆ™í•˜ì§€ ì•Šì€ ë¶„ì•¼ë¥¼ ê³µë¶€í•˜ëŠë¼ ë§Žì´ íž˜ë“¤ì—ˆì§€ë§Œ, ì‹œê°„ì´ ì§€ë‚˜ ìƒê°í•´ë³´ë‹ˆ êµ‰ìž¥ížˆ ì†Œì¤‘í•œ ê²½í—˜ì´ì—ˆìŒì„ ê¹¨ë‹¬ì•˜ìŠµë‹ˆë‹¤.<br />
+ì´ë¥¼ ì‹œìž‘ìœ¼ë¡œ ì§€ê¸ˆê¹Œì§€ë„ í•­ìƒ ë°°ìš°ëŠ” ê²ƒì„ ì¦ê¸°ê³  ë°°ìš´ ê²ƒì„ í™œìš©í•˜ê³ ìž í•©ë‹ˆë‹¤. ê·¸ëž˜ì„œ ë‹¤ì–‘í•œ í”„ë ˆìž„ì›Œí¬ë¥¼ í™œìš©í•˜ì—¬ ì¢€ ë” ë§Žì€ ê°œë°œ í™˜ê²½ì„ êµ¬í˜„í•˜ê³  ìžˆìŠµë‹ˆë‹¤.<br />
+ê°€ìž¥ ìžì‹  ìžˆëŠ” ê°œë°œë¶„ì•¼ëŠ” ì›¹ ê°œë°œì´ê³  ìžì‹  ìžˆëŠ” ì–¸ì–´ëŠ” JSP, JAVA, Java Script, jQuery, Ajaxìž…ë‹ˆë‹¤. ì›¹ ê°œë°œ ì‹œ í•„ìš”í•œ ê¸°ëŠ¥ì— ë”°ë¼ ë‹¤ì–‘í•œ ì˜¤í”ˆ ì†ŒìŠ¤ í™œìš© ë° êµ¬í˜„í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.<br />
+ê·¸ë¦¬ê³  í–¥í›„ ì „ë¬¸ê°€ê°€ ë˜ê³  ì‹¶ì€ ê°œë°œë¶„ì•¼ëŠ” Web Front-end, Back-end ê°œë°œ ë° ë°ì´í„°ë² ì´ìŠ¤ ê´€ë¦¬, ì •ë³´ë³´ì•ˆ ì—…ë¬´ìž…ë‹ˆë‹¤. ì›¹ ê°œë°œì€ ì›¹ ì„œë¹„ìŠ¤ë¥¼ í†µí•´ ì‚¬ìš©ìž ì¤‘ì‹¬ì˜ íŽ¸ì˜ì„±ì„ ì œê³µí•˜ì§€ë§Œ, ì´ì— ë¶€í•©ë˜ëŠ” ë‹¤ê°ì ì¸ ë³´ì•ˆì˜ ì—°êµ¬ë„ ë¬´ì—‡ë³´ë‹¤ ì¤‘ìš”í•˜ë‹¤ê³  ìƒê°í•˜ê¸° ë•Œë¬¸ìž…ë‹ˆë‹¤<font color="#4bc7f6"></font><font color="#6eb69e"></font><font color="#c0ffee"></font>                        </span>
                                             </td>
                 </tr>
                                                                 <tr>
-                    <th height="35"><b>Á÷¹«¿¡ ´ëÇÑ °­Á¡ ¹× ¾àÁ¡</b></th>
+                    <th height="35"><b>ì§ë¬´ì— ëŒ€í•œ ê°•ì  ë° ì•½ì </b></th>
                 </tr>
                 <tr>
                     <td class="career break-word" valign="top" height="100%">
                         <span id="introduce_contents">
-                            Àú´Â Àü»êÁ¤º¸Ã³¸®ÇÐ Àü°øÀ» ¹ÙÅÁÀ¸·Î ´Ù¾çÇÑ ÇÁ·Î±×·¥ °³¹ß°ú ÇÐ°ú È¨ÆäÀÌÁö °ü¸®, 'JAVA ÇÁ·Î±×·¥°³¹ß Àü¹®°¡°úÁ¤'±³À° ¼ö·á, ÇÁ·Î±×·¥°³¹ß Çù¾÷ µîÀ» ÅëÇØ¼­ IT°³¹ß¿¡ ÇÊ¿äÇÑ ±âº» Á÷¹«´É·ÂÀ» °®Ãß°í ÀÖ½À´Ï´Ù.<font color="#089dee"></font><br />
-Ã¹Â°, ´ëÇÐ¿¡¼­ Àü»êÁ¤º¸Ã³¸®ÇÐ Àü°ø ¼ö¾÷À» ÅëÇØ IT°³¹ß ¾ð¾î ¹× Database¿¡ ´ëÇÑ ±âº» ½Ç¹« Áö½ÄÀ» ½×¾Ò½À´Ï´Ù. ´Ü¼øÈ÷ Visual Studio, Eclipse, MySQL µî IT°³¹ß ToolÀ» ÀÍÈ÷´Âµ¥ ±×Ä¡Áö ¾Ê°í, ÇÐ°ú È¨ÆäÀÌÁö °³¹ß ¹× ¿î¿µ, ÇÐ»ý ¼ºÀû °ü¸® ÇÁ·Î±×·¥ ¹× ¸ð¹ÙÀÏ Application µî ¿©·¯ ÇÁ·Î±×·¥À» °³¹ßÇÏ¸ç ½Ç·ÂÀ» ½×¾Æ¿Ô½À´Ï´Ù.<font color="#279b7b"></font><br />
-µÑÂ°, Àü¹®¼ºÀ» ÇÔ¾çÇÏ±â À§ÇØ ÀÌ³ëºñÁî Ã»³â Ãë¾÷¾ÆÄ«µ¥¹Ì¸¦ ÅëÇØ 2°³¿ù µ¿¾È 'JAVA ÇÁ·Î±×·¥ Àü¹®°¡°úÁ¤'±³À°À» ²ö±â ÀÖ°Ô ¼ö·áÇÏ¿´½À´Ï´Ù. ÀÌ ±³À°À» ÅëÇØ ±â¾÷ÀÇ ½Ç¹« ÇÁ·ÎÁ§Æ®¸¦ °£Á¢ÀûÀ¸·Î °æÇèÇÒ ¼ö ÀÖ¾ú°í, À¥»çÀÌÆ®¸¦ °³¹ßÇÏ´Âµ¥ ´õ¿í Àü¹®ÀûÀÎ °³¹ß±â¼úÀ» ¹è¿ï ¼ö ÀÖ¾ú½À´Ï´Ù.<font color="#4bcdeb"></font><br />
-¼ÂÂ°, 2³â°£ Áõ±Ç»çÀÇ ´Ù¾çÇÑ ÇÁ·ÎÁ§Æ®¸¦ ¼öÇàÇÏ¸ç Çù¾÷´É·ÂÀ» Å°¿ü½À´Ï´Ù. Æ¯È÷ ÀÌÆ®·¹ÀÌµåÁõ±ÇÀÇ Â÷¼¼´ë ½Ã½ºÅÛ ±¸ÃàÀ» ÅëÇÑ ÁÖ¹® ¹× Ã¼°á ¼Óµµ È®º¸, ¾÷¹« Ã¼°è °³¼±À» ÅëÇØ ÇÁ·ÎÁ§Æ® °ü¸® ¹æ¹ý¿¡ ´ëÇÑ °æÇè°ú ÆÀ¿öÅ©ÀÇ Áß¿ä¼ºÀ» ±ú´ÞÀ» ¼ö ÀÖ¾ú½À´Ï´Ù.<br />
-¹Ý¸é ¸Å»ç¿¡ ½ÅÁßÇÏ´Ù º¸´Ï ½Ã°£°ü¸®¿¡ ¾î·Á¿òÀ» °Þ¾ú½À´Ï´Ù. ÀÌ·¯ÇÑ ¾î·Á¿òÀ» ±Øº¹ÇÏ±â À§ÇØ ÇÃ·¡³Ê¸¦ ÀÛ¼ºÇÏ¿© Ç×»ó ½Ã°£À» °ü¸®ÇÏ´Â ½À°üÀ» ±æ·¶½À´Ï´Ù. ÀÏÀ» µ¥µå¶óÀÎº¸´Ù ¸ÕÀú ³¡³» ¿©À¯½Ã°£À» È®º¸ÇÏ°í ²Ä²ÄÈ÷ °ËÅäÇÏ´Â °úÁ¤À» ¹Ýº¹ÇÏ¿© ¿À·ù¸¦ ÃÖ¼ÒÈ­ ÇÒ ¼ö ÀÖ¾ú½À´Ï´Ù.<font color="#6ffe9b"></font><br />
-ÀÌ·¯ÇÑ ÀúÀÇ IT¿¡ ´ëÇÑ ±âº» ½Ç¹«´É·Â°ú ÆÀ¿öÅ©, ²Ä²ÄÇÑ °ËÅä°úÁ¤À» ÅëÇÑ ½Ã½ºÅÛ ¾ÈÁ¤¼º È®º¸¸¦ ¹ÙÅÁÀ¸·Î È¸»çÀÇ IT¿î¿µ½Ã½ºÅÛÀÌ º¸´Ù ´õ ½º¸¶Æ®ÇÏ°í ¾ÈÁ¤ÀûÀ¸·Î ±¸Ãà, ¿î¿µµÉ ¼ö ÀÖµµ·Ï IT Specialist·Î ¼ºÀå, ±â¿©ÇÏ°Ú½À´Ï´Ù.<font color="#c0ffee"></font>                        </span>
+                            <font color="#08dc9a"></font><font color="#2b998d"></font>[ì·¨ì•½ì  ì œê±°]<br />
+ê°œë°œë‹¨ê³„ë¶€í„° ì†Œí”„íŠ¸ì›¨ì–´ì˜ ì·¨ì•½ì ì„ ë³´ì™„í•´ ì•ˆì •ì„±ì„ ë†’ì´ëŠ” 'ì‹œíì–´ ì½”ë”©'ì˜ ì¤‘ìš”ì„±ì´ ê°•ì¡°ë˜ê³  ìžˆìŠµë‹ˆë‹¤. ê·¸ëž˜ì„œ ì €ëŠ” ì›¹ íŽ˜ì´ì§€ ë³´ì•ˆ ê°•í™”ë¥¼ ìœ„í•´ í•­ìƒ ì‹œíì–´ ì½”ë”©ì„ í•˜ê³ , ì„œë²„ì™€ í†µì‹  ì‹œ íŒŒë¼ë¯¸í„°ë¥¼ ì•”í˜¸í™”í•˜ì—¬ í†µì‹ í•˜ë©°, ì›¹ ì„œë²„ì˜ í™˜ê²½ì„¤ì • ì‹œ ë³´ì•ˆ ì‚¬í•­ì„ ìžì„¸ížˆ ê²€í† í•˜ì—¬ ì·¨ì•½ì ì„ ì œê±°í•˜ê³ , ëŒ€ëŸ‰ì˜ ì›¹ íŽ˜ì´ì§€ì— ëŒ€í•˜ì—¬ ì•…ì„± í”„ë¡œê·¸ëž¨ ìœ í¬ì§€ ë° ê²½ìœ ì§€ì˜ ìœ ë¬´ë¥¼ ì‹¤ì‹œê°„ìœ¼ë¡œ ë¶„ì„í•˜ì—¬ ê³µê²©ì„ ì‚¬ì „ì— ì°¨ë‹¨ ë° ì˜ˆë°©í•˜ê³  ìžˆìŠµë‹ˆë‹¤.<br />
+<br />
+[ë‹¤ì–‘í•œ ì˜¤í”ˆ API, ì†ŒìŠ¤ í™œìš©]<br />
+ì‚¬ìš©ìž íŽ¸ì˜ë¥¼ ìœ„í•œ ë‹¤ì–‘í•œ ì¸í„°íŽ˜ì´ìŠ¤ êµ¬í˜„ í•˜ê¸° ìœ„í•´ ì—¬ëŸ¬ ê°€ì§€ ì˜¤í”ˆ ì†ŒìŠ¤ë“¤ì„ ì°¾ì•„ë³´ê³  ì‹¤ì œë¡œ ìƒ˜í”Œ ì½”ë“œë“¤ì„ ìž‘ì„±í•˜ì—¬ ì‹¤ë¬´ì— í™œìš©í•˜ê³  ìžˆìŠµë‹ˆë‹¤. ì‹¤ì œë¡œ ë‹¤ìŒ ìš°íŽ¸ë²ˆí˜¸ ì„œë¹„ìŠ¤, jqGrid, Datepicker, DataTables, FullCalendar ë“±ì„ í™œìš©í•œ ê²½í—˜ì´ ìžˆìŠµë‹ˆë‹¤. ë˜í•œ youtubeë¥¼ í†µí•´ ë‹¤ì–‘í•œ ê°œë°œ ê°•ì˜ë“¤ì„ ì°¾ì•„ë³´ê³  í‹ˆí‹ˆì´ ì‹œì²­í•˜ì—¬ ê°•ì˜ ë‚´ìš©ì„ ì‹¤ì œë¡œ êµ¬í˜„ ë° í™œìš©í•˜ê³  ìžˆìŠµë‹ˆë‹¤.<br />
+<br />
+[ë¬¸ì„œí™”ì˜ ìƒí™œí™”]<br />
+ë§Žì€ í”„ë¡œê·¸ëž˜ë¨¸ë“¤ì€ ê°œë°œì„ í•˜ë©´ì„œ ë¬¸ì„œ ìž‘ì„±ì„ í•˜ì§€ ì•ŠëŠ” íŽ¸ìž…ë‹ˆë‹¤. ë‚˜ë¦„ ì—…ë¬´ë¥¼ ê¼¼ê¼¼ížˆ í•˜ëŠ” ê°œë°œíŒ€ì—ì„œë„ í”„ë¡œì íŠ¸ ì „ë°˜ê¸°ì—ëŠ” ì„¤ê³„ ë¬¸ì„œë¥¼ ë§Œë“¤ë ¤ê³  ì• ì“°ëŠ” ê²½ìš°ê°€ ëŒ€ë‹¤ìˆ˜ì´ì§€ë§Œ ì´ëŸ° ê²½ìš°ì—ë„ ë§‰ìƒ í”„ë¡œì íŠ¸ê°€ ëë‚  ë•Œ ë³´ë©´ ë¬¸ì„œì˜ ìƒíƒœì™€ ê°œë°œ ê²°ê³¼ë¬¼ì˜ ìƒíƒœê°€ ì‹¬ížˆ ì–´ê¸‹ë‚˜ ìžˆëŠ” ê²½ìš°ê°€ ëŒ€ë¶€ë¶„ì´ì—ˆìŠµë‹ˆë‹¤. ì‹¬í•œ ê²½ìš°ì—ëŠ” ì£¼ì„ë¬¸ì˜ ìƒíƒœì™€ ì½”ë“œì˜ ìƒíƒœê°€ ë‹¤ë¥¸ ê²½ìš°ë„ ìžˆì—ˆìŠµë‹ˆë‹¤. í”„ë¡œê·¸ëž˜ë¨¸ê°€ ì½”ë“œë¥¼ ë³€ê²½í•˜ë©´ì„œ ì£¼ì„ ë¬¸ì„ ìž¬ê²€í† í•˜ì§€ ì•Šì•˜ê¸° ë•Œë¬¸ìž…ë‹ˆë‹¤.<br />
+ê·¸ëž˜ì„œ ì €ëŠ” í•­ìƒ ì„¤ê³„ í›„ ì½”ë”© í•˜ëŠ” ìŠµê´€ì„ ì§€ë‹ˆê³  ìžˆìŠµë‹ˆë‹¤. ì´ëŸ¬í•œ ìŠµê´€ì€ ì„¤ê³„ ë¬¸ì„œë¥¼ ìž‘ì„±í•˜ë©´ì„œ ì „ì²´ì ì¸ í”„ë¡œê·¸ëž¨ êµ¬ì¡°ë¥¼ íŒŒì•…í•  ìˆ˜ ìžˆê³ , ì½”ë”©í•˜ê¸° ì „ ë¨¼ì € ìƒê°ì„ í•´ ë³¸ë‹¤ëŠ” í° ìž¥ì ì´ ìžˆìŠµë‹ˆë‹¤.<font color="#4bc7f6"></font><font color="#6eb69e"></font><font color="#c0ffee"></font>                        </span>
                                             </td>
                 </tr>
                                                                 <tr>
-                    <th height="35"><b>¾÷¹«¼öÇà ½Ã ÇÊ¿ä¿ª·®°ú º»ÀÎÀÇ ³ë·Â</b></th>
+                    <th height="35"><b>ì—…ë¬´ìˆ˜í–‰ ì‹œ í•„ìš”ì—­ëŸ‰ê³¼ ë³¸ì¸ì˜ ë…¸ë ¥</b></th>
                 </tr>
                 <tr>
                     <td class="career break-word" valign="top" height="100%">
                         <span id="introduce_contents">
-                            <font color="#089dee"></font><font color="#279b7b"></font>°³¹ßÀÚ·Î¼­ °¡Àå Áß¿äÇÑ Á¡Àº Àü¹®¼ºÀ» ¹è¾çÇÏ´Â °ÍÀÌ¶ó »ý°¢ÇÕ´Ï´Ù. ¼¼°è¿¡¼­ ITºÐ¾ß´Â ³ª³¯ÀÌ Áß¿äÇØ Áö°í ÀÖ½À´Ï´Ù. ÃÖ±Ù ºÎ°¢µÇ°í ÀÖ´Â º¸¾È»Ó¸¸ ¾Æ´Ï¶ó ¿©·¯ »çÈ¸Àû, ÀáÀçÀû ¹®Á¦¸¦ ÇØ°áÇÏ±â À§ÇÑ Á¤Ã¥µµ »ý¼ºµÇ°í °³Á¤µÇ°í ÀÖÀ¸¸ç, ÀÌ·¯ÇÑ ¿ä±¸¿¡ ºü¸£°Ô ´ëÀÀÇØ¾ß ÇÏ´Â ºÎ¼­°¡ ¹Ù·Î ITºÎ¼­¶ó°í »ý°¢ÇÕ´Ï´Ù.<br />
-¸¹Àº ºÐµéÀÌ ¾µ¸¸ÇÑ °³¹ßÀÚ°¡ ¾ø´Ù´Â ÀÌ¾ß±â¸¦ ÇÏ½Ê´Ï´Ù. ±×¸¸Å­ °³¹ß ºÐ¾ß¿¡¼­ Àü¹®¼ºÀ» È¹µæÇÏ´Â °ÍÀº ¸Å¿ì ¾î·Á¿î ÀÏÀÌ¶ó ÆÇ´ÜµË´Ï´Ù. ±×·¡¼­ Àú´Â Áö±Ýµµ ÇÁ·Î±×·¡¹Ö Ã¥À» º¸¸é¼­ ²Ä²ÄÇÏ°Ô ÄÚµù ¿¬½ÀÀ» ÇÏ°í, ´ëÇÐ¿øÀ» ´Ù´Ï¸ç ºÎÁ·ÇÑ Á¡À» Ã¤¿ì±â À§ÇØ ³ë·ÂÇÏ°í ÀÖ½À´Ï´Ù. ÀÏÀ» ÇÏ¸é¼­ ÇÁ·Î±×·¡¹Ö¿¡ ´ëÇÑ Àü¹® Áö½ÄÀ» ½×±â À§ÇØ Ç×»ó ¼±¹è´Ôµé¿¡°Ô ¹¯°í ¶Ç ¹¯´Â ÀÚ¼¼·Î, Á¦ ºÐ¾ß¿¡¼­¸¸Å­Àº È®½ÇÇÏ´Ù´Â Æò°¡¸¦ µè°íÀÚ ³ë·ÂÇß½À´Ï´Ù.<br />
-´ÙÀ½À¸·Î ÀÏÁ¤ °ü¸®ÇÏ´Â °ÍÀÌ ¾î·Æ´Ù´Â ÀÌ¾ß±â¸¦ µé¾ú½À´Ï´Ù. °³¹ßÀ» ÇÏ´Ù º¸¸é ¿¹»óÄ¡ ¸øÇÑ º¯¼ö°¡ ¹ß»ýÇÏ°í, ±×·² ¶§¸¶´Ù ¾÷¹«°¡ ÇÑ²¨¹ø¿¡ ¹Ð·Áµé¾î¿Í Èûµé¾î ÇÏ½Ã´Â ºÐµéÀ» ÀÚÁÖ º¸¾Ò½À´Ï´Ù. ±×·¡¼­ Àú´Â ÀÏÀ» °èÈ¹ÇÒ ¶§, º¯¼ö±îÁö °í·ÁÇÑ Á¤È®ÇÑ ÀÏÁ¤À» Â¥¸é¼­ ¾÷¹«¸¦ ¼öÇàÇÕ´Ï´Ù. ¶ÇÇÑ ÀæÀº Ã¶¾ß ±Ù¹«¿¡µµ ¹öÆ¿ ¼ö ÀÖµµ·Ï ²ÙÁØÈ÷ Ã¼·Â °ü¸®µµ ÇÏ°í ÀÖ½À´Ï´Ù.<font color="#4bcdeb"></font><font color="#6ffe9b"></font><font color="#c0ffee"></font>                        </span>
+                            <font color="#08dc9a"></font><font color="#2b998d"></font>ê°œë°œìžë¡œì„œ ê°€ìž¥ ì¤‘ìš”í•œ ì ì€ ì „ë¬¸ì„±ì„ ë°°ì–‘í•˜ëŠ” ê²ƒì´ë¼ ìƒê°í•©ë‹ˆë‹¤. ì„¸ê³„ì—ì„œ ITë¶„ì•¼ëŠ” ë‚˜ë‚ ì´ ì¤‘ìš”í•´ ì§€ê³  ìžˆìŠµë‹ˆë‹¤. ìµœê·¼ ë¶€ê°ë˜ê³  ìžˆëŠ” ë³´ì•ˆë¿ë§Œ ì•„ë‹ˆë¼ ì—¬ëŸ¬ ì‚¬íšŒì , ìž ìž¬ì  ë¬¸ì œë¥¼ í•´ê²°í•˜ê¸° ìœ„í•œ ì •ì±…ë„ ìƒì„±ë˜ê³  ê°œì •ë˜ê³  ìžˆìœ¼ë©°, ì´ëŸ¬í•œ ìš”êµ¬ì— ë¹ ë¥´ê²Œ ëŒ€ì‘í•´ì•¼ í•˜ëŠ” ë¶€ì„œê°€ ë°”ë¡œ ITë¶€ì„œë¼ê³  ìƒê°í•©ë‹ˆë‹¤.<br />
+ë§Žì€ ë¶„ë“¤ì´ ì“¸ë§Œí•œ ê°œë°œìžê°€ ì—†ë‹¤ëŠ” ì´ì•¼ê¸°ë¥¼ í•˜ì‹­ë‹ˆë‹¤. ê·¸ë§Œí¼ ê°œë°œ ë¶„ì•¼ì—ì„œ ì „ë¬¸ì„±ì„ íšë“í•˜ëŠ” ê²ƒì€ ë§¤ìš° ì–´ë ¤ìš´ ì¼ì´ë¼ íŒë‹¨ë©ë‹ˆë‹¤. ê·¸ëž˜ì„œ ì €ëŠ” ì§€ê¸ˆë„ í”„ë¡œê·¸ëž˜ë° ì±…ì„ ë³´ë©´ì„œ ê¼¼ê¼¼í•˜ê²Œ ì½”ë”© ì—°ìŠµì„ í•˜ê³ , ëŒ€í•™ì›ì„ ë‹¤ë‹ˆë©° ë¶€ì¡±í•œ ì ì„ ì±„ìš°ê¸° ìœ„í•´ ë…¸ë ¥í•˜ê³  ìžˆìŠµë‹ˆë‹¤. ì¼ì„ í•˜ë©´ì„œ í”„ë¡œê·¸ëž˜ë°ì— ëŒ€í•œ ì „ë¬¸ ì§€ì‹ì„ ìŒ“ê¸° ìœ„í•´ í•­ìƒ ì„ ë°°ë‹˜ë“¤ì—ê²Œ ë¬»ê³  ë˜ ë¬»ëŠ” ìžì„¸ë¡œ, ì œ ë¶„ì•¼ì—ì„œë§Œí¼ì€ í™•ì‹¤í•˜ë‹¤ëŠ” í‰ê°€ë¥¼ ë“£ê³ ìž ë…¸ë ¥í–ˆìŠµë‹ˆë‹¤.<br />
+ë‹¤ìŒìœ¼ë¡œ ì¼ì • ê´€ë¦¬í•˜ëŠ” ê²ƒì´ ì–´ë µë‹¤ëŠ” ì´ì•¼ê¸°ë¥¼ ë“¤ì—ˆìŠµë‹ˆë‹¤. ê°œë°œì„ í•˜ë‹¤ ë³´ë©´ ì˜ˆìƒì¹˜ ëª»í•œ ë³€ìˆ˜ê°€ ë°œìƒí•˜ê³ , ê·¸ëŸ´ ë•Œë§ˆë‹¤ ì—…ë¬´ê°€ í•œêº¼ë²ˆì— ë°€ë ¤ë“¤ì–´ì™€ íž˜ë“¤ì–´ í•˜ì‹œëŠ” ë¶„ë“¤ì„ ìžì£¼ ë³´ì•˜ìŠµë‹ˆë‹¤. ê·¸ëž˜ì„œ ì €ëŠ” ì¼ì„ ê³„íší•  ë•Œ, ë³€ìˆ˜ê¹Œì§€ ê³ ë ¤í•œ ì •í™•í•œ ì¼ì •ì„ ì§œë©´ì„œ ì—…ë¬´ë¥¼ ìˆ˜í–‰í•©ë‹ˆë‹¤. ë˜í•œ ìž¦ì€ ì² ì•¼ ê·¼ë¬´ì—ë„ ë²„í‹¸ ìˆ˜ ìžˆë„ë¡ ê¾¸ì¤€ížˆ ì²´ë ¥ ê´€ë¦¬ë„ í•˜ê³  ìžˆìŠµë‹ˆë‹¤.<font color="#4bc7f6"></font><font color="#6eb69e"></font><font color="#c0ffee"></font>                        </span>
                                             </td>
                 </tr>
                                                                 <tr>
-                    <th height="35"><b>Á÷¾÷¼±ÅÃ ½Ã Áß¿ä °í·Á »çÇ×</b></th>
+                    <th height="35"><b>ì§ì—…ì„ íƒ ì‹œ ì¤‘ìš” ê³ ë ¤ ì‚¬í•­</b></th>
                 </tr>
                 <tr>
                     <td class="career break-word" valign="top" height="100%">
                         <span id="introduce_contents">
-                            <font color="#089dee"></font><font color="#279b7b"></font>Á¦°¡ »ý°¢ÇÏ´Â Á÷¾÷°üÀº 2°¡Áö Á¤µµ·Î Ãà¾àÇÒ ¼ö ÀÖ½À´Ï´Ù.<br />
-Ã¹Â°·Î °¡Àå ÀßÇÒ ¼ö ÀÖ´Â ÀÏÀ» ÇÏ´Â °ÍÀÔ´Ï´Ù. Áö±Ý±îÁö ½ºÅÍµð ±×·ìÀÇ ÆÀÀå ¼öÇà, Â÷¼¼´ë ¿øÀå½Ã½ºÅÛ ±¸ÃàÀ» Æ÷ÇÔÇÑ Áõ±Ç»çÀÇ ´Ù¾çÇÑ ÇÁ·ÎÁ§Æ®¿¡¼­ÀÇ ÇÁ·Î±×·¥ °³¹ß ¹× À¯Áöº¸¼ö °æÇèÀ» ÅëÇØ¼­ ÀúÀÇ °­Á¡°ú ÀÚÁúÀ» È®ÀÎÇÒ ¼ö ÀÖ¾ú°í, ÀúÀÇ ÀÌ·± ÀåÁ¡À» ±Ø´ëÈ­ ½ÃÅ³ ¼ö ÀÖ´Â ¾÷Á¾Àº IT¾÷Á¾ÀÌ¶ó ÆÇ´ÜÇÏ¿´½À´Ï´Ù.<br />
-µÑÂ°·Î ÀÚºÎ½ÉÀ» °¡Áö¸ç ÀÏÇÒ ¼ö ÀÖ´Â °÷¿¡¼­ ÀÏÇÏ´Â °ÍÀÔ´Ï´Ù. Àú´Â ¹«ÁöÇÑ »ç¶÷À¸·Î ºñÄ¡´Â °ÍÀ» ½È¾îÇØ¼­ ²÷ÀÓ¾øÀÌ ¹«¾ùÀÎ°¡¸¦ ¾Ë°íÀÚ ÇÏ¸ç, °´°üÀûÀÌ°í ¸í¹éÇÑ ±âÁØ¿¡ ÀÇÇØ °áÁ¤À» ³»¸®°í, »óÈ²¿¡ °¡Àå ÀûÇÕÇÑ ¹æ¹ýÀ» Ã£±â À§ÇØ Ç×»ó Á¤º¸¸¦ ¼öÁýÇÏ´Â '¸Ó¸®Çü Å¸ÀÔ'ÀÇ ¼º°ÝÀ» °¡Áö°í ÀÖ½À´Ï´Ù. ±×·¡¼­ ¹«¾ùÀÌµçÁö ¿­½ÉÈ÷ ÇÏ°Ú´Ù´Â ¿­Á¤ÀûÀÎ ÀÚ¼¼¸¦ °®Ãß°í ÀÖÀ¸¸ç, °í°´°ú µ¿·áµé¿¡°Ô ½Å·Ú¸¦ ÁÖ°í, Ç×»ó ¸ð¹üÀÌ µÇ°íÀÚ ÇÕ´Ï´Ù. ÀúÀÇ ÀÌ·± ÀåÁ¡À» ±Ø´ëÈ­ ½ÃÅ³ ¼ö ÀÖ°í ÀúÀÇ Á÷¾÷°ü°ú ºñÀüÀ» ½ÇÇöÇÒ ¼ö ÀÖ´Â ±â¾÷¿¡¼­ ±â¾÷ÀÇ ¼º°úÃ¢Ãâ¿¡ ±â¿©ÇÏ¸ç ±â¾÷°ú ÇÔ²² µ¿¹Ý ¼ºÀåÇÏ´Â ÀÎÀç°¡ µÇ°í ½Í½À´Ï´Ù.<font color="#4bcdeb"></font><font color="#6ffe9b"></font><font color="#c0ffee"></font>                        </span>
+                            <font color="#08dc9a"></font><font color="#2b998d"></font>ì œê°€ ìƒê°í•˜ëŠ” ì§ì—…ê´€ì€ 2ê°€ì§€ ì •ë„ë¡œ ì¶•ì•½í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.<br />
+ì²«ì§¸, ê°€ìž¥ ìž˜ í•  ìˆ˜ ìžˆëŠ” ì¼ì„ í•˜ëŠ” ê²ƒìž…ë‹ˆë‹¤. ì§€ê¸ˆê¹Œì§€ ìŠ¤í„°ë”” ê·¸ë£¹ì˜ íŒ€ìž¥ ìˆ˜í–‰, ì°¨ì„¸ëŒ€ ì›ìž¥ì‹œìŠ¤í…œ êµ¬ì¶•ì„ í¬í•¨í•œ ì¦ê¶Œì‚¬ì˜ ë‹¤ì–‘í•œ í”„ë¡œì íŠ¸ì—ì„œì˜ í”„ë¡œê·¸ëž¨ ê°œë°œ ë° ìœ ì§€ë³´ìˆ˜, ì›¹ ê°œë°œì—…ë¬´ ê²½í—˜ì„ í†µí•´ì„œ ì €ì˜ ê°•ì ê³¼ ìžì§ˆì„ í™•ì¸í•  ìˆ˜ ìžˆì—ˆê³ , ì €ì˜ ì´ëŸ° ìž¥ì ì„ ê·¹ëŒ€í™” ì‹œí‚¬ ìˆ˜ ìžˆëŠ” ì—…ì¢…ì€ ITì—…ì¢…ì´ë¼ íŒë‹¨í•˜ì˜€ìŠµë‹ˆë‹¤.<br />
+ë‘˜ì§¸, ìžë¶€ì‹¬ì„ ê°€ì§€ë©° ì¼í•  ìˆ˜ ìžˆëŠ” ê³³ì—ì„œ ì¼í•˜ëŠ” ê²ƒìž…ë‹ˆë‹¤. ì €ëŠ” ë¬´ì§€í•œ ì‚¬ëžŒìœ¼ë¡œ ë¹„ì¹˜ëŠ” ê²ƒì„ ì‹«ì–´í•´ì„œ ëŠìž„ì—†ì´ ë¬´ì—‡ì¸ê°€ë¥¼ ì•Œê³ ìž í•˜ë©°, ê°ê´€ì ì´ê³  ëª…ë°±í•œ ê¸°ì¤€ì— ì˜í•´ ê²°ì •ì„ ë‚´ë¦¬ê³ , ìƒí™©ì— ê°€ìž¥ ì í•©í•œ ë°©ë²•ì„ ì°¾ê¸° ìœ„í•´ í•­ìƒ ì •ë³´ë¥¼ ìˆ˜ì§‘í•˜ëŠ” 'ë¨¸ë¦¬í˜• íƒ€ìž…'ì˜ ì„±ê²©ì„ ê°€ì§€ê³  ìžˆìŠµë‹ˆë‹¤. ê·¸ëž˜ì„œ ë¬´ì—‡ì´ë“ ì§€ ì—´ì‹¬ížˆ í•˜ê² ë‹¤ëŠ” ì—´ì •ì ì¸ ìžì„¸ë¥¼ ê°–ì¶”ê³  ìžˆìœ¼ë©°, ê³ ê°ê³¼ ë™ë£Œë“¤ì—ê²Œ ì‹ ë¢°ë¥¼ ì£¼ê³ , í•­ìƒ ëª¨ë²”ì´ ë˜ê³ ìž í•©ë‹ˆë‹¤. ì €ì˜ ì´ëŸ° ìž¥ì ì„ ê·¹ëŒ€í™” ì‹œí‚¬ ìˆ˜ ìžˆê³  ì €ì˜ ì§ì—…ê´€ê³¼ ë¹„ì „ì„ ì‹¤í˜„í•  ìˆ˜ ìžˆëŠ” ê¸°ì—…ì—ì„œ ê¸°ì—…ì˜ ì„±ê³¼ì°½ì¶œì— ê¸°ì—¬í•˜ë©° ê¸°ì—…ê³¼ í•¨ê»˜ ë™ë°˜ ì„±ìž¥í•˜ëŠ” ì¸ìž¬ê°€ ë˜ê³  ì‹¶ìŠµë‹ˆë‹¤.<font color="#4bc7f6"></font><font color="#6eb69e"></font><font color="#c0ffee"></font>                        </span>
                                             </td>
                 </tr>
                                                                 <tr>
-                    <th height="35"><b>µµÀüÇß´ø °æÇè</b></th>
+                    <th height="35"><b>ë„ì „í–ˆë˜ ê²½í—˜</b></th>
                 </tr>
                 <tr>
                     <td class="career break-word" valign="top" height="100%">
                         <span id="introduce_contents">
-                            <font color="#089dee"></font><font color="#279b7b"></font>¸» º¸´Ù´Â Çàµ¿À¸·Î º¸¿©ÁÖ´Â °ÍÀ» ¿øÄ¢À¸·Î »ï¾Ò´ø Àú´Â 'º¯È­¸¦ µÎ·Á¿öÇÏÁö ¾Ê°í µµÀüÇÏ´Â »îÀÇ ÀÚ¼¼¸¦ °®ÀÚ'¶ó´Â ¸ñÇ¥·Î ²÷ÀÓ¾øÀÌ ¹«¾ùÀÎ°¡¸¦ °æÇèÇÏ±â À§ÇÑ µµÀüÀ» ÀÌ¾î¿Ô½À´Ï´Ù.<br />
-1³â µ¿¾È ¹Ì±¹À¸·Î ±³È¯ÇÐ»ýÀ» ´Ù³à¿Â ÀûÀÌ ÀÖ½À´Ï´Ù. ¿µ¾î°øºÎ»Ó¸¸ ¾Æ´Ï¶ó Å¸±¹¿¡¼­ÀÇ »ýÈ°À» ÅëÇØ ÀÚ¸³½ÉÀ» ±â¸£°í ³¸¼± È¯°æ¿¡ µµÀüÇÏ´Â Àû±Ø¼ºÀ» ÅëÇØ µµÀüÁ¤½ÅÀ» ±â¸£°í ½Í¾ú±â ¶§¹®ÀÔ´Ï´Ù. Ä£±¸ ÇÑ ¸í ¾ø´Â Å¸Áö¿¡¼­ ³¸¼± ¿Ü±¹ÀÎµé°ú Ä£ÇØÁö±â À§ÇØ ±×µéÀÇ ¹®È­¿Í ÀÎ»ç¸» µîÀ» ¹Ì¸® ÀÍÇôµÎ¾î Ä£È­·Â ÀÖ°Ô ±×µéÀ» ´ëÇß½À´Ï´Ù. ±× °á°ú ¿À·£ ½Ã°£ °É¸®Áö ¾Ê°í ´Ù¾çÇÑ ³ª¶óÀÇ ¿Ü±¹ÀÎµé°ú ºü¸£°Ô Ä£ÇØÁú ¼ö ÀÖ¾ú½À´Ï´Ù.<br />
-±³È¯ÇÐ»ýÀ» ´Ù³à¿Â ÈÄ TOEIC ½ÃÇèÀ» ÁØºñÇÏ°íÀÚ ÇÑ´Þ µ¿¾È ¾îÇÐ¿ø¿¡ ´Ù³æ½À´Ï´Ù. Á¤±Ô¼ö¾÷ ÈÄ¿¡ ½ºÅÍµð ¸ðÀÓÀ» ÇÏ¿´°í ÆÀÀåÀ» ¼±ÃâÇØ¾ß ÇÏ´Âµ¥ ¸ðµÎ°¡ ²¨·ÁÇß½À´Ï´Ù. ±×·¡¼­ Ã¥ÀÓ°¨À» °¡Áö°í ÀÚÁøÇØ¼­ ÆÀÀåÀ» ¸Ã¾Ò½À´Ï´Ù. Á¦°¡ ÆÀÀåÀ¸·Î¼­ °­Á¶Çß´ø ºÎºÐÀº 'È­¸ñÇÑ ºÐÀ§±â'¿´½À´Ï´Ù. ÀÌ ºÎºÐ¸¸Å­Àº Ã¶ÀúÇÏ°Ô ÇÏ°íÀÚ ÆÀ¿øµéÀÇ ¾Ö·Î»çÇ×ÀÌ ÀÖÀ¸¸é °æÃ»ÇÏ°í, ºÒ¸¸ »çÇ×Àº ÃÖ´ëÇÑ °³¼±ÇÏ°íÀÚ ³ë·ÂÇß½À´Ï´Ù. ÀÌ·¸°Ô ¸®´õ½ÊÀ» ¹ßÈÖÇÑ °á°ú, ÆÀ¿øµéÀÇ ¼ºÀûÀÌ Çâ»óµÇ¾ú°í Áö±Ý±îÁöµµ ±×µé°ú ÁÁÀº ¸¸³²À» ÀÌ¾î°¡°í ÀÖ½À´Ï´Ù.<font color="#4bcdeb"></font><font color="#6ffe9b"></font><font color="#c0ffee"></font>                        </span>
+                            <font color="#08dc9a"></font><font color="#2b998d"></font>ë§ ë³´ë‹¤ëŠ” í–‰ë™ìœ¼ë¡œ ë³´ì—¬ì£¼ëŠ” ê²ƒì„ ì›ì¹™ìœ¼ë¡œ ì‚¼ì•˜ë˜ ì €ëŠ” 'ë³€í™”ë¥¼ ë‘ë ¤ì›Œí•˜ì§€ ì•Šê³  ë„ì „í•˜ëŠ” ì‚¶ì˜ ìžì„¸ë¥¼ ê°–ìž'ë¼ëŠ” ëª©í‘œë¡œ ëŠìž„ì—†ì´ ë¬´ì—‡ì¸ê°€ë¥¼ ê²½í—˜í•˜ê¸° ìœ„í•œ ë„ì „ì„ ì´ì–´ì™”ìŠµë‹ˆë‹¤.<br />
+1ë…„ ë™ì•ˆ ë¯¸êµ­ìœ¼ë¡œ êµí™˜í•™ìƒì„ ë‹¤ë…€ì˜¨ ì ì´ ìžˆìŠµë‹ˆë‹¤. ì˜ì–´ê³µë¶€ë¿ë§Œ ì•„ë‹ˆë¼ íƒ€êµ­ì—ì„œì˜ ìƒí™œì„ í†µí•´ ìžë¦½ì‹¬ì„ ê¸°ë¥´ê³  ë‚¯ì„  í™˜ê²½ì— ë„ì „í•˜ëŠ” ì ê·¹ì„±ì„ í†µí•´ ë„ì „ì •ì‹ ì„ ê¸°ë¥´ê³  ì‹¶ì—ˆê¸° ë•Œë¬¸ìž…ë‹ˆë‹¤. ì¹œêµ¬ í•œ ëª… ì—†ëŠ” íƒ€ì§€ì—ì„œ ë‚¯ì„  ì™¸êµ­ì¸ë“¤ê³¼ ì¹œí•´ì§€ê¸° ìœ„í•´ ê·¸ë“¤ì˜ ë¬¸í™”ì™€ ì¸ì‚¬ë§ ë“±ì„ ë¯¸ë¦¬ ìµí˜€ë‘ì–´ ì¹œí™”ë ¥ ìžˆê²Œ ê·¸ë“¤ì„ ëŒ€í–ˆìŠµë‹ˆë‹¤. ê·¸ ê²°ê³¼ ì˜¤ëžœ ì‹œê°„ ê±¸ë¦¬ì§€ ì•Šê³  ë‹¤ì–‘í•œ ë‚˜ë¼ì˜ ì™¸êµ­ì¸ë“¤ê³¼ ë¹ ë¥´ê²Œ ì¹œí•´ì§ˆ ìˆ˜ ìžˆì—ˆìŠµë‹ˆë‹¤.<br />
+êµí™˜í•™ìƒì„ ë‹¤ë…€ì˜¨ í›„ TOEIC ì‹œí—˜ì„ ì¤€ë¹„í•˜ê³ ìž í•œë‹¬ ë™ì•ˆ ì–´í•™ì›ì— ë‹¤ë…”ìŠµë‹ˆë‹¤. ì •ê·œìˆ˜ì—… í›„ì— ìŠ¤í„°ë”” ëª¨ìž„ì„ í•˜ì˜€ê³  íŒ€ìž¥ì„ ì„ ì¶œí•´ì•¼ í•˜ëŠ”ë° ëª¨ë‘ê°€ êº¼ë ¤í–ˆìŠµë‹ˆë‹¤. ê·¸ëž˜ì„œ ì±…ìž„ê°ì„ ê°€ì§€ê³  ìžì§„í•´ì„œ íŒ€ìž¥ì„ ë§¡ì•˜ìŠµë‹ˆë‹¤. ì œê°€ íŒ€ìž¥ìœ¼ë¡œì„œ ê°•ì¡°í–ˆë˜ ë¶€ë¶„ì€ 'í™”ëª©í•œ ë¶„ìœ„ê¸°'ì˜€ìŠµë‹ˆë‹¤. ì´ ë¶€ë¶„ë§Œí¼ì€ ì² ì €í•˜ê²Œ í•˜ê³ ìž íŒ€ì›ë“¤ì˜ ì• ë¡œì‚¬í•­ì´ ìžˆìœ¼ë©´ ê²½ì²­í•˜ê³ , ë¶ˆë§Œ ì‚¬í•­ì€ ìµœëŒ€í•œ ê°œì„ í•˜ê³ ìž ë…¸ë ¥í–ˆìŠµë‹ˆë‹¤. ì´ë ‡ê²Œ ë¦¬ë”ì‹­ì„ ë°œíœ˜í•œ ê²°ê³¼, íŒ€ì›ë“¤ì˜ ì„±ì ì´ í–¥ìƒë˜ì—ˆê³  ì§€ê¸ˆê¹Œì§€ë„ ê·¸ë“¤ê³¼ ì¢‹ì€ ë§Œë‚¨ì„ ì´ì–´ê°€ê³  ìžˆìŠµë‹ˆë‹¤.<font color="#4bc7f6"></font><font color="#6eb69e"></font><font color="#c0ffee"></font>                        </span>
                                             </td>
                 </tr>
                                                                 <tr>
-                    <th height="35"><b>ÀÔ»ç ÈÄ Æ÷ºÎ</b></th>
+                    <th height="35"><b>íšŒì‚¬ì— ì§€ì›í•  ë•Œ ê°€ìž¥ ë¨¼ì € ë³´ëŠ” ê²ƒê³¼ ê·¸ íšŒì‚¬ì™€ ë¶€í•©í•˜ëŠ” ì </b></th>
                 </tr>
                 <tr>
                     <td class="career break-word" valign="top" height="100%">
                         <span id="introduce_contents">
-                            <font color="#089dee"></font><font color="#279b7b"></font>Á¦°¡ °¡Àå Àß ÇÒ ¼ö ÀÖ´Â ITºÐ¾ß¿¡ ´ëÇÑ ¿­Á¤°ú Àü¹®¼ºÀ» ¹ÙÅÁÀ¸·Î ¾ÈÁ¤¼º ÀÖ´Â ½Ã½ºÅÛ °³¹ßÀ» ½ÇÃµÇÏ´Â Àü¹®°¡·Î ¼ºÀåÇÏ±â À§ÇÑ '3´Ü°è ¸ñÇ¥'°¡ ÀÖ½À´Ï´Ù.<br />
-ÀÔ»ç ÃÊ±â¿¡´Â ÀüÃ¼ÀûÀÎ ¾÷¹« ÇÁ·Î¼¼½º¿Í Á÷¹«¿¡ ´ëÇÑ ÇÊ¼öÀûÀÎ Áö½ÄµéÀ» ½ÀµæÇÏ°í, ¸ÃÀº ºÐ¾ß¸¦ È¥ÀÚ¼­ Ã³¸®ÇÒ ¼ö ÀÖµµ·Ï ½Ã½ºÅÛ °³¹ß ¹× ¿î¿µ¾÷¹«¿¡ ´ëÇØ ºü¸£°Ô ÀÌÇØÇÒ ¼ö ÀÖµµ·Ï ³ë·ÂÇÏ°Ú½À´Ï´Ù. ±×¸®°í ¾÷¹«¿Í °ü·ÃµÈ ¾Ë°í¸®Áò°ú ÄÚµù´É·ÂÀ» ¹è¾çÇÏ´Âµ¥ Èû¾²°Ú½À´Ï´Ù. »Ó¸¸ ¾Æ´Ï¶ó »ç³» µ¿È£È¸¸¦ ÅëÇØ Á÷¿øµé°úÀÇ Ä£¸ñ°ú ²ö²öÇÑ ÆÀ¿öÅ©¸¦ ´ÙÁö°Ú½À´Ï´Ù.<br />
-ÀÔ»ç ÈÄ 5³â µÚ¿¡´Â ½ÅÀÔ»ç¿ø°ú »ó»ç¸¦ ÀÌ¾îÁÖ´Â ¸àÅä ¿ªÇÒÀ» ÇÏ°í ½Í½À´Ï´Ù. ´ëÇÐ ¸àÅä¸µ È°µ¿À» ÅëÇØ Á¦°¡ °¡Áø Áö½Ä°ú °æÇèÀ» Àü´ÞÇÏ¿© ¼º°ú¸¦ ³»´Â ¼ºÃë°¨À» ´À³¤ °æÇèÀÌ ÀÖ½À´Ï´Ù. ÀÔ»ç ÈÄ¿¡µµ ¾÷¹«¿¡ ´ëÇÑ Á¶¾ðÀ» ÅëÇØ ÆÀÀÇ ¾÷¹« È¿À²¼ºÀ» Áõ´ë½ÃÅ°°í, ºÎ¼­ ³»¿¡¼­ ÈÄ¹è ½ÅÀÔ»ç¿øµéÀÇ °íÃæÀ» µé¾îÁÖ°í, È¸»ç»ýÈ°¿¡ µµ¿òÀ» ÁÙ ¼ö ÀÖ´Â µû¶æÇÑ ¼±¹è·Î¼­, »ó»ç¿¡°Ô´Â µëÁ÷ÇÑ ºÎÇÏÁ÷¿øÀ¸·Î¼­ ¿ªÇÒÀ» ¼öÇàÇÏ°Ú½À´Ï´Ù.<br />
-ÀÔ»ç ÈÄ 10³â µÚ¿¡´Â ÇÑ ºÎ¼­ÀÇ ¸®´õ·Î¼­ ºÎ¼­¿øµéÀÇ Àü¹®¼º °³¹ßÀ» À§ÇØ ´õ ¸¹Àº ±³À°ÀÇ ±âÈ¸¸¦ ºÎ¿©ÇÒ °ÍÀÌ¸ç, ½º½º·Îµµ ÀÚ±â°è¹ß¿¡ ¼Ö¼±¼ö¹üÇÏ´Â ¸ð½ÀÀ» º¸¿© ÁÙ °ÍÀÔ´Ï´Ù. ¶ÇÇÑ PMÀ¸·Î¼­ °í°´µé¿¡°Ô ÃÖÀûÀÇ ¼Ö·ç¼Ç°ú ÇØ°áÃ¥À» Á¦°øÇØ ÁÙ ¼ö ÀÖ´Â Àü¹®¼ºÀ» °®Ãá ¸®´õ°¡ µÇ°Ú½À´Ï´Ù.<font color="#4bcdeb"></font><font color="#6ffe9b"></font><font color="#c0ffee"></font>                        </span>
+                            <font color="#08dc9a"></font><font color="#2b998d"></font>ì œê°€ íšŒì‚¬ë¥¼ ì„ íƒí•˜ëŠ” ê¸°ì¤€ì€ 'ê¸°ì—…ì˜ ëª©í‘œì™€ ì¶”êµ¬í•˜ëŠ” ê°€ì¹˜, ê¸°ì—…ì˜ ì„±ìž¥ ê°€ëŠ¥ì„±'ìž…ë‹ˆë‹¤. ì„±ìž¥í•˜ëŠ” ê¸°ì—… ì•ˆì—ì„œ ì œê°€ ê°€ì§„ ì—­ëŸ‰ì„ ë°œíœ˜í•˜ë©° ê¸°ì—…ê³¼ í•¨ê»˜ ë°œì „í•˜ëŠ” ì‚¶ì„ í†µí•´ ë³´ëžŒì„ ëŠë¼ë©° ì‚´ì•„ê°€ê¸°ë¥¼ ì˜¤ëž«ë™ì•ˆ ê¿ˆê¿”ì™”ê¸° ë•Œë¬¸ìž…ë‹ˆë‹¤. ì´ëŸ° ì˜ë¯¸ì—ì„œ ì €ë¥¼ í•„ìš”ë¡œ í•˜ëŠ” ê¸°ì—… ì•ˆì—ì„œ ì œê°€ ê°€ì§„ ì—­ëŸ‰ì„ ë°œíœ˜í•˜ì—¬ ì„±ê³¼ì°½ì¶œì— ê¸°ì—¬í•˜ê³ , ê¸°ì—…ê³¼ ë™ë°˜ ì„±ìž¥í•˜ëŠ” ì¸ìž¬ê°€ ë˜ê³ ìž í•©ë‹ˆë‹¤.<br />
+ì €ëŠ” ê°ê´€ì ì´ê³  ëª…ë°±í•œ ê¸°ì¤€ì— ì˜í•´ ê²°ì •ì„ ë‚´ë¦¬ê³ , ìƒí™©ì— ê°€ìž¥ ì í•©í•œ ë°©ë²•ì„ ì°¾ê¸° ìœ„í•´ í•­ìƒ ê¼¼ê¼¼í•˜ê²Œ ì •ë³´ë¥¼ ìˆ˜ì§‘í•˜ëŠ” 'ë¨¸ë¦¬í˜• íƒ€ìž…'ì˜ ì„±ê²©ìž…ë‹ˆë‹¤. ê·¸ëž˜ì„œ ìžì‹ ì˜ ì¼ê³¼ ì‚¶ì„ ì‚¬ëž‘í•˜ê³ , ê³ ê°ê³¼ ë™ë£Œë“¤ì—ê²Œ ì‹ ë¢°ë¥¼ ì£¼ê³ , í•­ìƒ ëª¨ë²”ì´ ë˜ê³ ìž í•©ë‹ˆë‹¤. ì§€ê¸ˆê¹Œì§€ ì‹ë‹¹ ì„œë¹™ ì•„ë¥´ë°”ì´íŠ¸, ìŠ¤í„°ë”” ê·¸ë£¹ì˜ íŒ€ìž¥ ìˆ˜í–‰, 3ë…„ê°„ì˜ ë‹¤ì–‘í•œ í”„ë¡œì íŠ¸ì—ì„œì˜ í”„ë¡œê·¸ëž¨ ê°œë°œ ë° í˜‘ì—…ì„ í†µí•´ì„œ ì €ì˜ ì—­ëŸ‰ê³¼ ê°•ì ì„ ìŒ“ì•„ì™”ìŠµë‹ˆë‹¤.<br />
+ì €ëŠ” ì²« ì§ìž¥ì—ì„œ ì²˜ìŒìœ¼ë¡œ í–ˆë˜ ì—…ë¬´ë„ ì›¹ ê°œë°œì´ì—ˆê³  ì§€ê¸ˆê¹Œì§€ë„ í•˜ê³  ìžˆìŠµë‹ˆë‹¤. ì—¬ëŸ¬ ì°¨ë¡€ ë§Žì€ ì‚¬ëžŒê³¼ í˜‘ì—…í•˜ë©° ëŠë‚€ ì ì€ íŒ€ì›ë“¤ ê°„ì˜ ì›í™œí•œ ì˜ì‚¬ì†Œí†µì˜ ì¤‘ìš”ì„±ì´ì—ˆìŠµë‹ˆë‹¤. í”„ë¡œì íŠ¸ ê¸°íšì— ëŒ€í•´ íŒ€ì›ë“¤ê³¼ íšŒì˜í–ˆì„ ë•Œ ì„œë¡œ ê°œë°œ ë° êµ¬í˜„ì— ëŒ€í•´ì„œ ìƒê°í•˜ëŠ” ë°”ê°€ ë‹¬ëžê¸° ë•Œë¬¸ì— ê¸°íš ì˜ë„ë¥¼ ì •í™•ížˆ íŒŒì•…í•˜ê³  ê°œë°œ í‘œì¤€ì•ˆì´ í•„ìš”í•˜ë‹¤ëŠ” ê²ƒì„ ëŠê¼ˆìŠµë‹ˆë‹¤. ê·¸ëž˜ì„œ ì§ì ‘ íŒ€ìž¥ë‹˜ì—ê²Œ ì´ëŸ¬í•œ ì˜ê²¬ì„ ì œì‹œí•˜ì˜€ê³  ë°”ë¡œ ë°˜ì˜í•˜ì—¬ ê°œë°œì— í° ì°¨ì§ˆì—†ì´ í”„ë¡œì íŠ¸ë¥¼ ëë‚¼ ìˆ˜ ìžˆì—ˆìŠµë‹ˆë‹¤.<br />
+ë˜í•œ, ì§‘ì—ì„œ êµ¬ê¸€ ê²€ìƒ‰ ì¤‘ ì·¨ì•½ì ì— ê´€í•œ ë…¼ë¬¸ì„ ì½ì€ ì ì´ ìžˆìŠµë‹ˆë‹¤. ì´ ë…¼ë¬¸ì„ ì½ê³  ë‚œ í›„ ë³´ì•ˆì— ê´€í•œ ê´€ì‹¬ì´ ì»¤ì¡ŒìŠµë‹ˆë‹¤. ê·¸ëž˜ì„œ ë³´ì•ˆì— ëŒ€í•´ ì „ë¬¸ì„±ì„ ê¸°ë¥´ê³  ì‹¶ì—ˆê³  í‡´ê·¼ í›„ ì•¼ê°„ ëŒ€í•™ì›ì— ìž…í•™í•˜ì—¬ ì „ë¬¸ì ì¸ ë³´ì•ˆ ì§€ì‹ì„ ê³µë¶€í•˜ì˜€ìŠµë‹ˆë‹¤. ë³´ì•ˆì´ ì¤‘ìš”ì‹œë˜ëŠ” ìš”ì¦˜ ì‹œëŒ€ì— ë‹¤ì–‘í•œ ì†Œí”„íŠ¸ì›¨ì–´ë¥¼ ê°œë°œí•˜ëŠ” ê¸°ì—…ì—ì„œ ì €ì˜ ê´€ì‹¬ ë¶„ì•¼ì™€ ì—´ì •ì„ ë°œíœ˜í•  ìˆ˜ ìžˆëŠ” ì¢‹ì€ íšŒì‚¬ì—ì„œ ì¼í•˜ê³ ìž í•©ë‹ˆë‹¤.<br />
+ìˆ˜ë§Žì€ ì†Œí”„íŠ¸ì›¨ì–´ ê¸°ì—… ì¤‘ì—ì„œ ë†’ì€ ë¸Œëžœë“œì™€ ë›°ì–´ë‚œ ê²½ì˜ì‹¤ì ì„ ê±°ë‘ê³  ìžˆëŠ” ê¸°ì—…ì— ìž…ì‚¬í•˜ëŠ” ê²ƒì„ ì €ì˜ í˜„ìž¬ ëª©í‘œë¡œ ì •í–ˆê³ , ê·¸ê³³ì—ì„œ ì €ì˜ ê°•ì ì„ ê·¹ëŒ€í™”í•˜ê³ , ì—´ì •ì„ ë‹¤í•˜ëŠ” í•„ìš”í•œ ì¸ìž¬ê°€ ë˜ë ¤ê³  í•©ë‹ˆë‹¤.<font color="#4bc7f6"></font><font color="#6eb69e"></font><font color="#c0ffee"></font>                        </span>
+                                            </td>
+                </tr>
+                                                                <tr>
+                    <th height="35"><b>ìž…ì‚¬ í›„ í¬ë¶€</b></th>
+                </tr>
+                <tr>
+                    <td class="career break-word" valign="top" height="100%">
+                        <span id="introduce_contents">
+                            <font color="#08dc9a"></font><font color="#2b998d"></font>ì œê°€ ê°€ìž¥ ìž˜í•  ìˆ˜ ìžˆëŠ” IT ë¶„ì•¼ì— ëŒ€í•œ ì—´ì •ê³¼ ì „ë¬¸ì„±ì„ ë°”íƒ•ìœ¼ë¡œ ì•ˆì •ì„± ìžˆëŠ” ì›¹ ê°œë°œì„ ì‹¤ì²œí•˜ëŠ” ì „ë¬¸ê°€ë¡œ ì„±ìž¥í•˜ê¸° ìœ„í•œ '3ë‹¨ê³„ ëª©í‘œ'ê°€ ìžˆìŠµë‹ˆë‹¤.<br />
+ìš°ì„  ìž…ì‚¬ ì´ˆê¸°ì—ëŠ” ì „ì²´ì ì¸ ì—…ë¬´ í”„ë¡œì„¸ìŠ¤ì™€ ì§ë¬´ì— ëŒ€í•œ í•„ìˆ˜ì ì¸ ì§€ì‹ì„ ë¹ ë¥´ê²Œ ìŠµë“í•˜ê³ , í™ˆíŽ˜ì´ì§€ ê°œë°œ ë° ìš´ì˜ ê´€ë¦¬ì—…ë¬´ë¥¼ ëŠ¥ë™ì ìœ¼ë¡œ ì²˜ë¦¬í•  ìˆ˜ ìžˆë„ë¡ í•˜ê² ìŠµë‹ˆë‹¤. ê·¸ë¦¬ê³  ì—…ë¬´ì™€ ê´€ë ¨ëœ ì•Œê³ ë¦¬ì¦˜ê³¼ ì½”ë”©ëŠ¥ë ¥ì„ ë°°ì–‘í•˜ëŠ” ë° íž˜ì“°ê² ìŠµë‹ˆë‹¤. ë¿ë§Œ ì•„ë‹ˆë¼ ì‚¬ë‚´ ë™í˜¸íšŒë¥¼ í†µí•´ ì§ì›ë“¤ê³¼ì˜ ì¹œëª©ì„ ë„ëª¨í•˜ê³  ëˆëˆí•œ íŒ€ì›Œí¬ë¥¼ ë‹¤ì§€ê² ìŠµë‹ˆë‹¤.<br />
+ìž…ì‚¬ í›„ 5ë…„ ë’¤ì—ëŠ” ì‹ ìž…ì‚¬ì›ê³¼ ìƒì‚¬ë¥¼ ì´ì–´ì£¼ëŠ” ë©˜í†  ì—­í• ì„ í•˜ê³  ì‹¶ìŠµë‹ˆë‹¤. ëŒ€í•™ ë©˜í† ë§ í™œë™ì„ í†µí•´ ì œê°€ ê°€ì§„ ì§€ì‹ê³¼ ê²½í—˜ì„ ì „ë‹¬í•˜ì—¬ ì„±ì·¨ê°ì„ ëŠë‚€ ê²½í—˜ì´ ìžˆìŠµë‹ˆë‹¤. ìž…ì‚¬ í›„ì—ë„ ì—…ë¬´ì— ëŒ€í•œ ì¡°ì–¸ì„ í†µí•´ íŒ€ì˜ ì—…ë¬´ íš¨ìœ¨ì„±ì„ ì¦ëŒ€ì‹œí‚¤ê³ , ë¶€ì„œ ë‚´ì—ì„œ í›„ë°° ì‹ ìž…ì‚¬ì›ë“¤ì˜ ê³ ì¶©ì„ ë“¤ì–´ì£¼ê³ , íšŒì‚¬ìƒí™œì— ë„ì›€ì„ ì¤„ ìˆ˜ ìžˆëŠ” ë”°ëœ»í•œ ì„ ë°°ë¡œì„œ, ìƒì‚¬ì—ê²ŒëŠ” ë“¬ì§í•œ ë¶€í•˜ ì§ì›ìœ¼ë¡œì„œ ì—­í• ì„ ìˆ˜í–‰í•˜ê² ìŠµë‹ˆë‹¤. ë˜í•œ, ê°œë°œ ì—…ë¬´ì— í•„ìš”í•œ ë‹¤ì–‘í•œ í”„ë ˆìž„ì›Œí¬ í™œìš©ëŠ¥ë ¥ì„ ì¢€ ë” í‚¤ìš°ê³ , ì •ë³´ë³´ì•ˆê´€ë ¨ ìžê²©ì¦ì¸ ì •ë³´ë³´í˜¸ê¸°ì‚¬ë¥¼ ì·¨ë“í•˜ê² ìŠµë‹ˆë‹¤.<br />
+ìž…ì‚¬ í›„ 10ë…„ ë’¤ì—ëŠ” í•œ ë¶€ì„œì˜ ë¦¬ë”ë¡œì„œ ë¶€ì„œì›ë“¤ì˜ ì „ë¬¸ì„± ê°œë°œì„ ìœ„í•´ ë” ë§Žì€ êµìœ¡ì˜ ê¸°íšŒë¥¼ ë¶€ì—¬í•  ê²ƒì´ë©°, ìŠ¤ìŠ¤ë¡œë„ ìžê¸°ê³„ë°œì— ì†”ì„ ìˆ˜ë²”í•˜ëŠ” ëª¨ìŠµì„ ë³´ì—¬ ì¤„ ê²ƒìž…ë‹ˆë‹¤. ë˜í•œ, PMìœ¼ë¡œì„œ ê³ ê°ë“¤ì—ê²Œ ìµœì ì˜ ì†”ë£¨ì…˜ê³¼ í•´ê²°ì±…ì„ ì œê³µí•´ ì¤„ ìˆ˜ ìžˆëŠ” ì „ë¬¸ì„±ì„ ê°–ì¶˜ ë¦¬ë”ê°€ ë˜ê² ìŠµë‹ˆë‹¤.<font color="#4bc7f6"></font><font color="#6eb69e"></font><font color="#c0ffee"></font>                        </span>
                                             </td>
                 </tr>
                                             </table>
             </div>
 </div>
-            <!-- //ÀúÀåµÈ ¼ø¼­´ë·Î Ç×¸ñº° ·»´õ -->
+            <!-- //ì €ìž¥ëœ ìˆœì„œëŒ€ë¡œ í•­ëª©ë³„ ë Œë” -->
             
             <!-- footer -->
             <div id="resume_footer">
                 <div class="sign">
-                    À§ÀÇ ¸ðµç ³»¿ëÀº »ç½Ç°ú ´Ù¸§¾øÀ½À» È®ÀÎÇÕ´Ï´Ù.<br /> 
-                    ÀÛ¼ºÀÏ :<b> 2016³â 09¿ù 27ÀÏ (È­)</b>
-                     / ÀÛ¼ºÀÚ : <b>°­µ¿Çõ</b></div>
+                    ìœ„ì˜ ëª¨ë“  ë‚´ìš©ì€ ì‚¬ì‹¤ê³¼ ë‹¤ë¦„ì—†ìŒì„ í™•ì¸í•©ë‹ˆë‹¤.<br /> 
+                    ìž‘ì„±ì¼ :<b> 2017ë…„ 05ì›” 27ì¼ (í† )</b>
+                     / ìž‘ì„±ìž : <b>ê°•ë™í˜</b>
+                </div>
+                <div class="legal_notice_box">
+                    ìœ„ì¡°ëœ ë¬¸ì„œë¥¼ ë“±ë¡í•˜ì—¬ ì·¨ì—…í™œë™ì— ì´ìš©ì‹œ ë²•ì  ì±…ìž„ì„ ì§€ê²Œ ë  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.<br>
+                    (ì£¼)ì‚¬ëžŒì¸HRì€ êµ¬ì§ìžê°€ ë“±ë¡í•œ ë¬¸ì„œì— ëŒ€í•´ ë³´ì¦í•˜ê±°ë‚˜ ë³„ë„ì˜ ì±…ìž„ì„ ì§€ì§€ ì•Šìœ¼ë©°<br>
+                    ì²¨ë¶€ëœ ë¬¸ì„œë¥¼ ì‹ ë¢°í•˜ì—¬ ë°œìƒí•œ ë²•ì  ë¶„ìŸì— ì±…ìž„ì„ ì§€ì§€ ì•ŠìŠµë‹ˆë‹¤. (ê°œì¸íšŒì›ì•½ê´€ ì œ15ì¡° ê´€ë ¨)<br>
+                    ë˜í•œ êµ¬ì¸/êµ¬ì§ ëª©ì  ì™¸ ëª©ì ìœ¼ë¡œ ì´ìš© ì‹œ ì´ë ¥ì„œ ì‚­ì œ í˜¹ì€ ë¹„ê³µê°œ ì¡°ì¹˜ë  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.
+                </div>
             </div>        
             <!-- //footer -->
             
                     </div>
     </div>
         </td></tr></table>
-        <!-- //ÀÌ·Â¼­ º»¹® -->
+        <!-- //ì´ë ¥ì„œ ë³¸ë¬¸ -->
     
-    <!-- ÀÎÀçÁ¤º¸ ºäÀÏ ¶§ ÇÏ´Ü¿¡ ¸ñ·ÏÀ¸·Î ¾ÆÀÌÄÜ -->
-        <!-- //ÀÎÀçÁ¤º¸ ºäÀÏ ¶§ ÇÏ´Ü¿¡ ¸ñ·ÏÀ¸·Î ¾ÆÀÌÄÜ -->
-    
-    <!-- ÇÏ´Ü ÀÎÀç°Ë»ö ¼­ºñ½º ½ÅÃ» ÀÌ¹ÌÁö(µ¥ÀÌÅÍ ¸ÅÄªÀ¸·Î ÀÎÇÏ¿© Á¦¿Ü) -->
-        <!-- //ÇÏ´Ü ÀÎÀç°Ë»ö ¼­ºñ½º ½ÅÃ» ÀÌ¹ÌÁö -->
+    <!-- ì¸ìž¬ì •ë³´ ë·°ì¼ ë•Œ í•˜ë‹¨ì— ëª©ë¡ìœ¼ë¡œ ì•„ì´ì½˜ -->
+         <!-- //ì¸ìž¬ì •ë³´ ë·°ì¼ ë•Œ í•˜ë‹¨ì— ëª©ë¡ìœ¼ë¡œ ì•„ì´ì½˜ -->
+
+    <!-- í•˜ë‹¨ ì¸ìž¬ê²€ìƒ‰ ì„œë¹„ìŠ¤ ì‹ ì²­ ì´ë¯¸ì§€(ë°ì´í„° ë§¤ì¹­ìœ¼ë¡œ ì¸í•˜ì—¬ ì œì™¸) -->
+        <!-- //í•˜ë‹¨ ì¸ìž¬ê²€ìƒ‰ ì„œë¹„ìŠ¤ ì‹ ì²­ ì´ë¯¸ì§€ -->
     
     </body>
 </html>
